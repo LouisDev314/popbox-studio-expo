@@ -1,9 +1,15 @@
 import React, { createContext, useContext, useState } from 'react';
+import useCustomizeMutation from '@/app/hooks/use-customize-mutation';
+import { MutationConfigs } from '@/app/api/configs/mutation-config';
+import { AxiosResponse } from 'axios';
+import { IBaseApiResponse } from '@/app/interfaces/api-response';
+import { IUser } from '@/app/models/user';
+import { Keyboard } from 'react-native';
+import ITokens from '@/app/interfaces/tokens';
 
 interface IAuthContext {
   isLoggedIn: boolean;
-  token: string | null;
-  login: (email: string, password: string) => Promise<void>;
+  login: (user: Pick<IUser, 'username' | 'email'> & { password: string; }) => void;
   logout: () => void;
 }
 
@@ -11,30 +17,30 @@ const AuthContext = createContext<IAuthContext | undefined>(undefined);
 
 export const AuthProvider = (props: { children: React.ReactNode }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [token, setToken] = useState<string | null>(null);
 
-  const login = async (email: string, password: string) => {
-    // Simulate an API call for authentication
-    const response = await fetch('https://api.example.com/login', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, password }),
-    });
+  const { mutation: loginMutation, isPending } = useCustomizeMutation({
+    mutationFn: MutationConfigs.login,
+    onSuccess: async (data: AxiosResponse<IBaseApiResponse<IUser & ITokens>>) => {
+      // TODO: set tokens
+      setIsLoggedIn(true);
+    },
+    onError: () => {
+      // InfoAlert({ title: 'Invalid username or password', description: 'Please try again' });
+    },
+  });
 
-    if (!response.ok) throw new Error('Login failed');
-    const data = await response.json();
-    
-    setToken(data.token);
-    setIsLoggedIn(true);
+  const login = (user: Pick<IUser, 'username' | 'email'> & { password: string }) => {
+    Keyboard.dismiss();
+    loginMutation(user);
   };
 
   const logout = () => {
-    setToken(null);
+    // TODO: delete tokens from mmkv
     setIsLoggedIn(false);
   };
 
   return (
-    <AuthContext.Provider value={{ isLoggedIn, token, login, logout }}>
+    <AuthContext.Provider value={{ isLoggedIn, login, logout }}>
       {props.children}
     </AuthContext.Provider>
   );

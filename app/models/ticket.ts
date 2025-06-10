@@ -3,4 +3,4 @@ export default interface ITicket {
   prizeName: string;
   prizeRank: string,
   isRedeemed: boolean,
-}
+};

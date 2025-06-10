@@ -7,4 +7,4 @@ export default interface ISeries {
   prizes: IPrize[],
   totalTickets: number,
   remainingTickets: number,
-}
+};

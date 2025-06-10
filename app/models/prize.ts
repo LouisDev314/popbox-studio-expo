@@ -6,4 +6,4 @@ export default interface IPrize {
   quantity: number;
   imgUrl: string;
   probability: number;
-}
+};

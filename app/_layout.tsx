@@ -6,8 +6,11 @@ import * as SplashScreen from 'expo-splash-screen';
 import { useEffect, useState } from 'react';
 import AnimatedSplash from '@/app/components/AnimatedSplash';
 import { StatusBar } from 'expo-status-bar';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 const config = createTamagui({ ...defaultConfig, ...tamaguiConfig });
+
+const queryClient = new QueryClient();
 
 // Catch any errors thrown by the Layout component
 export { ErrorBoundary } from 'expo-router';
@@ -25,14 +28,16 @@ export default function RootLayout() {
   };
 
   return (
-    <TamaguiProvider config={config}>
-      <StatusBar style="light" />
-      <Stack>
-        <Stack.Screen name="(screens)/login" />
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        {/*<Stack.Screen name="product/[id]" options={{ headerShown: false }} />*/}
-      </Stack>
-      {isSplashVisible && <AnimatedSplash onFinish={handleSplashFinish} />}
-    </TamaguiProvider>
+    <QueryClientProvider client={queryClient}>
+      <TamaguiProvider config={config}>
+        <StatusBar style="light" />
+        <Stack>
+          <Stack.Screen name="(screens)/login" />
+          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+          {/*<Stack.Screen name="product/[id]" options={{ headerShown: false }} />*/}
+        </Stack>
+        {isSplashVisible && <AnimatedSplash onFinish={handleSplashFinish} />}
+      </TamaguiProvider>
+    </QueryClientProvider>
   );
 }
