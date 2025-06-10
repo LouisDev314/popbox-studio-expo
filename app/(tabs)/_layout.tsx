@@ -1,45 +1,84 @@
 import { Tabs } from 'expo-router';
-import React from 'react';
-import { Platform } from 'react-native';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
-import { HapticTab } from '@/components/HapticTab';
-import { IconSymbol } from '@/components/ui/IconSymbol';
-import TabBarBackground from '@/components/ui/TabBarBackground';
-import { Colors } from '@/constants/Colors';
-import { useColorScheme } from '@/hooks/useColorScheme';
-
-export default function TabLayout() {
-  const colorScheme = useColorScheme();
-
+const TabLayout = () => {
   return (
-    <Tabs
-      screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
-        headerShown: false,
-        tabBarButton: HapticTab,
-        tabBarBackground: TabBarBackground,
-        tabBarStyle: Platform.select({
-          ios: {
-            // Use a transparent background on iOS to show the blur effect
-            position: 'absolute',
-          },
-          default: {},
-        }),
-      }}>
+    <Tabs screenOptions={{
+      tabBarActiveTintColor: 'white',
+      tabBarShowLabel: false,
+      tabBarStyle: {
+        height: 70,
+        paddingTop: 5,
+        backgroundColor: '#111',
+        borderTopWidth: 0.2,
+      },
+      tabBarIconStyle: {
+        width: 32,
+        height: 32,
+      },
+    }}>
       <Tabs.Screen
         name="index"
         options={{
           title: 'Home',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="house.fill" color={color} />,
+          headerShown: false,
+          tabBarIcon: ({ focused, color, size }) => <Ionicons
+            name={focused ? 'home' : 'home-outline'}
+            size={size}
+            color={color}
+          />,
         }}
       />
       <Tabs.Screen
-        name="explore"
+        name="search"
         options={{
-          title: 'Explore',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="paperplane.fill" color={color} />,
+          title: 'Search',
+          headerShown: false,
+          tabBarIcon: ({ focused, color, size }) => <Ionicons
+            name={focused ? 'search' : 'search-outline'}
+            size={size}
+            color={color}
+          />,
+        }}
+      />
+      <Tabs.Screen
+        name="kuji"
+        options={{
+          title: 'Kuji',
+          headerShown: false,
+          tabBarIcon: ({ focused, color, size }) => <Ionicons
+            name={focused ? 'ticket' : 'ticket-outline'}
+            size={size}
+            color={color}
+          />,
+        }}
+      />
+      <Tabs.Screen
+        name="cart"
+        options={{
+          title: 'Cart',
+          headerShown: false,
+          tabBarIcon: ({ focused, color, size }) => <Ionicons
+            name={focused ? 'cart' : 'cart-outline'}
+            size={size}
+            color={color}
+          />,
+        }}
+      />
+      <Tabs.Screen
+        name="profile"
+        options={{
+          title: 'Profile',
+          headerShown: false,
+          tabBarIcon: ({ focused, color, size }) => <Ionicons
+            name={focused ? 'person-circle' : 'person-circle-outline'}
+            size={size}
+            color={color}
+          />,
         }}
       />
     </Tabs>
   );
-}
+};
+
+export default TabLayout;

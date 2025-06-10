@@ -1,39 +1,38 @@
-import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
-import { useFonts } from 'expo-font';
 import { Stack } from 'expo-router';
+import { createTamagui, TamaguiProvider } from 'tamagui';
+import { defaultConfig } from '@tamagui/config/v4';
+import tamaguiConfig from '@/app/constants/tamagui.config';
 import * as SplashScreen from 'expo-splash-screen';
+import { useEffect, useState } from 'react';
+import AnimatedSplash from '@/app/components/AnimatedSplash';
 import { StatusBar } from 'expo-status-bar';
-import { useEffect } from 'react';
-import 'react-native-reanimated';
 
-import { useColorScheme } from '@/hooks/useColorScheme';
+const config = createTamagui({ ...defaultConfig, ...tamaguiConfig });
 
-// Prevent the splash screen from auto-hiding before asset loading is complete.
-SplashScreen.preventAutoHideAsync();
+// Catch any errors thrown by the Layout component
+export { ErrorBoundary } from 'expo-router';
 
 export default function RootLayout() {
-  const colorScheme = useColorScheme();
-  const [loaded] = useFonts({
-    SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
-  });
+  const [isSplashVisible, setIsSplashVisible] = useState(true);
 
   useEffect(() => {
-    if (loaded) {
-      SplashScreen.hideAsync();
-    }
-  }, [loaded]);
+    // Hide the native splash screen as soon as the app loads
+    SplashScreen.hideAsync();
+  }, []);
 
-  if (!loaded) {
-    return null;
-  }
+  const handleSplashFinish = () => {
+    setIsSplashVisible(false); // Remove the custom splash screen
+  };
 
   return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+    <TamaguiProvider config={config}>
+      <StatusBar style="light" />
       <Stack>
+        <Stack.Screen name="(screens)/login" />
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="+not-found" />
+        {/*<Stack.Screen name="product/[id]" options={{ headerShown: false }} />*/}
       </Stack>
-      <StatusBar style="auto" />
-    </ThemeProvider>
+      {isSplashVisible && <AnimatedSplash onFinish={handleSplashFinish} />}
+    </TamaguiProvider>
   );
 }
