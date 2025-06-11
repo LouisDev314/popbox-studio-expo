@@ -4,12 +4,13 @@ import { MutationConfigs } from '@/app/api/configs/mutation-config';
 import { AxiosResponse } from 'axios';
 import { IBaseApiResponse } from '@/app/interfaces/api-response';
 import { IUser } from '@/app/models/user';
+import { useUserStore } from '@/app/store/user-store';
 import { Keyboard } from 'react-native';
 import ITokens from '@/app/interfaces/tokens';
 
 interface IAuthContext {
   isLoggedIn: boolean;
-  login: (user: Pick<IUser, 'username' | 'email'> & { password: string; }) => void;
+  login: (user: { email: string, password: string } | { username: string, password: string }) => void;
   logout: () => void;
 }
 
@@ -18,10 +19,13 @@ const AuthContext = createContext<IAuthContext | undefined>(undefined);
 export const AuthProvider = (props: { children: React.ReactNode }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
+  const setUser = useUserStore((state) => state.setUser);
+
   const { mutation: loginMutation, isPending } = useCustomizeMutation({
     mutationFn: MutationConfigs.login,
     onSuccess: async (data: AxiosResponse<IBaseApiResponse<IUser & ITokens>>) => {
       // TODO: set tokens
+      setUser(data.data.data);
       setIsLoggedIn(true);
     },
     onError: () => {
@@ -29,7 +33,7 @@ export const AuthProvider = (props: { children: React.ReactNode }) => {
     },
   });
 
-  const login = (user: Pick<IUser, 'username' | 'email'> & { password: string }) => {
+  const login = (user: { email: string, password: string } | { username: string, password: string }) => {
     Keyboard.dismiss();
     loginMutation(user);
   };

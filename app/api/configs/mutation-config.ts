@@ -1,4 +1,3 @@
-import { IUser } from '@/app/models/user';
 import appClient from '@/app/api/app-client';
 
 export const MutationConfigs = {
@@ -11,7 +10,7 @@ export const MutationConfigs = {
   // register: async (user: IRegisterUser) => {
   //   return appClient.post('/auth/register', user);
   // },
-  login: async (user: Pick<IUser, 'username' | 'email'> & { password: string }) => {
+  login: async (user: { email: string, password: string } | { username: string, password: string }) => {
     return appClient.post('/auth/login', user);
   },
   // logout: async () => {
