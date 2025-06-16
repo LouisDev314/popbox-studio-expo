@@ -4,7 +4,41 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="17ef7c58-bf7c-413e-b6ef-f4686d9e06c1" name="Changes" comment="" />
+    <list default="true" id="17ef7c58-bf7c-413e-b6ef-f4686d9e06c1" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/eas.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/models/setting.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.expo/devices.json" beforeDir="false" afterPath="$PROJECT_DIR$/.expo/devices.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.expo/types/router.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/.expo/types/router.d.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app.json" beforeDir="false" afterPath="$PROJECT_DIR$/app.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/(screens)/LoginScreen.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/(tabs)/_layout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(tabs)/_layout.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/(tabs)/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(tabs)/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/_layout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/_layout.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/api/app-client.ts" beforeDir="false" afterPath="$PROJECT_DIR$/api/app-client.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/api/configs/mutation-config.ts" beforeDir="false" afterPath="$PROJECT_DIR$/api/configs/mutation-config.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/api/handlers/error-handler.ts" beforeDir="false" afterPath="$PROJECT_DIR$/api/handlers/error-handler.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/components/Alert/InfoAlert.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/Alert/InfoAlert.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/components/AnimatedSplash.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/AnimatedSplash.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/configs/env.ts" beforeDir="false" afterPath="$PROJECT_DIR$/configs/env.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/constants/tamagui.config.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/context/AuthContext.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/context/AuthContext.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/hooks/use-customize-mutation.ts" beforeDir="false" afterPath="$PROJECT_DIR$/hooks/use-customize-mutation.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/interfaces/api-response.ts" beforeDir="false" afterPath="$PROJECT_DIR$/interfaces/api-response.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/interfaces/tokens.ts" beforeDir="false" afterPath="$PROJECT_DIR$/interfaces/tokens.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/models/order.ts" beforeDir="false" afterPath="$PROJECT_DIR$/models/order.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/models/prize.ts" beforeDir="false" afterPath="$PROJECT_DIR$/models/prize.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/models/series.ts" beforeDir="false" afterPath="$PROJECT_DIR$/models/series.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/models/setting.ts" beforeDir="false" afterPath="$PROJECT_DIR$/constants/stylesheets.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/models/ticket.ts" beforeDir="false" afterPath="$PROJECT_DIR$/models/ticket.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/models/user.ts" beforeDir="false" afterPath="$PROJECT_DIR$/models/user.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/products/[id].tsx" beforeDir="false" afterPath="$PROJECT_DIR$/products/[id].tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/store/user-store.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/utils/mmkv.ts" beforeDir="false" afterPath="$PROJECT_DIR$/utils/mmkv.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pnpm-lock.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pnpm-lock.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tsconfig.json" beforeDir="false" afterPath="$PROJECT_DIR$/tsconfig.json" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -13,32 +47,72 @@
   <component name="FormatOnSaveOptions">
     <option name="myRunOnSave" value="true" />
   </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
   <component name="OptimizeOnSaveOptions">
     <option name="myRunOnSave" value="true" />
   </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "associatedIndex": 0
+}]]></component>
+  <component name="ProjectId" id="2yOIb4Q4cHqTtfelMBu5XENmYI6" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "code.cleanup.on.save": "true",
-    "last_opened_file_path": "/Users/louischan/upo-expo",
+    "git-widget-placeholder": "main",
+    "last_opened_file_path": "/Users/louischan/upo-expo/app/(screens)/auth",
+    "node.js.detected.package.eslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "pnpm",
     "rearrange.code.on.save": "true",
     "settings.editor.selected.configurable": "settings.javascript.prettier",
-    "ts.external.directory.path": "/Users/louischan/upo-expo/node_modules/typescript/lib"
+    "ts.external.directory.path": "/Users/louischan/upo-expo/node_modules/typescript/lib",
+    "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/app/(screens)/auth" />
       <recent name="$PROJECT_DIR$" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/app/interfaces" />
-      <recent name="$PROJECT_DIR$/app/context" />
-      <recent name="$PROJECT_DIR$/app/components" />
-      <recent name="$PROJECT_DIR$/app" />
+      <recent name="$PROJECT_DIR$/configs" />
+      <recent name="$PROJECT_DIR$/app/(screens)/auth/login" />
+      <recent name="$PROJECT_DIR$/app/(screens)/auth" />
       <recent name="$PROJECT_DIR$" />
+      <recent name="$PROJECT_DIR$/app/(screens)/auth/register" />
     </key>
   </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-js-predefined-d6986cc7102b-822845ee3bb5-JavaScript-WS-243.23654.157" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="17ef7c58-bf7c-413e-b6ef-f4686d9e06c1" name="Changes" comment="" />
+      <created>1749699261954</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1749699261954</updated>
+      <workItem from="1749699263430" duration="33439000" />
+    </task>
     <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
   </component>
 </project>

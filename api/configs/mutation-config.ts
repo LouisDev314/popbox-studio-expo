@@ -1,4 +1,4 @@
-import appClient from '@/app/api/app-client';
+import appClient from '@/api/app-client';
 
 export const MutationConfigs = {
   // verifyEmail: async (user: IVerifyEmail) => {

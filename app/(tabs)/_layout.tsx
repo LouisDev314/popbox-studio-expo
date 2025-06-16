@@ -1,5 +1,6 @@
 import { Tabs } from 'expo-router';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import React from 'react';
 
 const TabLayout = () => {
   return (
@@ -7,7 +8,7 @@ const TabLayout = () => {
       tabBarActiveTintColor: 'white',
       tabBarShowLabel: false,
       tabBarStyle: {
-        height: 70,
+        height: 75,
         paddingTop: 5,
         backgroundColor: '#111',
         borderTopWidth: 0.2,

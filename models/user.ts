@@ -1,6 +1,6 @@
 import { z } from 'zod';
-import ISeries from '@/app/models/series';
-import { IOrder } from '@/app/models/order';
+import ISeries from '@/models/series';
+import { IOrder } from '@/models/order';
 
 export const UserSchema = z.object({
   username: z

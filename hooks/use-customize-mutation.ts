@@ -1,4 +1,4 @@
-import { IBaseApiResponse, responseError } from '@/app/interfaces/api-response';
+import { IBaseApiResponse, responseError } from '@/interfaces/api-response';
 import { MutationFunction, useMutation } from '@tanstack/react-query';
 import { AxiosError, AxiosResponse } from 'axios';
 

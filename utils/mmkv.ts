@@ -1,5 +1,5 @@
 import { MMKV } from 'react-native-mmkv';
-import getEnvConfig from '@/app/configs/env';
+import getEnvConfig from '@/configs/env';
 
 
 export const storage = new MMKV();

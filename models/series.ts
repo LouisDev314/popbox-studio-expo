@@ -1,4 +1,4 @@
-import IPrize from '@/app/models/prize';
+import IPrize from '@/models/prize';
 
 export default interface ISeries {
   title: string;

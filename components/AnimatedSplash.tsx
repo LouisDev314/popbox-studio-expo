@@ -14,13 +14,13 @@ const AnimatedSplash = (props: IAnimatedSplash) => {
       // Fade in the logo over 2 seconds
       Animated.timing(logoOpacity, {
         toValue: 1,
-        duration: 2000,
+        duration: 1500,
         useNativeDriver: true,
       }),
       // Fade out the entire splash screen over 1 second
       Animated.timing(containerOpacity, {
         toValue: 0,
-        duration: 350,
+        duration: 300,
         useNativeDriver: true,
       }),
     ]).start(props.onFinish); // Call onFinish when the sequence completes
@@ -31,7 +31,7 @@ const AnimatedSplash = (props: IAnimatedSplash) => {
       style={[styles.container, { opacity: containerOpacity }]}
     >
       <Animated.Image
-        source={require('../../assets/images/logo.png')}
+        source={require('../assets/images/logo.png')}
         style={[styles.logo, { opacity: logoOpacity }]}
       />
     </Animated.View>
@@ -50,8 +50,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   logo: {
-    width: 300,
-    height: 300,
+    width: 350,
+    height: 350,
   },
 });
 

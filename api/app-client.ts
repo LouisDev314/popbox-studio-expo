@@ -1,4 +1,4 @@
-import getEnvConfig from '@/app/configs/env';
+import getEnvConfig from '@/configs/env';
 import axios from 'axios';
 
 const appClient = axios.create({
