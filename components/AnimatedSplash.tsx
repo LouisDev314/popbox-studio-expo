@@ -31,7 +31,7 @@ const AnimatedSplash = (props: IAnimatedSplash) => {
       style={[styles.container, { opacity: containerOpacity }]}
     >
       <Animated.Image
-        source={require('../assets/images/logo.png')}
+        source={require('@/assets/images/logo.png')}
         style={[styles.logo, { opacity: logoOpacity }]}
       />
     </Animated.View>

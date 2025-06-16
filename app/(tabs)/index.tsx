@@ -1,7 +1,7 @@
 import { SizableText } from 'tamagui';
 import React from 'react';
 import { useAuth } from '@/context/AuthContext';
-import { bgStyleSheet } from '@/constants/stylesheets';
+import AppStyleSheet from '@/constants/app-stylesheet';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Redirect } from 'expo-router';
 
@@ -13,7 +13,7 @@ const Home = () => {
   }
 
   return (
-    <SafeAreaView style={bgStyleSheet.container}>
+    <SafeAreaView style={AppStyleSheet.bg}>
       <SizableText size="$8">Home Page</SizableText>
     </SafeAreaView>
   );

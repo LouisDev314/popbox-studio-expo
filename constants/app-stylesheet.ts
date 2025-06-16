@@ -1,8 +1,10 @@
 import { StyleSheet } from 'react-native';
 
-export const bgStyleSheet = StyleSheet.create({
-  container: {
+const AppStyleSheet = StyleSheet.create({
+  bg: {
     flex: 1,
     backgroundColor: 'black',
   },
 });
+
+export default AppStyleSheet;
