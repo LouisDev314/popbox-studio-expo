@@ -26,7 +26,11 @@ const RootLayoutNav = () => {
   return (
     <>
       <StatusBar style="light" />
-      <Stack screenOptions={{ headerShown: false }}>
+      <Stack
+        screenOptions={{
+          headerShown: false,
+        }}
+      >
         <Stack.Screen name="(tabs)" />
       </Stack>
       {isSplashVisible && <AnimatedSplash onFinish={handleSplashFinish} />}

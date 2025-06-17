@@ -14,6 +14,8 @@ import { Keyboard, StyleSheet } from 'react-native';
 import Colors from '@/constants/colors';
 import PasswordInput from '@/components/Input/PasswordInput';
 import FormInput from '@/components/Input/FormInput';
+import { router } from 'expo-router';
+import { AppScreen } from '@/enums/screens';
 
 interface ILoginForm {
   username: string;
@@ -39,18 +41,14 @@ const LoginScreen = () => {
     },
   });
 
-  const login = (user: { email: string, password: string } | { username: string, password: string }) => {
-    Keyboard.dismiss();
-    loginMutation(user);
-  };
-
   const onSubmit = (data: ILoginForm) => {
     if (!data.username || !data.password) setIsFormValid(false);
     const loginForm =
       data.username.includes('@')
         ? { email: data.username, password: data.password }
         : { username: data.username, password: data.password };
-    login(loginForm);
+    Keyboard.dismiss();
+    loginMutation(loginForm);
   };
 
   return (
@@ -58,18 +56,10 @@ const LoginScreen = () => {
       <Image style={styleSheet.logoContainer} source={{
         uri: require('@/assets/images/logo.png'),
       }} />
-      {/*{errors.username && <Text color="red">{errors.username.message}</Text>}*/}
       {!isFormValid && <Text color="red">Invalid username or password</Text>}
       <Controller
         control={control}
         name="username"
-        // rules={{
-        //   required: 'Username or email is required',
-        //   validate: value =>
-        //     usernamePattern.test(value) || emailPattern.test(value)
-        //       ? true
-        //       : 'Enter a valid username or email address',
-        // }}
         render={({ field: { onChange, onBlur, value } }) => (
           <FormInput
             placeholder="Username or email"
@@ -98,7 +88,6 @@ const LoginScreen = () => {
         onPress={() => console.log('forgot!')}
       >
         <Text color={'$blue10'}>
-          {/* TODO: bold on press*/}
           Forgot password?
         </Text>
       </Button>
@@ -113,8 +102,10 @@ const LoginScreen = () => {
         <SizableText size={'$4'}>
           Don't have an account yet?
         </SizableText>
-        {/* TODO: bold on press*/}
-        <Button unstyled color={Colors.primary} pressStyle={{ opacity: 0.5 }}>Sign Up</Button>
+        <Button unstyled color={Colors.primary} pressStyle={{ opacity: 0.5 }}
+                onPress={() => router.navigate(AppScreen.RegisterInit)}>
+          Sign Up
+        </Button>
       </XStack>
 
       <XStack alignItems="center" marginTop={30} marginBottom={10}>
@@ -145,7 +136,6 @@ const styleSheet = StyleSheet.create({
   },
   yStack: {
     gap: 15,
-    flex: 1,
     justifyContent: 'center',
   },
   xStack: {
