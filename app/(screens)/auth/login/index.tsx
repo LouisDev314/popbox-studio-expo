@@ -1,8 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
-import { Button, Image, Input, Separator, SizableText, Spinner, Text, XStack, YStack } from 'tamagui';
+import { Button, Image, Separator, SizableText, Spinner, Text, XStack, YStack } from 'tamagui';
 import AppStyleSheet from '@/constants/app-stylesheet';
-import { emailPattern, usernamePattern } from '@/constants/patterns';
 import useCustomizeMutation from '@/hooks/use-customize-mutation';
 import { MutationConfigs } from '@/api/configs/mutation-config';
 import { AxiosResponse } from 'axios';
@@ -13,6 +12,8 @@ import { secureStorage } from '@/utils/mmkv';
 import { setUser } from '@/hooks/use-user-store';
 import { Keyboard, StyleSheet } from 'react-native';
 import Colors from '@/constants/colors';
+import PasswordInput from '@/components/Input/PasswordInput';
+import FormInput from '@/components/Input/FormInput';
 
 interface ILoginForm {
   username: string;
@@ -20,7 +21,8 @@ interface ILoginForm {
 }
 
 const LoginScreen = () => {
-  const { control, handleSubmit, formState: { errors } } = useForm<ILoginForm>();
+  const [isFormValid, setIsFormValid] = useState(true);
+  const { control, handleSubmit } = useForm<ILoginForm>();
 
   const { mutation: loginMutation, isPending } = useCustomizeMutation({
     mutationFn: MutationConfigs.login,
@@ -32,6 +34,7 @@ const LoginScreen = () => {
     },
     onError: () => {
       console.log('error');
+      setIsFormValid(false);
       // InfoAlert({ title: 'Invalid username or password', description: 'Please try again' });
     },
   });
@@ -42,6 +45,7 @@ const LoginScreen = () => {
   };
 
   const onSubmit = (data: ILoginForm) => {
+    if (!data.username || !data.password) setIsFormValid(false);
     const loginForm =
       data.username.includes('@')
         ? { email: data.username, password: data.password }
@@ -50,22 +54,24 @@ const LoginScreen = () => {
   };
 
   return (
-    <YStack flex={1} padding="$4" justifyContent="center" style={{ ...styleSheet.yStack, ...AppStyleSheet.bg }}>
+    <YStack padding="$4" style={{ ...styleSheet.yStack, ...AppStyleSheet.bg }}>
       <Image style={styleSheet.logoContainer} source={{
         uri: require('@/assets/images/logo.png'),
       }} />
+      {/*{errors.username && <Text color="red">{errors.username.message}</Text>}*/}
+      {!isFormValid && <Text color="red">Invalid username or password</Text>}
       <Controller
         control={control}
         name="username"
-        rules={{
-          required: 'Username or email is required',
-          validate: value =>
-            usernamePattern.test(value) || emailPattern.test(value)
-              ? true
-              : 'Enter a valid username or email address',
-        }}
+        // rules={{
+        //   required: 'Username or email is required',
+        //   validate: value =>
+        //     usernamePattern.test(value) || emailPattern.test(value)
+        //       ? true
+        //       : 'Enter a valid username or email address',
+        // }}
         render={({ field: { onChange, onBlur, value } }) => (
-          <Input
+          <FormInput
             placeholder="Username or email"
             onBlur={onBlur}
             onChangeText={onChange}
@@ -74,26 +80,21 @@ const LoginScreen = () => {
           />
         )}
       />
-      {errors.username && <Text color="red">{errors.username.message}</Text>}
-
       <Controller
         control={control}
         name="password"
         render={({ field: { onChange, onBlur, value } }) => (
-          <Input
-            placeholder="Password"
-            secureTextEntry
+          <PasswordInput
             onBlur={onBlur}
             onChangeText={onChange}
             value={value}
           />
         )}
       />
-      {errors.password && <Text color="red">{errors.password.message}</Text>}
-
       <Button
         unstyled
         alignItems="flex-end"
+        pressStyle={{ opacity: 0.5 }}
         onPress={() => console.log('forgot!')}
       >
         <Text color={'$blue10'}>
@@ -113,7 +114,7 @@ const LoginScreen = () => {
           Don't have an account yet?
         </SizableText>
         {/* TODO: bold on press*/}
-        <Button color={Colors.primary} unstyled>Sign Up</Button>
+        <Button unstyled color={Colors.primary} pressStyle={{ opacity: 0.5 }}>Sign Up</Button>
       </XStack>
 
       <XStack alignItems="center" marginTop={30} marginBottom={10}>
@@ -122,7 +123,7 @@ const LoginScreen = () => {
         <Separator />
       </XStack>
 
-      <Button unstyled>
+      <Button unstyled pressStyle={{ opacity: 0.5 }}>
         <Image style={styleSheet.googleContainer} source={{
           uri: require('@/assets/images/google_logo.png'),
         }} />
@@ -141,10 +142,11 @@ const styleSheet = StyleSheet.create({
     marginHorizontal: 'auto',
     width: 30,
     height: 30,
-    backgroundColor: '$blue10',
   },
   yStack: {
     gap: 15,
+    flex: 1,
+    justifyContent: 'center',
   },
   xStack: {
     alignItems: 'center',
