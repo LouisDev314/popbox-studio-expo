@@ -2,11 +2,11 @@ import Colors from '@/constants/colors';
 import { Stack } from 'expo-router';
 import React from 'react';
 
-interface ICustomizedHeaderBack {
+interface ICustomizeHeaderBackProps {
   title: string;
 }
 
-const CustomizedHeaderBack = (props: ICustomizedHeaderBack) => <Stack.Screen
+const CustomizeHeaderBack = (props: ICustomizeHeaderBackProps) => <Stack.Screen
   options={{
     headerShown: true,
     title: '',
@@ -16,4 +16,4 @@ const CustomizedHeaderBack = (props: ICustomizedHeaderBack) => <Stack.Screen
   }}
 />;
 
-export default CustomizedHeaderBack;
+export default CustomizeHeaderBack;

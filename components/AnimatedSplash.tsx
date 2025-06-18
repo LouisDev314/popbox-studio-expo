@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react';
 import { Animated, StyleSheet } from 'react-native';
 
-interface IAnimatedSplash {
+interface IAnimatedSplashProps {
   onFinish: () => void;
 }
 
-const AnimatedSplash = (props: IAnimatedSplash) => {
+const AnimatedSplash = (props: IAnimatedSplashProps) => {
   const logoOpacity = new Animated.Value(0); // Logo starts invisible
   const containerOpacity = new Animated.Value(1); // Container starts visible
 

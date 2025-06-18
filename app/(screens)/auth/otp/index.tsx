@@ -1,25 +1,25 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Image, Text, YStack } from 'tamagui';
-import AppStyleSheet from '@/constants/app-stylesheet';
+import { Button, Text } from 'tamagui';
 import useCustomizeMutation from '@/hooks/use-customize-mutation';
 import { MutationConfigs } from '@/api/configs/mutation-config';
-import { Keyboard, StyleSheet, View } from 'react-native';
-import { useLocalSearchParams } from 'expo-router';
-import { useHeaderHeight } from '@react-navigation/elements';
+import { Keyboard } from 'react-native';
 import Colors from '@/constants/colors';
-import CustomizedHeaderBack from '@/components/CustomizedHeaderBack';
-import ProgressIndicator from '@/components/ProgressIndicator';
 import { OtpInput } from 'react-native-otp-entry';
+import { Step } from '@/enums/register-step';
 
-const OtpScreen = () => {
-  const { email } = useLocalSearchParams<{ email: string }>();
+interface IOtpScreenProps {
+  email: string;
+  setStep: (step: Step) => void;
+}
+
+const OtpScreen = (props: IOtpScreenProps) => {
   const [otp, setOtp] = useState('');
   const [isOtpValid, setIsOtpValid] = useState(true);
 
   const { mutation: verifyOtpMutation, isPending } = useCustomizeMutation({
     mutationFn: MutationConfigs.verifyOtp,
     onSuccess: async () => {
-      // TODO: go to the password screen
+      props.setStep(Step.Password);
     },
     onError: () => {
       console.log('error');
@@ -30,61 +30,42 @@ const OtpScreen = () => {
 
   const onSubmit = (otp: string) => {
     Keyboard.dismiss();
-    verifyOtpMutation({ email, otp });
+    props.setStep(Step.Password);
+    verifyOtpMutation({ email: props.email, otp });
   };
 
   useEffect(() => {
     if (otp) onSubmit(otp);
   }, [otp]);
 
-  const headerHeight = -useHeaderHeight();
-
   return (
-    <View style={AppStyleSheet.bg}>
-      <YStack padding="$4" marginTop={headerHeight} style={{ ...styleSheet.yStack, ...AppStyleSheet.bg }}>
-        <CustomizedHeaderBack title="Verify Email" />
-        <Image style={styleSheet.logoContainer} source={{
-          uri: require('@/assets/images/logo.png'),
-        }} />
-        {!isOtpValid && <Text color="red">OTP is invalid</Text>}
-        <OtpInput
-          numberOfDigits={6}
-          focusColor={Colors.primary}
-          type="numeric"
-          textProps={{}}
-          theme={{
-            pinCodeContainerStyle: { width: 50 },
-            pinCodeTextStyle: { color: 'white' },
-            filledPinCodeContainerStyle: { borderColor: Colors.primary },
-          }}
-          onFilled={(otp) => setOtp(otp)}
-        />
-        <Button
-          unstyled
-          alignItems="flex-end"
-          pressStyle={{ opacity: 0.5 }}
-          onPress={() => console.log('resend otp')}
-        >
-          <Text color={Colors.primary}>
-            Resend OTP
-          </Text>
-        </Button>
-      </YStack>
-      <ProgressIndicator currentStep={2} />
-    </View>
+    <>
+      {!isOtpValid && <Text color="red">OTP is invalid</Text>}
+      <OtpInput
+        numberOfDigits={6}
+        focusColor={Colors.primary}
+        type="numeric"
+        textProps={{}}
+        theme={{
+          pinCodeContainerStyle: { width: 50 },
+          pinCodeTextStyle: { color: 'white' },
+          filledPinCodeContainerStyle: { borderColor: Colors.primary },
+        }}
+        onFilled={(otp) => setOtp(otp)}
+      />
+      <Button
+        unstyled
+        alignItems="flex-end"
+        pressStyle={{ opacity: 0.5 }}
+        onPress={() => console.log('resend otp')}
+      >
+        {/* TODO: timer count down */}
+        <Text color={Colors.primary}>
+          Resend OTP
+        </Text>
+      </Button>
+    </>
   );
 };
-
-const styleSheet = StyleSheet.create({
-  logoContainer: {
-    marginHorizontal: 'auto',
-    width: 280,
-    height: 120,
-  },
-  yStack: {
-    gap: 15,
-    justifyContent: 'center',
-  },
-});
 
 export default OtpScreen;

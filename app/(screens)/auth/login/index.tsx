@@ -2,53 +2,33 @@ import React, { useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { Button, Image, Separator, SizableText, Spinner, Text, XStack, YStack } from 'tamagui';
 import AppStyleSheet from '@/constants/app-stylesheet';
-import useCustomizeMutation from '@/hooks/use-customize-mutation';
-import { MutationConfigs } from '@/api/configs/mutation-config';
-import { AxiosResponse } from 'axios';
-import { IBaseApiResponse } from '@/interfaces/api-response';
-import { IUser } from '@/models/user';
-import ITokens from '@/interfaces/tokens';
-import { secureStorage } from '@/utils/mmkv';
-import { setUser } from '@/hooks/use-user-store';
 import { Keyboard, StyleSheet } from 'react-native';
 import Colors from '@/constants/colors';
 import PasswordInput from '@/components/Input/PasswordInput';
 import FormInput from '@/components/Input/FormInput';
 import { router } from 'expo-router';
 import { AppScreen } from '@/enums/screens';
+import { useAuth } from '@/context/AuthContext';
 
-interface ILoginForm {
+interface ILoginFormProps {
   username: string;
   password: string;
 }
 
 const LoginScreen = () => {
   const [isFormValid, setIsFormValid] = useState(true);
-  const { control, handleSubmit } = useForm<ILoginForm>();
+  const { control, handleSubmit } = useForm<ILoginFormProps>();
+  const { loginMutation } = useAuth();
+  const { mutation: login, isPending } = loginMutation;
 
-  const { mutation: loginMutation, isPending } = useCustomizeMutation({
-    mutationFn: MutationConfigs.login,
-    onSuccess: async (data: AxiosResponse<IBaseApiResponse<{ user: IUser; tokens: ITokens }>>) => {
-      const { tokens, user } = data.data.data;
-      secureStorage.set('accessToken', tokens.accessToken);
-      secureStorage.set('refreshToken', tokens.refreshToken);
-      setUser(user);
-    },
-    onError: () => {
-      console.log('error');
-      setIsFormValid(false);
-      // InfoAlert({ title: 'Invalid username or password', description: 'Please try again' });
-    },
-  });
-
-  const onSubmit = (data: ILoginForm) => {
+  const onSubmit = (data: ILoginFormProps) => {
     if (!data.username || !data.password) setIsFormValid(false);
     const loginForm =
       data.username.includes('@')
         ? { email: data.username, password: data.password }
         : { username: data.username, password: data.password };
     Keyboard.dismiss();
-    loginMutation(loginForm);
+    login(loginForm);
   };
 
   return (

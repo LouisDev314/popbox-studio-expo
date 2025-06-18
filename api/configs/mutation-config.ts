@@ -16,7 +16,7 @@ export const MutationConfigs = {
   resendOtp: async (email: string) => {
     return appClient.post('/auth/resend-otp', { email });
   },
-  // logout: async () => {
-  //   return appClient.delete('/auth/logout');
-  // },
+  logout: async () => {
+    return appClient.delete('/auth/logout');
+  },
 };

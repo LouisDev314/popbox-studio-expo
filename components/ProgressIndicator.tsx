@@ -3,11 +3,11 @@ import { StyleSheet } from 'react-native';
 import Colors from '@/constants/colors';
 import { Circle, XStack } from 'tamagui';
 
-interface IProgressIndicator {
+interface IProgressIndicatorProps {
   currentStep: number;
 }
 
-const ProgressIndicator = (props: IProgressIndicator) => {
+const ProgressIndicator = (props: IProgressIndicatorProps) => {
   const steps = [1, 2, 3];
   return (
     <XStack style={styles.container}>
