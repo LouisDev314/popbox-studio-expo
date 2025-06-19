@@ -5,18 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="17ef7c58-bf7c-413e-b6ef-f4686d9e06c1" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/utils/auth-header.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/utils/device-id.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.expo/devices.json" beforeDir="false" afterPath="$PROJECT_DIR$/.expo/devices.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app.json" beforeDir="false" afterPath="$PROJECT_DIR$/app.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/(screens)/auth/login/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(screens)/auth/login/index.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/(tabs)/profile.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(tabs)/profile.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/configs/env.ts" beforeDir="false" afterPath="$PROJECT_DIR$/configs/env.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/context/AuthContext.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/context/AuthContext.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/eas.json" beforeDir="false" afterPath="$PROJECT_DIR$/eas.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pnpm-lock.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pnpm-lock.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/(screens)/auth/email/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(screens)/auth/email/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/(screens)/auth/otp/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(screens)/auth/otp/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/(screens)/auth/password/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(screens)/auth/password/index.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -87,7 +79,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1749699261954</updated>
-      <workItem from="1749699263430" duration="92798000" />
+      <workItem from="1749699263430" duration="93751000" />
     </task>
     <servers />
   </component>

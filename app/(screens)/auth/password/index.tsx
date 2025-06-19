@@ -20,9 +20,9 @@ interface IPasswordForm {
 const PasswordScreen = (props: IPasswordScreenProps) => {
   const { control, handleSubmit, formState: { errors }, getValues } = useForm<IPasswordForm>();
   const { loginMutation } = useAuth();
-  const { mutation: login, isPending } = loginMutation;
+  const { mutation: login, isPending: isLoginPending } = loginMutation;
 
-  const { mutation: register } = useCustomizeMutation({
+  const { mutation: register, isPending: isRegisterPending } = useCustomizeMutation({
     mutationFn: MutationConfigs.register,
     onSuccess: async () => {
       login({ email: props.email, password: getValues('password') });
@@ -37,6 +37,8 @@ const PasswordScreen = (props: IPasswordScreenProps) => {
     Keyboard.dismiss();
     register({ email: props.email, password: data.password });
   };
+
+  const isPending = isLoginPending || isRegisterPending;
 
   return (
     <>
@@ -80,7 +82,7 @@ const PasswordScreen = (props: IPasswordScreenProps) => {
 
       <Button disabled={isPending} icon={isPending ? <Spinner /> : undefined} onPress={handleSubmit(onSubmit)}>
         <SizableText size={'$5'}>
-          {isPending ? '' : 'Register'}
+          {isPending || isLoginPending ? '' : 'Register'}
         </SizableText>
       </Button>
     </>

@@ -24,8 +24,8 @@ const EmailScreen = (props: IEmailFormProps) => {
     onSuccess: async () => {
       props.setStep(Step.Otp);
     },
-    onError: () => {
-      console.log('error');
+    onError: (err) => {
+      console.log(err.response?.data);
       setIsFormValid(false);
       // InfoAlert({ title: 'Invalid username or password', description: 'Please try again' });
     },
@@ -34,7 +34,6 @@ const EmailScreen = (props: IEmailFormProps) => {
   const onSubmit = (data: IEmailFormProps) => {
     Keyboard.dismiss();
     props.setEmail(data.email);
-    props.setStep(Step.Otp);
     verifyEmailMutation(data.email);
   };
 

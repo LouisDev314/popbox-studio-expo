@@ -30,7 +30,6 @@ const OtpScreen = (props: IOtpScreenProps) => {
 
   const onSubmit = (otp: string) => {
     Keyboard.dismiss();
-    props.setStep(Step.Password);
     verifyOtpMutation({ email: props.email, otp });
   };
 
