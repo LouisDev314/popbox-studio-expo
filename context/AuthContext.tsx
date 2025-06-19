@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import { clearUser, setUser } from '@/hooks/use-user-store';
+import { setUser } from '@/hooks/use-user-store';
 import { secureStorage } from '@/utils/mmkv';
 import { router } from 'expo-router';
 import useCustomizeMutation from '@/hooks/use-customize-mutation';
@@ -9,6 +9,7 @@ import { IBaseApiResponse } from '@/interfaces/api-response';
 import { IUser } from '@/models/user';
 import ITokens from '@/interfaces/tokens';
 import { UseMutateFunction } from '@tanstack/react-query';
+import { setAuthHeader, setDeviceIdHeader } from '@/utils/auth-header';
 
 type LoginMutationType = {
   mutation: UseMutateFunction<
@@ -50,29 +51,34 @@ export const AuthProvider = (props: { children: React.ReactNode }) => {
     setIsAuthenticated(!!token);
   }, []);
 
+  useEffect(() => {
+    const setDeviceId = async () => {
+      await setDeviceIdHeader();
+    };
+    setDeviceId();
+  }, []);
+
   const loginMutation = useCustomizeMutation({
     mutationFn: MutationConfigs.login,
     onSuccess: async (data: AxiosResponse<IBaseApiResponse<{ user: IUser; tokens: ITokens }>>) => {
       const { tokens, user } = data.data.data;
       secureStorage.set('accessToken', tokens.accessToken);
       secureStorage.set('refreshToken', tokens.refreshToken);
+      await setAuthHeader(tokens.accessToken);
       setUser(user);
+      setIsAuthenticated(true);
       router.replace('/(tabs)');
     },
-    onError: () => {
-      console.log('error');
+    onError: (err) => {
+      console.log('err:', err.response?.data);
       // InfoAlert({ title: 'Invalid username or password', description: 'Please try again' });
     },
   });
 
   const logoutMutation = useCustomizeMutation({
     mutationFn: MutationConfigs.logout,
-    onSuccess: async () => {
-      secureStorage.delete('accessToken');
-      secureStorage.delete('refreshToken');
-      clearUser();
-      setIsAuthenticated(false);
-      router.replace('/(screens)/auth/login');
+    onError: (err) => {
+      console.log('err:', err.response?.data);
     },
   });
 

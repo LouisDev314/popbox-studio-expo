@@ -1,7 +1,7 @@
 import Config from 'react-native-config';
 
 const EnvConfig = {
-  apiBaseUrl: Config.API_BASE_URL || '',
+  apiBaseUrl: Config.API_BASE_URL || 'https://popbox-studio.onrender.com/api/v1',
   encryptionKey: Config.ENCRYPTION_KEY || '',
 };
 

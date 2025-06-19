@@ -19,7 +19,8 @@
       "adaptiveIcon": {
         "foregroundImage": "",
         "backgroundColor": "#000000"
-      }
+      },
+      "package": "popboxstudio.com"
     },
     "web": {
       "bundler": "metro",

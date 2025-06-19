@@ -19,7 +19,7 @@ const LoginScreen = () => {
   const [isFormValid, setIsFormValid] = useState(true);
   const { control, handleSubmit } = useForm<ILoginFormProps>();
   const { loginMutation } = useAuth();
-  const { mutation: login, isPending } = loginMutation;
+  const { mutation: login, isPending, isError } = loginMutation;
 
   const onSubmit = (data: ILoginFormProps) => {
     if (!data.username || !data.password) setIsFormValid(false);
@@ -36,7 +36,7 @@ const LoginScreen = () => {
       <Image style={styleSheet.logoContainer} source={{
         uri: require('@/assets/images/logo.png'),
       }} />
-      {!isFormValid && <Text color="red">Invalid username or password</Text>}
+      {(!isFormValid || isError) && <Text color="red">Invalid username or password</Text>}
       <Controller
         control={control}
         name="username"
