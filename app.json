@@ -10,7 +10,7 @@
     "newArchEnabled": true,
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.louisjames.popboxstudio",
+      "bundleIdentifier": "com.popboxstudio",
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false
       }
@@ -20,7 +20,7 @@
         "foregroundImage": "",
         "backgroundColor": "#000000"
       },
-      "package": "popboxstudio.com"
+      "package": "com.popboxstudio"
     },
     "web": {
       "bundler": "metro",
@@ -34,6 +34,13 @@
         {
           "image": null,
           "backgroundColor": "#000000"
+        }
+      ],
+      "expo-font",
+      [
+        "@react-native-google-signin/google-signin",
+        {
+          "iosUrlScheme": "com.googleusercontent.apps.308017225163-5ke62fghtlreu9gjtv44eqhiuav654he"
         }
       ]
     ],

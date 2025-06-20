@@ -16,7 +16,7 @@ const OtpScreen = (props: IOtpScreenProps) => {
   const [otp, setOtp] = useState('');
   const [isOtpValid, setIsOtpValid] = useState(true);
 
-  const { mutation: verifyOtpMutation, isPending } = useCustomizeMutation({
+  const { mutation: verifyOtpMutation } = useCustomizeMutation({
     mutationFn: MutationConfigs.verifyOtp,
     onSuccess: async () => {
       props.setStep(Step.Password);

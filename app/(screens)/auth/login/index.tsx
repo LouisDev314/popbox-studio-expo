@@ -9,6 +9,7 @@ import FormInput from '@/components/Input/FormInput';
 import { router } from 'expo-router';
 import { AppScreen } from '@/enums/screens';
 import { useAuth } from '@/context/AuthContext';
+import GoogleLoginScreen from '@/app/(screens)/auth/login/google';
 
 interface ILoginFormProps {
   username: string;
@@ -32,8 +33,8 @@ const LoginScreen = () => {
   };
 
   return (
-    <YStack padding="$4" style={{ ...styleSheet.yStack, ...AppStyleSheet.bg }}>
-      <Image style={styleSheet.logoContainer} source={{
+    <YStack padding="$4" style={{ ...styles.yStack, ...AppStyleSheet.bg }}>
+      <Image style={styles.logoContainer} source={{
         uri: require('@/assets/images/logo.png'),
       }} />
       {(!isFormValid || isError) && <Text color="red">Invalid username or password</Text>}
@@ -78,7 +79,7 @@ const LoginScreen = () => {
         </SizableText>
       </Button>
 
-      <XStack style={styleSheet.xStack}>
+      <XStack style={styles.xStack}>
         <SizableText size={'$4'}>
           Don't have an account yet?
         </SizableText>
@@ -94,25 +95,16 @@ const LoginScreen = () => {
         <Separator />
       </XStack>
 
-      <Button unstyled pressStyle={{ opacity: 0.5 }}>
-        <Image style={styleSheet.googleContainer} source={{
-          uri: require('@/assets/images/google_logo.png'),
-        }} />
-      </Button>
+      <GoogleLoginScreen />
     </YStack>
   );
 };
 
-const styleSheet = StyleSheet.create({
+const styles = StyleSheet.create({
   logoContainer: {
     marginHorizontal: 'auto',
     width: 280,
     height: 150,
-  },
-  googleContainer: {
-    marginHorizontal: 'auto',
-    width: 30,
-    height: 30,
   },
   yStack: {
     gap: 15,
