@@ -5,12 +5,14 @@ import { secureStorage } from '@/utils/mmkv';
 import { setAuthHeader } from '@/utils/auth-header';
 import { clearUser } from '@/hooks/use-user-store';
 import { router } from 'expo-router';
+import { GoogleSignin } from '@react-native-google-signin/google-signin';
 
 const Profile = () => {
   const { logoutMutation } = useAuth();
   const { mutation: logout } = logoutMutation;
 
-  const onLogout = () => {
+  const onLogout = async () => {
+    await GoogleSignin.signOut();
     logout({});
     const refreshToken = secureStorage.getString('refreshToken');
     setAuthHeader(refreshToken!);

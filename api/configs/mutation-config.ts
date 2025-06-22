@@ -13,6 +13,9 @@ export const MutationConfigs = {
   login: async (user: { email: string, password: string } | { username: string, password: string }) => {
     return appClient.post('/auth/login', user);
   },
+  google: async (user: { email: string, googleId: string }) => {
+    return appClient.post('/auth/google', user);
+  },
   resendOtp: async (email: string) => {
     return appClient.post('/auth/resend-otp', { email });
   },

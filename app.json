@@ -9,6 +9,8 @@
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
+      "useFrameworks": "static",
+      "modular_headers": true,
       "supportsTablet": true,
       "bundleIdentifier": "com.popboxstudio",
       "infoPlist": {
@@ -40,7 +42,15 @@
       [
         "@react-native-google-signin/google-signin",
         {
-          "iosUrlScheme": "com.googleusercontent.apps.308017225163-5ke62fghtlreu9gjtv44eqhiuav654he"
+          "iosUrlScheme": "com.googleusercontent.apps.768654878392-6mus2qfs53q8jpnhsu3brelgmg7v79uj"
+        }
+      ],
+      "expo-build-properties",
+      [
+        "ios",
+        {
+          "useFrameworks": "static",
+          "modular_headers": true
         }
       ]
     ],

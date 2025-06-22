@@ -1,48 +1,68 @@
 import React from 'react';
-import { GoogleSignin } from '@react-native-google-signin/google-signin';
-import { secureStorage } from '@/utils/mmkv';
+import {
+  GoogleSignin,
+  isErrorWithCode,
+  isSuccessResponse,
+  statusCodes,
+} from '@react-native-google-signin/google-signin';
 import { Button, Image } from 'tamagui';
 import { StyleSheet } from 'react-native';
+import getEnvConfig from '@/configs/env';
+import useCustomizeMutation from '@/hooks/use-customize-mutation';
+import { MutationConfigs } from '@/api/configs/mutation-config';
+import { AxiosResponse } from 'axios';
+import { IBaseApiResponse } from '@/interfaces/api-response';
+import { IUser } from '@/models/user';
+import ITokens from '@/interfaces/tokens';
+import { router } from 'expo-router';
+import handleLoginSuccess from '@/app/(screens)/auth/login/login-success.handler';
 
 GoogleSignin.configure({
-  webClientId: '308017225163-i826kctmutk5f0r4e4o9mse3lpnqijqq.apps.googleusercontent.com',
-  iosClientId: '308017225163-5ke62fghtlreu9gjtv44eqhiuav654he.apps.googleusercontent.com',
+  webClientId: getEnvConfig().webClientId,
+  iosClientId: getEnvConfig().iosClientId,
+  profileImageSize: 150,
 });
 
 const GoogleLoginScreen = () => {
+  const { mutation: googleSignIn } = useCustomizeMutation({
+    mutationFn: MutationConfigs.google,
+    onSuccess: async (data: AxiosResponse<IBaseApiResponse<{ user: IUser; tokens: ITokens }>>) => {
+      handleLoginSuccess(data);
+      router.replace('/(tabs)');
+    },
+    onError: (err) => {
+      console.log('err:', err.response?.data);
+      // InfoAlert({ title: 'Invalid username or password', description: 'Please try again' });
+    },
+  });
+
   const handleSignIn = async () => {
     try {
       // Check if Play Services are available (Android only)
       await GoogleSignin.hasPlayServices();
 
       // Trigger Google Sign-In
-      const userInfo = await GoogleSignin.signIn();
-
-      // Get access and ID tokens
-      const tokens = await GoogleSignin.getTokens();
-
-      // Log user info and tokens for debugging
-      console.log('User Info:', userInfo);
-      console.log('Tokens:', tokens);
-      secureStorage.set('googleTokens', JSON.stringify(tokens));
-
-      // TODO: Navigate to home screen or pass tokens to your app state
-
+      const res = await GoogleSignin.signIn();
+      if (isSuccessResponse(res)) {
+        const user = res.data.user;
+        googleSignIn({ email: user.email, googleId: user.id });
+      }
     } catch (err) {
-      console.log(err);
-      // switch (error.code) {
-      //   case statusCodes.SIGN_IN_CANCELLED:
-      //     console.log('User cancelled the login flow');
-      //     break;
-      //   case statusCodes.IN_PROGRESS:
-      //     console.log('Sign-in is already in progress');
-      //     break;
-      //   case statusCodes.PLAY_SERVICES_NOT_AVAILABLE:
-      //     console.log('Google Play Services not available');
-      //     break;
-      //   default:
-      //     console.error('Google Sign-In Error:', error);
-      // }
+      if (isErrorWithCode(err)) {
+        switch (err.code) {
+          case statusCodes.SIGN_IN_CANCELLED:
+            console.log('User cancelled the login flow');
+            break;
+          case statusCodes.IN_PROGRESS:
+            console.log('Sign-in is already in progress');
+            break;
+          case statusCodes.PLAY_SERVICES_NOT_AVAILABLE:
+            console.log('Google Play Services not available');
+            break;
+          default:
+            console.error('Google Sign-In Error:', err);
+        }
+      }
     }
   };
 

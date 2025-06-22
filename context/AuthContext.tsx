@@ -1,5 +1,4 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import { setUser } from '@/hooks/use-user-store';
 import { secureStorage } from '@/utils/mmkv';
 import { router } from 'expo-router';
 import useCustomizeMutation from '@/hooks/use-customize-mutation';
@@ -9,7 +8,8 @@ import { IBaseApiResponse } from '@/interfaces/api-response';
 import { IUser } from '@/models/user';
 import ITokens from '@/interfaces/tokens';
 import { UseMutateFunction } from '@tanstack/react-query';
-import { setAuthHeader, setDeviceIdHeader } from '@/utils/auth-header';
+import { setDeviceIdHeader } from '@/utils/auth-header';
+import handleLoginSuccess from '@/app/(screens)/auth/login/login-success.handler';
 
 type LoginMutationType = {
   mutation: UseMutateFunction<
@@ -60,12 +60,8 @@ export const AuthProvider = (props: { children: React.ReactNode }) => {
 
   const loginMutation = useCustomizeMutation({
     mutationFn: MutationConfigs.login,
-    onSuccess: async (data: AxiosResponse<IBaseApiResponse<{ user: IUser; tokens: ITokens }>>) => {
-      const { tokens, user } = data.data.data;
-      secureStorage.set('accessToken', tokens.accessToken);
-      secureStorage.set('refreshToken', tokens.refreshToken);
-      await setAuthHeader(tokens.accessToken);
-      setUser(user);
+    onSuccess: (data: AxiosResponse<IBaseApiResponse<{ user: IUser; tokens: ITokens }>>) => {
+      handleLoginSuccess(data);
       setIsAuthenticated(true);
       router.replace('/(tabs)');
     },
