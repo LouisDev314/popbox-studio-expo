@@ -18,7 +18,7 @@ import { router } from 'expo-router';
 import handleLoginSuccess from '@/app/(screens)/auth/login/login-success.handler';
 
 GoogleSignin.configure({
-  webClientId: getEnvConfig().webClientId,
+  // webClientId: getEnvConfig().webClientId,
   iosClientId: getEnvConfig().iosClientId,
   profileImageSize: 150,
 });

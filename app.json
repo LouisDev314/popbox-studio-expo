@@ -9,20 +9,17 @@
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
-      "useFrameworks": "static",
-      "modular_headers": true,
       "supportsTablet": true,
-      "bundleIdentifier": "com.popboxstudio",
+      "bundleIdentifier": "com.louischan.popboxstudio",
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false
       }
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "",
-        "backgroundColor": "#000000"
+        "foregroundImage": ""
       },
-      "package": "com.popboxstudio"
+      "package": "com.louischan.popboxstudio"
     },
     "web": {
       "bundler": "metro",
@@ -42,7 +39,7 @@
       [
         "@react-native-google-signin/google-signin",
         {
-          "iosUrlScheme": "com.googleusercontent.apps.768654878392-6mus2qfs53q8jpnhsu3brelgmg7v79uj"
+          "iosUrlScheme": "com.googleusercontent.apps.1096354518994-1drt1oq3davk9bgab61v89t917a8kbpo"
         }
       ],
       [
@@ -66,6 +63,6 @@
         "projectId": "33f289e3-7a2f-49f7-80b5-760e8a175bdf"
       }
     },
-    "owner": "louisjames"
+    "owner": "louischan"
   }
 }
