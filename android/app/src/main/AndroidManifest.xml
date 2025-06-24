@@ -25,7 +25,7 @@
         <category android:name="android.intent.category.DEFAULT"/>
         <category android:name="android.intent.category.BROWSABLE"/>
         <data android:scheme="products"/>
-        <data android:scheme="com.popboxstudio"/>
+        <data android:scheme="com.louischan.popboxstudio"/>
         <data android:scheme="exp+popbox-studio"/>
       </intent-filter>
     </activity>

@@ -1,0 +1,53 @@
+# Node modules and package manager files
+node_modules/
+npm-debug.log
+yarn-error.log
+yarn.lock
+package-lock.json
+pnpm-lock.yaml
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Expo and build output
+dist/
+build/
+web-build/
+.expo/
+.expo-shared/
+coverage/
+*.tar.gz
+
+# IDE/editor settings
+.idea/
+.vscode/
+*.swp
+
+# Test and mock data
+__tests__/
+__mocks__/
+*.test.js
+*.test.ts
+*.test.tsx
+*.spec.js
+*.spec.ts
+*.spec.tsx
+
+# Miscellaneous
+.env
+.env.*
+*.local
+*.log
+
+# iOS/Android native build artifacts
+ios/build/
+android/app/build/
+android/.gradle/
+android/.idea/
+android/local.properties
+
+# macOS generated files
+*.xcworkspace/
+*.xcuserstate
+*.xcuserdata/

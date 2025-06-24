@@ -6,13 +6,9 @@
   "build": {
     "development": {
       "developmentClient": true,
-      "distribution": "internal",
-      "android": {
-        "buildType": "apk"
-      }
+      "distribution": "internal"
     },
     "simulator": {
-      "extends": "development",
       "ios": {
         "simulator": true
       }
