@@ -16,16 +16,17 @@ interface IEmailFormProps {
 
 const EmailScreen = (props: IEmailFormProps) => {
   const [isFormValid, setIsFormValid] = useState(true);
+  const [errMsg, setErrMsg] = useState('');
 
   const { control, handleSubmit, formState: { errors } } = useForm<IEmailFormProps>();
 
-  const { mutation: verifyEmailMutation, isPending } = useCustomizeMutation({
+  const { mutation: verifyEmail, isPending } = useCustomizeMutation({
     mutationFn: MutationConfigs.verifyEmail,
     onSuccess: async () => {
       props.setStep(Step.Otp);
     },
     onError: (err) => {
-      console.log(err.response?.data);
+      setErrMsg(err.response?.data.message ?? 'Invalid credentials');
       setIsFormValid(false);
       // InfoAlert({ title: 'Invalid username or password', description: 'Please try again' });
     },
@@ -34,13 +35,13 @@ const EmailScreen = (props: IEmailFormProps) => {
   const onSubmit = (data: IEmailFormProps) => {
     Keyboard.dismiss();
     props.setEmail(data.email);
-    verifyEmailMutation(data.email);
+    verifyEmail(data.email);
   };
 
   return (
     <>
       {errors.email && <Text color="red">{errors.email.message}</Text>}
-      {!isFormValid && <Text color="red">Email is already registered</Text>}
+      {!isFormValid && <Text color="red">{errMsg}</Text>}
       <Controller
         control={control}
         name="email"

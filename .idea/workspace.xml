@@ -5,15 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="17ef7c58-bf7c-413e-b6ef-f4686d9e06c1" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.easignore" beforeDir="false" afterPath="$PROJECT_DIR$/.easignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.expo/devices.json" beforeDir="false" afterPath="$PROJECT_DIR$/.expo/devices.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/enums/storage.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app.json" beforeDir="false" afterPath="$PROJECT_DIR$/app.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/(screens)/auth/login/google.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(screens)/auth/login/google.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/(screens)/auth/email/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(screens)/auth/email/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/(screens)/auth/login/login-success.handler.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/(screens)/auth/login/login-success.handler.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/(screens)/auth/otp/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(screens)/auth/otp/index.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/(tabs)/profile.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(tabs)/profile.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/context/AuthContext.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/context/AuthContext.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/auth-header.ts" beforeDir="false" afterPath="$PROJECT_DIR$/utils/auth-header.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

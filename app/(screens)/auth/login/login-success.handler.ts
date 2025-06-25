@@ -5,11 +5,12 @@ import ITokens from '@/interfaces/tokens';
 import { secureStorage } from '@/utils/mmkv';
 import { setAuthHeader } from '@/utils/auth-header';
 import { setUser } from '@/hooks/use-user-store';
+import { StorageKey } from '@/enums/storage';
 
 const handleLoginSuccess = (data: AxiosResponse<IBaseApiResponse<{ user: IUser; tokens: ITokens }>>) => {
   const { tokens, user } = data.data.data;
-  secureStorage.set('accessToken', tokens.accessToken);
-  secureStorage.set('refreshToken', tokens.refreshToken);
+  secureStorage.set(StorageKey.AccessToken, tokens.accessToken);
+  secureStorage.set(StorageKey.RefreshToken, tokens.refreshToken);
   setAuthHeader(tokens.accessToken);
   setUser(user);
 };

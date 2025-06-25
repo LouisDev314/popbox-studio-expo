@@ -10,6 +10,7 @@ import ITokens from '@/interfaces/tokens';
 import { UseMutateFunction } from '@tanstack/react-query';
 import { setDeviceIdHeader } from '@/utils/auth-header';
 import handleLoginSuccess from '@/app/(screens)/auth/login/login-success.handler';
+import { StorageKey } from '@/enums/storage';
 
 type LoginMutationType = {
   mutation: UseMutateFunction<
@@ -48,7 +49,7 @@ export const AuthProvider = (props: { children: React.ReactNode }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
-    const token = secureStorage.getString('accessToken');
+    const token = secureStorage.getString(StorageKey.AccessToken);
     setIsAuthenticated(!!token);
   }, []);
 

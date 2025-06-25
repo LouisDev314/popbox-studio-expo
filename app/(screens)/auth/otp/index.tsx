@@ -6,6 +6,8 @@ import { Keyboard } from 'react-native';
 import Colors from '@/constants/colors';
 import { OtpInput } from 'react-native-otp-entry';
 import { Step } from '@/enums/register-step';
+import { storage } from '@/utils/mmkv';
+import { StorageKey } from '@/enums/storage';
 
 interface IOtpScreenProps {
   email: string;
@@ -15,8 +17,60 @@ interface IOtpScreenProps {
 const OtpScreen = (props: IOtpScreenProps) => {
   const [otp, setOtp] = useState('');
   const [isOtpValid, setIsOtpValid] = useState(true);
+  const [remainingTime, setRemainingTime] = useState(0);
+  const [isTimerActive, setIsTimerActive] = useState(false);
 
-  const { mutation: verifyOtpMutation } = useCustomizeMutation({
+  useEffect(() => {
+    const initTimer = () => {
+      const savedTimer = storage.getString(StorageKey.OtpResetKey);
+      if (savedTimer) {
+        const { startTime, duration } = JSON.parse(savedTimer);
+        const elapsed = Math.floor((Date.now() - startTime) / 1000);
+        const remaining = duration - elapsed;
+        if (remaining > 0) {
+          setRemainingTime(remaining);
+          setIsTimerActive(true);
+        } else {
+          // Timer has expired
+          setIsTimerActive(false);
+          storage.delete(StorageKey.OtpResetKey);
+        }
+      }
+    };
+    initTimer();
+  }, []);
+
+  const startNewTimer = () => {
+    const duration = 60;
+    const startTime = Date.now();
+    const timerState = { startTime, duration };
+    storage.set(StorageKey.OtpResetKey, JSON.stringify(timerState));
+    setRemainingTime(duration);
+    setIsTimerActive(true);
+  };
+
+  useEffect(() => {
+    if (isTimerActive) {
+      const interval = setInterval(() => {
+        setRemainingTime((prev) => {
+          if (prev <= 1) {
+            clearInterval(interval);
+            setIsTimerActive(false);
+            storage.delete(StorageKey.OtpResetKey);
+            return 0;
+          }
+          return prev - 1;
+        });
+      }, 1000);
+      return () => clearInterval(interval);
+    }
+  }, [isTimerActive]);
+
+  useEffect(() => {
+    if (otp) onSubmit(otp);
+  }, [otp]);
+
+  const { mutation: verifyOtp } = useCustomizeMutation({
     mutationFn: MutationConfigs.verifyOtp,
     onSuccess: async () => {
       props.setStep(Step.Password);
@@ -28,14 +82,24 @@ const OtpScreen = (props: IOtpScreenProps) => {
     },
   });
 
+  const { mutation: resendOtp } = useCustomizeMutation({
+    mutationFn: MutationConfigs.resendOtp,
+    onSuccess: async () => {
+      // init countdown timer
+    },
+    onError: () => {
+    },
+  });
+
   const onSubmit = (otp: string) => {
     Keyboard.dismiss();
-    verifyOtpMutation({ email: props.email, otp });
+    verifyOtp({ email: props.email, otp });
   };
 
-  useEffect(() => {
-    if (otp) onSubmit(otp);
-  }, [otp]);
+  const onResend = () => {
+    startNewTimer();
+    resendOtp(props.email);
+  };
 
   return (
     <>
@@ -54,13 +118,13 @@ const OtpScreen = (props: IOtpScreenProps) => {
       />
       <Button
         unstyled
+        disabled={isTimerActive}
         alignItems="flex-end"
         pressStyle={{ opacity: 0.5 }}
-        onPress={() => console.log('resend otp')}
+        onPress={onResend}
       >
-        {/* TODO: timer count down */}
         <Text color={Colors.primary}>
-          Resend OTP
+          {isTimerActive ? `${remainingTime}(s)` : 'Resend OTP'}
         </Text>
       </Button>
     </>

@@ -6,6 +6,7 @@ import { removeAuthHeader, setAuthHeader } from '@/utils/auth-header';
 import { clearUser } from '@/hooks/use-user-store';
 import { router } from 'expo-router';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
+import { StorageKey } from '@/enums/storage';
 
 const Profile = () => {
   const { logoutMutation } = useAuth();
@@ -13,11 +14,11 @@ const Profile = () => {
 
   const onLogout = async () => {
     await GoogleSignin.signOut();
-    setAuthHeader(secureStorage.getString('refreshToken')!);
+    setAuthHeader(secureStorage.getString(StorageKey.RefreshToken)!);
     logout({});
     removeAuthHeader();
-    secureStorage.delete('accessToken');
-    secureStorage.delete('refreshToken');
+    secureStorage.delete(StorageKey.AccessToken);
+    secureStorage.delete(StorageKey.RefreshToken);
     clearUser();
     router.replace('/(screens)/auth/login');
   };
