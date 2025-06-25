@@ -2,11 +2,11 @@ import appClient from '@/api/app-client';
 import retrieveDeviceId from '@/utils/device-id';
 
 export const setAuthHeader = (token: string) => {
-  appClient.defaults.headers.common.Authorization = `Bearer ${token}`;
+  appClient.defaults.headers.common['authorization'] = `Bearer ${token}`;
 };
 
 export const setDeviceIdHeader = async () => {
-  appClient.defaults.headers.common.deviceId = await retrieveDeviceId();
+  appClient.defaults.headers.common['device-id'] = await retrieveDeviceId();
 };
 
 export const removeAuthHeader = () => {

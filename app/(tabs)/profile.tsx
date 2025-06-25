@@ -2,7 +2,7 @@ import { Button, Text } from 'tamagui';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useAuth } from '@/context/AuthContext';
 import { secureStorage } from '@/utils/mmkv';
-import { setAuthHeader } from '@/utils/auth-header';
+import { removeAuthHeader, setAuthHeader } from '@/utils/auth-header';
 import { clearUser } from '@/hooks/use-user-store';
 import { router } from 'expo-router';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
@@ -13,9 +13,9 @@ const Profile = () => {
 
   const onLogout = async () => {
     await GoogleSignin.signOut();
+    setAuthHeader(secureStorage.getString('refreshToken')!);
     logout({});
-    const refreshToken = secureStorage.getString('refreshToken');
-    setAuthHeader(refreshToken!);
+    removeAuthHeader();
     secureStorage.delete('accessToken');
     secureStorage.delete('refreshToken');
     clearUser();

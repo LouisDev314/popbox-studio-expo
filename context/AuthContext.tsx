@@ -37,6 +37,7 @@ type LogoutMutationType = {
 
 interface IAuthContext {
   isAuthenticated: boolean;
+  setIsAuthenticated: React.Dispatch<React.SetStateAction<boolean>>;
   loginMutation: LoginMutationType;
   logoutMutation: LogoutMutationType;
 }
@@ -79,7 +80,7 @@ export const AuthProvider = (props: { children: React.ReactNode }) => {
   });
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated, loginMutation, logoutMutation }}>
+    <AuthContext.Provider value={{ isAuthenticated, setIsAuthenticated, loginMutation, logoutMutation }}>
       {props.children}
     </AuthContext.Provider>
   );
