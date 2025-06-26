@@ -7,6 +7,7 @@ import { passwordPattern } from '@/constants/patterns';
 import { Keyboard } from 'react-native';
 import useCustomizeMutation from '@/hooks/use-customize-mutation';
 import { MutationConfigs } from '@/api/configs/mutation-config';
+import { useLocalSearchParams } from 'expo-router';
 
 interface IPasswordScreenProps {
   email: string;
@@ -18,6 +19,7 @@ interface IPasswordForm {
 }
 
 const PasswordScreen = (props: IPasswordScreenProps) => {
+  const { isForgotPassword } = useLocalSearchParams();
   const { control, handleSubmit, formState: { errors }, getValues } = useForm<IPasswordForm>();
   const { loginMutation } = useAuth();
   const { mutation: login, isPending: isLoginPending } = loginMutation;
@@ -33,12 +35,28 @@ const PasswordScreen = (props: IPasswordScreenProps) => {
     },
   });
 
+  const { mutation: resetPassword, isPending: isResetPasswordPending } = useCustomizeMutation({
+    mutationFn: MutationConfigs.setPassword,
+    onSuccess: async () => {
+      login({ email: props.email, password: getValues('password') });
+    },
+    onError: () => {
+      console.log('error');
+      // InfoAlert({ title: 'Invalid username or password', description: 'Please try again' });
+    },
+  });
+
   const onSubmit = (data: IPasswordForm) => {
     Keyboard.dismiss();
-    register({ email: props.email, password: data.password });
+    if (isForgotPassword) {
+      resetPassword({ email: props.email, password: data.password });
+    } else {
+      register({ email: props.email, password: data.password });
+    }
   };
 
-  const isPending = isLoginPending || isRegisterPending;
+  const isPending = isLoginPending || isRegisterPending || isResetPasswordPending;
+  const btnLabel = isForgotPassword ? 'Reset password' : 'Register';
 
   return (
     <>
@@ -46,7 +64,8 @@ const PasswordScreen = (props: IPasswordScreenProps) => {
         <>
           <Text color="red">Between 8-30 characters</Text>
           <Text color="red">Include 1 letter, 1 digit, and 1 special character</Text>
-        </>}
+        </>
+      }
       <Controller
         control={control}
         name="password"
@@ -82,7 +101,8 @@ const PasswordScreen = (props: IPasswordScreenProps) => {
 
       <Button disabled={isPending} icon={isPending ? <Spinner /> : undefined} onPress={handleSubmit(onSubmit)}>
         <SizableText size={'$5'}>
-          {isPending || isLoginPending ? '' : 'Register'}
+
+          {isPending || isLoginPending ? '' : btnLabel}
         </SizableText>
       </Button>
     </>

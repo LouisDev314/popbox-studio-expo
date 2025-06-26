@@ -35,13 +35,15 @@ const OtpScreen = (props: IOtpScreenProps) => {
           setIsTimerActive(false);
           storage.delete(StorageKey.OtpResetKey);
         }
+      } else {
+        sendOtpMutation(props.email);
       }
     };
     initTimer();
   }, []);
 
   const startNewTimer = () => {
-    const duration = 60;
+    const duration = 59;
     const startTime = Date.now();
     const timerState = { startTime, duration };
     storage.set(StorageKey.OtpResetKey, JSON.stringify(timerState));
@@ -53,7 +55,7 @@ const OtpScreen = (props: IOtpScreenProps) => {
     if (isTimerActive) {
       const interval = setInterval(() => {
         setRemainingTime((prev) => {
-          if (prev <= 1) {
+          if (prev <= 0) {
             clearInterval(interval);
             setIsTimerActive(false);
             storage.delete(StorageKey.OtpResetKey);
@@ -82,12 +84,10 @@ const OtpScreen = (props: IOtpScreenProps) => {
     },
   });
 
-  const { mutation: resendOtp } = useCustomizeMutation({
-    mutationFn: MutationConfigs.resendOtp,
-    onSuccess: async () => {
-      // init countdown timer
-    },
+  const { mutation: sendOtpMutation } = useCustomizeMutation({
+    mutationFn: MutationConfigs.sendOtp,
     onError: () => {
+      console.log('failed to resendOtp');
     },
   });
 
@@ -96,9 +96,9 @@ const OtpScreen = (props: IOtpScreenProps) => {
     verifyOtp({ email: props.email, otp });
   };
 
-  const onResend = () => {
+  const sendOtp = () => {
     startNewTimer();
-    resendOtp(props.email);
+    sendOtpMutation(props.email);
   };
 
   return (
@@ -121,7 +121,7 @@ const OtpScreen = (props: IOtpScreenProps) => {
         disabled={isTimerActive}
         alignItems="flex-end"
         pressStyle={{ opacity: 0.5 }}
-        onPress={onResend}
+        onPress={sendOtp}
       >
         <Text color={Colors.primary}>
           {isTimerActive ? `${remainingTime}(s)` : 'Resend OTP'}

@@ -2,7 +2,7 @@ const baseScreenPath = '/(screens)';
 
 export const enum AppScreen {
   Login = `${baseScreenPath}/auth/login`,
-  RegisterInit = `${baseScreenPath}/auth/register`,
+  VerifyEmail = `${baseScreenPath}/auth/register`,
   Otp = `${baseScreenPath}/auth/otp`,
 }
 

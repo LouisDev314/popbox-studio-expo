@@ -66,7 +66,10 @@ const LoginScreen = () => {
         unstyled
         alignItems="flex-end"
         pressStyle={{ opacity: 0.5 }}
-        onPress={() => console.log('forgot!')}
+        onPress={() => router.navigate({
+          pathname: AppScreen.VerifyEmail,
+          params: { isForgotPassword: 'true' },
+        })}
       >
         <Text color={'$blue10'}>
           Forgot password?
@@ -84,7 +87,7 @@ const LoginScreen = () => {
           Don't have an account yet?
         </SizableText>
         <Button unstyled color={Colors.primary} pressStyle={{ opacity: 0.5 }}
-                onPress={() => router.navigate(AppScreen.RegisterInit)}>
+                onPress={() => router.navigate(AppScreen.VerifyEmail)}>
           Sign Up
         </Button>
       </XStack>
