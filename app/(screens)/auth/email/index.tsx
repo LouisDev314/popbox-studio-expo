@@ -7,6 +7,7 @@ import { Keyboard } from 'react-native';
 import FormInput from '@/components/Input/FormInput';
 import { emailPattern } from '@/constants/patterns';
 import { Step } from '@/enums/register-step';
+import { useLocalSearchParams } from 'expo-router';
 
 interface IEmailFormProps {
   email: string;
@@ -15,6 +16,7 @@ interface IEmailFormProps {
 }
 
 const EmailScreen = (props: IEmailFormProps) => {
+  const { isForgotPassword } = useLocalSearchParams();
   const [isFormValid, setIsFormValid] = useState(true);
   const [errMsg, setErrMsg] = useState('');
 
@@ -35,7 +37,7 @@ const EmailScreen = (props: IEmailFormProps) => {
   const onSubmit = (data: IEmailFormProps) => {
     Keyboard.dismiss();
     props.setEmail(data.email);
-    verifyEmail(data.email);
+    verifyEmail({ email: data.email, isResetPassword: !!isForgotPassword });
   };
 
   return (

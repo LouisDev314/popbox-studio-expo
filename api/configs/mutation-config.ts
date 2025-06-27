@@ -1,8 +1,8 @@
 import appClient from '@/api/app-client';
 
 export const MutationConfigs = {
-  verifyEmail: async (email: string) => {
-    return appClient.post('/auth/verify-email', { email });
+  verifyEmail: async (user: { email: string, isResetPassword?: boolean }) => {
+    return appClient.post('/auth/verify-email', user);
   },
   verifyOtp: async (user: { email: string, otp: string }) => {
     return appClient.post('/auth/verify-otp', user);
@@ -19,8 +19,8 @@ export const MutationConfigs = {
   sendOtp: async (email: string) => {
     return appClient.post('/auth/send-otp', { email });
   },
-  setPassword: async (user: { email: string, password: string }) => {
-    return appClient.post('/auth/set-password', user);
+  forgotPassword: async (user: { email: string, password: string }) => {
+    return appClient.post('/auth/forgot-password', user);
   },
   logout: async () => {
     return appClient.delete('/auth/logout');

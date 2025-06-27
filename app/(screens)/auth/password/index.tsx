@@ -1,13 +1,16 @@
 import { Button, SizableText, Spinner, Text } from 'tamagui';
 import { Controller, useForm } from 'react-hook-form';
 import PasswordInput from '@/components/Input/PasswordInput';
-import React from 'react';
+import React, { useState } from 'react';
 import { useAuth } from '@/context/AuthContext';
 import { passwordPattern } from '@/constants/patterns';
 import { Keyboard } from 'react-native';
 import useCustomizeMutation from '@/hooks/use-customize-mutation';
 import { MutationConfigs } from '@/api/configs/mutation-config';
 import { useLocalSearchParams } from 'expo-router';
+import { HttpStatusCode } from 'axios';
+import { storage } from '@/utils/mmkv';
+import { StorageKey } from '@/enums/storage';
 
 interface IPasswordScreenProps {
   email: string;
@@ -23,26 +26,26 @@ const PasswordScreen = (props: IPasswordScreenProps) => {
   const { control, handleSubmit, formState: { errors }, getValues } = useForm<IPasswordForm>();
   const { loginMutation } = useAuth();
   const { mutation: login, isPending: isLoginPending } = loginMutation;
+  const [errMsg, setErrMsg] = useState('');
 
   const { mutation: register, isPending: isRegisterPending } = useCustomizeMutation({
     mutationFn: MutationConfigs.register,
     onSuccess: async () => {
       login({ email: props.email, password: getValues('password') });
     },
-    onError: () => {
-      console.log('error');
-      // InfoAlert({ title: 'Invalid username or password', description: 'Please try again' });
+    onError: (err) => {
+      setErrMsg(err.response?.data.message ?? 'Internal Server Error');
     },
   });
 
   const { mutation: resetPassword, isPending: isResetPasswordPending } = useCustomizeMutation({
-    mutationFn: MutationConfigs.setPassword,
+    mutationFn: MutationConfigs.forgotPassword,
     onSuccess: async () => {
+      storage.delete(StorageKey.OtpResetKey);
       login({ email: props.email, password: getValues('password') });
     },
-    onError: () => {
-      console.log('error');
-      // InfoAlert({ title: 'Invalid username or password', description: 'Please try again' });
+    onError: (err) => {
+      if (err.response?.data.code === HttpStatusCode.NotFound) setErrMsg(err.message);
     },
   });
 
@@ -66,6 +69,7 @@ const PasswordScreen = (props: IPasswordScreenProps) => {
           <Text color="red">Include 1 letter, 1 digit, and 1 special character</Text>
         </>
       }
+      {<Text color="red">{errMsg}</Text>}
       <Controller
         control={control}
         name="password"
@@ -101,7 +105,6 @@ const PasswordScreen = (props: IPasswordScreenProps) => {
 
       <Button disabled={isPending} icon={isPending ? <Spinner /> : undefined} onPress={handleSubmit(onSubmit)}>
         <SizableText size={'$5'}>
-
           {isPending || isLoginPending ? '' : btnLabel}
         </SizableText>
       </Button>
