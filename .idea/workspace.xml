@@ -6,9 +6,11 @@
   <component name="ChangeListManager">
     <list default="true" id="17ef7c58-bf7c-413e-b6ef-f4686d9e06c1" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/configs/mutation-config.ts" beforeDir="false" afterPath="$PROJECT_DIR$/api/configs/mutation-config.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/(screens)/auth/email/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(screens)/auth/email/index.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/(screens)/auth/password/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(screens)/auth/password/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/(tabs)/cart.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(tabs)/cart.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/(tabs)/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(tabs)/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/(tabs)/kuji.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(tabs)/kuji.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/(tabs)/profile.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(tabs)/profile.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/(tabs)/search.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(tabs)/search.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

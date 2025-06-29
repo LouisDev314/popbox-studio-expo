@@ -7,6 +7,7 @@ import { clearUser } from '@/hooks/use-user-store';
 import { router } from 'expo-router';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import { StorageKey } from '@/enums/storage';
+import AppStyleSheet from '@/constants/app-stylesheet';
 
 const Profile = () => {
   const { logoutMutation } = useAuth();
@@ -24,7 +25,7 @@ const Profile = () => {
   };
 
   return (
-    <SafeAreaView>
+    <SafeAreaView style={AppStyleSheet.bg}>
       <Text>Profile page</Text>
       <Button onPress={onLogout}>
         Logout
