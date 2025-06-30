@@ -1,4 +1,6 @@
 import appClient from '@/api/app-client';
+import { secureStorage } from '@/utils/mmkv';
+import { StorageKey } from '@/enums/storage';
 
 export const MutationConfigs = {
   verifyEmail: async (user: { email: string, isResetPassword?: boolean }) => {
@@ -23,6 +25,10 @@ export const MutationConfigs = {
     return appClient.post('/auth/forgot-password', user);
   },
   logout: async () => {
-    return appClient.delete('/auth/logout');
+    return appClient.delete('/auth/logout', {
+      headers: {
+        Authorization: `Bearer ${secureStorage.getString(StorageKey.RefreshToken)}`,
+      },
+    });
   },
 };

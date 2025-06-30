@@ -8,9 +8,10 @@ import { IBaseApiResponse } from '@/interfaces/api-response';
 import { IUser } from '@/models/user';
 import ITokens from '@/interfaces/tokens';
 import { UseMutateFunction } from '@tanstack/react-query';
-import { setDeviceIdHeader } from '@/utils/auth-header';
+import { removeAuthHeader, setHeaderDeviceId } from '@/utils/auth-header';
 import handleLoginSuccess from '@/app/(screens)/auth/login/login-success.handler';
 import { StorageKey } from '@/enums/storage';
+import { clearUser } from '@/hooks/use-user-store';
 
 type LoginMutationType = {
   mutation: UseMutateFunction<
@@ -55,7 +56,7 @@ export const AuthProvider = (props: { children: React.ReactNode }) => {
 
   useEffect(() => {
     const setDeviceId = async () => {
-      await setDeviceIdHeader();
+      await setHeaderDeviceId();
     };
     setDeviceId();
   }, []);
@@ -75,6 +76,13 @@ export const AuthProvider = (props: { children: React.ReactNode }) => {
 
   const logoutMutation = useCustomizeMutation({
     mutationFn: MutationConfigs.logout,
+    onSuccess: () => {
+      removeAuthHeader();
+      secureStorage.delete(StorageKey.AccessToken);
+      secureStorage.delete(StorageKey.RefreshToken);
+      clearUser();
+      router.replace('/(screens)/auth/login');
+    },
     onError: (err) => {
       console.log('err:', err.response?.data);
     },

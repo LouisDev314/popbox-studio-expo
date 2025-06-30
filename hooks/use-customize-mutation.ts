@@ -1,6 +1,6 @@
 import { IBaseApiResponse, responseError } from '@/interfaces/api-response';
 import { MutationFunction, useMutation } from '@tanstack/react-query';
-import { AxiosError, AxiosResponse } from 'axios';
+import { AxiosError, AxiosResponse, HttpStatusCode } from 'axios';
 
 interface ICustomizeMutationConfig<ApiResponse, ApiRequest> {
   mutationFn: MutationFunction<AxiosResponse<IBaseApiResponse<ApiResponse>>, ApiRequest>;
@@ -21,12 +21,15 @@ const useCustomizeMutation = <ApiResponse, ApiRequest>({
     onSuccess: (data) => {
       onSuccess?.(data);
     },
-    onError: (error: responseError) => {
-      if (error.code === 'ECONNABORTED' && error.message.includes('timeout')) {
+    onError: (err: responseError) => {
+      if (err.code === 'ECONNABORTED' && err.message.includes('timeout')) {
         // TODO: Add info alert component
         // InfoAlert({ title: 'Network Error', description: 'Please check your connection' });
+      } else if (err.code === HttpStatusCode.Unauthorized.toString() && err.message.includes('access token')) {
+        // access token is expired
+
       } else {
-        onError?.(error as AxiosError<IBaseApiResponse>);
+        onError?.(err as AxiosError<IBaseApiResponse>);
       }
     },
   });
