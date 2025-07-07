@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { Button, SizableText, Spinner, Text } from 'tamagui';
 import useCustomizeMutation from '@/hooks/use-customize-mutation';
-import { MutationConfigs } from '@/api/configs/mutation-config';
+import MutationConfigs from '@/api/configs/mutation-config';
 import { Keyboard } from 'react-native';
 import FormInput from '@/components/Input/FormInput';
 import { emailPattern } from '@/constants/patterns';

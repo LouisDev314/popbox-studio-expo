@@ -3,7 +3,7 @@ import { GoogleSignin, isSuccessResponse } from '@react-native-google-signin/goo
 import { Button, Image } from 'tamagui';
 import { StyleSheet } from 'react-native';
 import useCustomizeMutation from '@/hooks/use-customize-mutation';
-import { MutationConfigs } from '@/api/configs/mutation-config';
+import MutationConfigs from '@/api/configs/mutation-config';
 import { AxiosResponse } from 'axios';
 import { IBaseApiResponse } from '@/interfaces/api-response';
 import { IUser } from '@/models/user';

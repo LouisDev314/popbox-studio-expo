@@ -40,7 +40,7 @@ appClient.interceptors.response.use(
     const originalRequest = err.config as InternalAxiosRequestConfig & { _retry?: boolean };
 
     if (err.response?.status === 401 && err.response?.data.message.includes('token') && !originalRequest._retry) {
-      // Queue requests when refresh is in progress
+      // queue requests when refresh is in progress
       if (isRefreshing) {
         // turn failed request into Promise and store in failedQueue
         return new Promise<string | null>((resolve, reject) => {
@@ -54,7 +54,7 @@ appClient.interceptors.response.use(
       originalRequest._retry = true;
       isRefreshing = true;
 
-      // Refresh token call
+      // refresh token call
       try {
         const { data } = await appClient.post<{
           accessToken: string;
@@ -71,7 +71,7 @@ appClient.interceptors.response.use(
         // retry original request
         return appClient(originalRequest);
       } catch (refreshErr) {
-        // Process queue with error
+        // process queue with error
         processQueue(refreshErr, null);
         return Promise.reject(refreshErr);
       } finally {

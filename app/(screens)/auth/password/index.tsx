@@ -6,7 +6,7 @@ import { useAuth } from '@/context/AuthContext';
 import { passwordPattern } from '@/constants/patterns';
 import { Keyboard } from 'react-native';
 import useCustomizeMutation from '@/hooks/use-customize-mutation';
-import { MutationConfigs } from '@/api/configs/mutation-config';
+import MutationConfigs from '@/api/configs/mutation-config';
 import { useLocalSearchParams } from 'expo-router';
 import { HttpStatusCode } from 'axios';
 import { storage } from '@/utils/mmkv';

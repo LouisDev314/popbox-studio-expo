@@ -2,7 +2,7 @@ import appClient from '@/api/app-client';
 import { secureStorage } from '@/utils/mmkv';
 import { StorageKey } from '@/enums/storage';
 
-export const MutationConfigs = {
+const MutationConfigs = {
   verifyEmail: async (user: { email: string, isResetPassword?: boolean }) => {
     return appClient.post('/auth/verify-email', user);
   },
@@ -32,3 +32,5 @@ export const MutationConfigs = {
     });
   },
 };
+
+export default MutationConfigs;
