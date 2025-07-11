@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Button, Text } from 'tamagui';
 import useCustomizeMutation from '@/hooks/use-customize-mutation';
-import MutationConfigs from '@/api/configs/mutation-config';
+import MutationConfigs from '@/configs/api/mutation-config';
 import { Keyboard } from 'react-native';
 import Colors from '@/constants/colors';
 import { OtpInput } from 'react-native-otp-entry';

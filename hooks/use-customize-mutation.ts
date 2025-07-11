@@ -1,33 +1,26 @@
-import { IBaseApiResponse, responseError } from '@/interfaces/api-response';
+import { IBaseApiResponse } from '@/interfaces/api-response';
 import { MutationFunction, useMutation } from '@tanstack/react-query';
-import { AxiosError, AxiosResponse, HttpStatusCode } from 'axios';
+import { AxiosError, AxiosResponse } from 'axios';
 
 interface ICustomizeMutationConfig<ApiResponse, ApiRequest> {
   mutationFn: MutationFunction<AxiosResponse<IBaseApiResponse<ApiResponse>>, ApiRequest>;
   retry?: boolean | number;
-  onError?: (error: AxiosError<IBaseApiResponse>) => void;
+  onError?: (err: AxiosError<IBaseApiResponse>) => void;
   onSuccess?: (data: AxiosResponse<IBaseApiResponse<ApiResponse>, unknown>) => void;
 }
 
-const useCustomizeMutation = <ApiResponse, ApiRequest>({
-                                                         mutationFn,
-                                                         retry,
-                                                         onSuccess,
-                                                         onError,
-                                                       }: ICustomizeMutationConfig<ApiResponse, ApiRequest>) => {
+const useCustomizeMutation = <ApiResponse, ApiRequest>(config: ICustomizeMutationConfig<ApiResponse, ApiRequest>) => {
+  const { onSuccess, onError, ...mutationConfig } = config;
   const mutation = useMutation<AxiosResponse<IBaseApiResponse<ApiResponse>>, AxiosError, ApiRequest>({
-    mutationFn,
-    retry,
+    mutationFn: mutationConfig.mutationFn,
+    retry: mutationConfig.retry,
     onSuccess: (data) => {
       onSuccess?.(data);
     },
-    onError: (err: responseError) => {
+    onError: (err) => {
       if (err.code === 'ECONNABORTED' && err.message.includes('timeout')) {
         // TODO: Add info alert component
         // InfoAlert({ title: 'Network Error', description: 'Please check your connection' });
-      } else if (err.code === HttpStatusCode.Unauthorized.toString() && err.message.includes('access token')) {
-        // access token is expired
-
       } else {
         onError?.(err as AxiosError<IBaseApiResponse>);
       }

@@ -3,7 +3,7 @@ import { GoogleSignin, isSuccessResponse } from '@react-native-google-signin/goo
 import { Button, Image } from 'tamagui';
 import { StyleSheet } from 'react-native';
 import useCustomizeMutation from '@/hooks/use-customize-mutation';
-import MutationConfigs from '@/api/configs/mutation-config';
+import MutationConfigs from '@/configs/api/mutation-config';
 import { AxiosResponse } from 'axios';
 import { IBaseApiResponse } from '@/interfaces/api-response';
 import { IUser } from '@/models/user';
@@ -11,7 +11,7 @@ import ITokens from '@/interfaces/tokens';
 import { router } from 'expo-router';
 import handleLoginSuccess from '@/app/(screens)/auth/login/login-success.handler';
 import getEnvConfig from '@/configs/env';
-import { useAuth } from '@/context/AuthContext';
+import { useAuth } from '@/context/auth-context';
 
 GoogleSignin.configure({
   // webClientId: getEnvConfig().webClientId,

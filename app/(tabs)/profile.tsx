@@ -1,6 +1,6 @@
 import { Button, Text } from 'tamagui';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { useAuth } from '@/context/AuthContext';
+import { useAuth } from '@/context/auth-context';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import AppStyleSheet from '@/constants/app-stylesheet';
 

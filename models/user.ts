@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import ISeries from '@/models/series';
+import IKuji from '@/models/kuji';
 import { IOrder } from '@/models/order';
 
 export const UserSchema =
@@ -29,8 +29,8 @@ export interface IUser {
   username: string;
   email: string;
   avatar: string;
-  wishlist: ISeries[];
-  cart: ISeries[];
+  wishlist: IKuji[];
+  cart: IKuji[];
   address: string;
   order: IOrder[];
   role: 'user' | 'admin';

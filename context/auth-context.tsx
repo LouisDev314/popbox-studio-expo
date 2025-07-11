@@ -2,7 +2,7 @@ import React, { createContext, useContext, useEffect, useState } from 'react';
 import { secureStorage } from '@/utils/mmkv';
 import { router } from 'expo-router';
 import useCustomizeMutation from '@/hooks/use-customize-mutation';
-import MutationConfigs from '@/api/configs/mutation-config';
+import MutationConfigs from '@/configs/api/mutation-config';
 import { AxiosError, AxiosResponse } from 'axios';
 import { IBaseApiResponse } from '@/interfaces/api-response';
 import { IUser } from '@/models/user';

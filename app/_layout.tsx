@@ -6,7 +6,7 @@ import AnimatedSplash from '@/components/AnimatedSplash';
 import { StatusBar } from 'expo-status-bar';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import * as SplashScreen from 'expo-splash-screen';
-import { AuthProvider } from '@/context/AuthContext';
+import { AuthProvider } from '@/context/auth-context';
 
 const config = createTamagui(defaultConfig);
 

@@ -1,6 +1,4 @@
-import { AxiosError, HttpStatusCode } from 'axios';
-
-export type responseError = AxiosError<IBaseApiResponse | unknown>;
+import { HttpStatusCode } from 'axios';
 
 export interface IBaseApiResponse<Data = Record<string, unknown> | null | unknown> {
   status: string;
