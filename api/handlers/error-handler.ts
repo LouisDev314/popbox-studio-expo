@@ -1,8 +1,8 @@
+import { secureStorage } from '@/utils/mmkv';
+import { StorageKey } from '@/enums/storage';
+import { router } from 'expo-router';
 // import { ErrorScreen } from '@enums/screen.enum';
-// import { StorageItem } from '@enums/storage.enum';
 // import { IBaseApiResponse } from '@/app/interfaces/api-response';
-// import { deleteFromStorage } from '@utils/secure-store';
-// import { router } from 'expo-router';
 //
 // export const serverErrorHandler = (error: IBaseApiResponse) => {
 //   console.error('Server error:', {
@@ -38,11 +38,13 @@
 //   router.navigate({ pathname: ErrorScreen.BadRequest, params: { message: error.message } });
 // };
 //
-// export const forbiddenHandler = async () => {
-//   await deleteFromStorage(StorageItem.Token);
-//   await deleteFromStorage(StorageItem.RefreshToken);
-//   router.navigate(ErrorScreen.Forbidden);
-// };
+
+export const forbiddenHandler = () => {
+  secureStorage.delete(StorageKey.AccessToken);
+  secureStorage.delete(StorageKey.RefreshToken);
+  router.replace('/(screens)/auth/login');
+};
+
 //
 // export const timeoutHandler = () => {
 //   console.error('Timeout error');

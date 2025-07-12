@@ -17,7 +17,7 @@ const Home = () => {
     isFetchingNextPage,
     isLoading,
     error,
-  } = useProductsInfinite();
+  } = useProductsInfinite(isAuthenticated);
 
   const products = data?.pages.flatMap(page => page.products) ?? [];
 

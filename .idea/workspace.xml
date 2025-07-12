@@ -5,31 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="17ef7c58-bf7c-413e-b6ef-f4686d9e06c1" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/components/Product/ProductCard.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/configs/api/query-config.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/hooks/use-customize-query.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/hooks/use-products-infinite.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/interfaces/products/index.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/models/product.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.expo/devices.json" beforeDir="false" afterPath="$PROJECT_DIR$/.expo/devices.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/configs/mutation-config.ts" beforeDir="false" afterPath="$PROJECT_DIR$/configs/api/mutation-config.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/configs/query-config.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/(screens)/auth/email/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(screens)/auth/email/index.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/(screens)/auth/login/google.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(screens)/auth/login/google.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/(screens)/auth/login/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(screens)/auth/login/index.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/(screens)/auth/otp/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(screens)/auth/otp/index.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/(screens)/auth/password/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(screens)/auth/password/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/app-client.ts" beforeDir="false" afterPath="$PROJECT_DIR$/api/app-client.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/handlers/error-handler.ts" beforeDir="false" afterPath="$PROJECT_DIR$/api/handlers/error-handler.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/(tabs)/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(tabs)/index.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/(tabs)/profile.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(tabs)/profile.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/(tabs)/search.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(tabs)/search.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/_layout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/_layout.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/context/AuthContext.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/context/auth-context.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hooks/use-customize-mutation.ts" beforeDir="false" afterPath="$PROJECT_DIR$/hooks/use-customize-mutation.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/interfaces/api-response.ts" beforeDir="false" afterPath="$PROJECT_DIR$/interfaces/api-response.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/prize.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/series.ts" beforeDir="false" afterPath="$PROJECT_DIR$/models/kuji.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/user.ts" beforeDir="false" afterPath="$PROJECT_DIR$/models/user.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hooks/use-products-infinite.ts" beforeDir="false" afterPath="$PROJECT_DIR$/hooks/use-products-infinite.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/auth-header.ts" beforeDir="false" afterPath="$PROJECT_DIR$/utils/auth-header.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -102,7 +84,7 @@
       <option name="presentableId" value="Default" />
       <updated>1749699261954</updated>
       <workItem from="1749699263430" duration="102797000" />
-      <workItem from="1751171226646" duration="60318000" />
+      <workItem from="1751171226646" duration="65674000" />
     </task>
     <servers />
   </component>

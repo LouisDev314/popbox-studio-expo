@@ -1,4 +1,4 @@
-import axios, { AxiosError, AxiosInstance, AxiosResponse, InternalAxiosRequestConfig } from 'axios';
+import axios, { AxiosError, AxiosInstance, AxiosResponse, HttpStatusCode, InternalAxiosRequestConfig } from 'axios';
 import getEnvConfig from '@/configs/env';
 import { secureStorage } from '@/utils/mmkv';
 import { StorageKey } from '@/enums/storage';
@@ -39,7 +39,10 @@ appClient.interceptors.response.use(
   async (err: AxiosError<IBaseApiResponse<unknown>, unknown>) => {
     const originalRequest = err.config as InternalAxiosRequestConfig & { _retry?: boolean };
 
-    if (err.response?.status === 401 && err.response?.data.message.includes('token') && !originalRequest._retry) {
+    console.log('res error:', err);
+    console.log('refresh token:', secureStorage.getString(StorageKey.RefreshToken));
+
+    if (err.response?.status === HttpStatusCode.Unauthorized && err.response?.data.message.includes('token') && !originalRequest._retry) {
       // queue requests when refresh is in progress
       if (isRefreshing) {
         // turn failed request into Promise and store in failedQueue
@@ -59,12 +62,13 @@ appClient.interceptors.response.use(
         const { data } = await appClient.post<{
           accessToken: string;
           refreshToken: string
-        }>(`${getEnvConfig().apiBaseUrl}/auth/rotate-token`, {
-          refreshToken: secureStorage.getString(StorageKey.RefreshToken),
+        }>(`${getEnvConfig().apiBaseUrl}/auth/rotate-token`, {}, {
+          headers: {
+            'authorization': secureStorage.getString(StorageKey.RefreshToken),
+          },
         });
         secureStorage.set(StorageKey.AccessToken, data.accessToken);
         secureStorage.set(StorageKey.RefreshToken, data.refreshToken);
-        // set auth header
         appClient.defaults.headers.common['authorization'] = `Bearer ${data.accessToken}`;
 
         processQueue(null, data.accessToken);
