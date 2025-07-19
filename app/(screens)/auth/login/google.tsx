@@ -1,46 +1,22 @@
-import React, { useEffect } from 'react';
+import React, { useCallback } from 'react';
 import { GoogleSignin, isSuccessResponse } from '@react-native-google-signin/google-signin';
 import { Button, Image } from 'tamagui';
 import { StyleSheet } from 'react-native';
-import useCustomizeMutation from '@/hooks/use-customize-mutation';
-import MutationConfigs from '@/configs/api/mutation-config';
-import { AxiosResponse } from 'axios';
-import { IBaseApiResponse } from '@/interfaces/api-response';
-import { IUser } from '@/models/user';
-import ITokens from '@/interfaces/tokens';
-import { router } from 'expo-router';
-import handleLoginSuccess from '@/app/(screens)/auth/login/login-success.handler';
 import getEnvConfig from '@/configs/env';
+import { getAdditionalUserInfo, GoogleAuthProvider, signInWithCredential } from 'firebase/auth';
+import { auth } from '@/configs/firebase';
 import { useAuth } from '@/context/auth-context';
 
 GoogleSignin.configure({
-  // webClientId: getEnvConfig().webClientId,
+  webClientId: getEnvConfig().webClientId,
   iosClientId: getEnvConfig().iosClientId,
-  profileImageSize: 150,
+  offlineAccess: true,
 });
 
 const GoogleLoginScreen = () => {
-  const { setIsAuthenticated } = useAuth();
+  const { createUser, fetchUser } = useAuth();
 
-  const { mutation: googleSignIn, isPending } = useCustomizeMutation({
-    mutationFn: MutationConfigs.google,
-    onSuccess: async (data: AxiosResponse<IBaseApiResponse<{ user: IUser; tokens: ITokens }>>) => {
-      handleLoginSuccess(data);
-      setIsAuthenticated(true);
-      router.replace('/(tabs)');
-    },
-    onError: (err) => {
-      console.log('err from callback be:', err.response?.data);
-      // InfoAlert({ title: 'Invalid username or password', description: 'Please try again' });
-    },
-  });
-
-  // TODO
-  useEffect(() => {
-    // if (isPending) show loading modal
-  }, [isPending]);
-
-  const handleSignIn = async () => {
+  const loginWithGoogle = useCallback(async () => {
     try {
       // Check if Play Services are available (Android only)
       await GoogleSignin.hasPlayServices();
@@ -48,32 +24,24 @@ const GoogleLoginScreen = () => {
       // Trigger Google Sign-In
       const res = await GoogleSignin.signIn();
       if (isSuccessResponse(res)) {
-        const user = res.data.user;
-        googleSignIn({ email: user.email, googleId: user.id });
+        const googleCredential = GoogleAuthProvider.credential(res.data.idToken);
+        const result = await signInWithCredential(auth, googleCredential);
+
+        const additionalInfo = getAdditionalUserInfo(result);
+        if (additionalInfo?.isNewUser) {
+          createUser({}); // Create new user in backend
+        } else {
+          await fetchUser(); // Fetch existing user data
+        }
       }
-      // eslint-disable-next-line no-unused-vars
     } catch (err) {
-      // if (isErrorWithCode(err)) {
-      //   switch (err.code) {
-      //     case statusCodes.SIGN_IN_CANCELLED:
-      //       console.log('User cancelled the login flow');
-      //       break;
-      //     case statusCodes.IN_PROGRESS:
-      //       console.log('Sign-in is already in progress');
-      //       break;
-      //     case statusCodes.PLAY_SERVICES_NOT_AVAILABLE:
-      //       console.log('Google Play Services not available');
-      //       break;
-      //     default:
-      //       console.error('Google Sign-In Error:', err);
-      //   }
-      // }
+      console.error('Google sign in error:', err);
     }
-  };
+  }, []);
 
   return (
-    <Button unstyled pressStyle={{ opacity: 0.5 }} onPress={handleSignIn}>
-      <Image style={styles.container} source={{
+    <Button style={styles.btnContainer} unstyled pressStyle={{ opacity: 0.5 }} onPress={loginWithGoogle}>
+      <Image style={styles.imgContainer} source={{
         uri: require('@/assets/images/google_logo.png'),
       }} />
     </Button>
@@ -81,7 +49,12 @@ const GoogleLoginScreen = () => {
 };
 
 const styles = StyleSheet.create({
-  container: {
+  btnContainer: {
+    marginHorizontal: 'auto',
+    width: 40,
+    height: 40,
+  },
+  imgContainer: {
     marginHorizontal: 'auto',
     width: 30,
     height: 30,

@@ -9,4 +9,4 @@ export default interface IProduct {
   material: string;
   size: number;
   isActive: boolean;
-};
+};;;;;;;;;;;;;;;;;;;;;

@@ -8,28 +8,41 @@ import PasswordInput from '@/components/Input/PasswordInput';
 import FormInput from '@/components/Input/FormInput';
 import { router } from 'expo-router';
 import { AppScreen } from '@/enums/screens';
-import { useAuth } from '@/context/auth-context';
 import GoogleLoginScreen from '@/app/(screens)/auth/login/google';
+import { useSignInWithEmailAndPasswordMutation } from '@tanstack-query-firebase/react/auth';
+import { auth } from '@/configs/firebase';
+import { useAuth } from '@/context/auth-context';
 
 interface ILoginFormProps {
-  username: string;
+  email: string;
   password: string;
 }
 
 const LoginScreen = () => {
   const [isFormValid, setIsFormValid] = useState(true);
   const { control, handleSubmit } = useForm<ILoginFormProps>();
-  const { loginMutation } = useAuth();
-  const { mutation: login, isPending, isError } = loginMutation;
+  const { fetchUser, isFetchingUser } = useAuth();
+
+  // Firebase email/password sign in
+  const {
+    mutate: login,
+    isPending: isLoginPending,
+    isError,
+  } = useSignInWithEmailAndPasswordMutation(auth, {
+    onSuccess: async () => {
+      await fetchUser();
+    },
+    onError: (err) => {
+      console.log('Firebase login error:', err);
+    },
+  });
+
+  const isLoading = isFetchingUser || isLoginPending;
 
   const onSubmit = (data: ILoginFormProps) => {
-    if (!data.username || !data.password) setIsFormValid(false);
-    const loginForm =
-      data.username.includes('@')
-        ? { email: data.username, password: data.password }
-        : { username: data.username, password: data.password };
     Keyboard.dismiss();
-    login(loginForm);
+    if (!data.email || !data.password) setIsFormValid(false);
+    else login({ email: data.email, password: data.password });
   };
 
   return (
@@ -40,10 +53,10 @@ const LoginScreen = () => {
       {(!isFormValid || isError) && <Text color="red">Invalid username or password</Text>}
       <Controller
         control={control}
-        name="username"
+        name="email"
         render={({ field: { onChange, onBlur, value } }) => (
           <FormInput
-            placeholder="Username or email"
+            placeholder="Email"
             onBlur={onBlur}
             onChangeText={onChange}
             value={value}
@@ -76,9 +89,9 @@ const LoginScreen = () => {
         </Text>
       </Button>
 
-      <Button disabled={isPending} icon={isPending ? <Spinner /> : undefined} onPress={handleSubmit(onSubmit)}>
+      <Button disabled={isLoading} icon={isLoading ? <Spinner /> : undefined} onPress={handleSubmit(onSubmit)}>
         <SizableText size={'$5'}>
-          {isPending ? '' : 'Login'}
+          {isLoading ? '' : 'Login'}
         </SizableText>
       </Button>
 

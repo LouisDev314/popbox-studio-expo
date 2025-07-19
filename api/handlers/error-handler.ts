@@ -1,6 +1,3 @@
-import { secureStorage } from '@/utils/mmkv';
-import { StorageKey } from '@/enums/storage';
-import { router } from 'expo-router';
 // import { ErrorScreen } from '@enums/screen.enum';
 // import { IBaseApiResponse } from '@/app/interfaces/api-response';
 //
@@ -39,11 +36,9 @@ import { router } from 'expo-router';
 // };
 //
 
-export const forbiddenHandler = () => {
-  secureStorage.delete(StorageKey.AccessToken);
-  secureStorage.delete(StorageKey.RefreshToken);
-  router.replace('/(screens)/auth/login');
-};
+// export const forbiddenHandler = () => {
+//   router.replace('/(screens)/auth/login');
+// };
 
 //
 // export const timeoutHandler = () => {

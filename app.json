@@ -13,7 +13,7 @@
       "bundleIdentifier": "com.louischan.popboxstudio",
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false
-      }
+      },
     },
     "android": {
       "adaptiveIcon": {
@@ -39,7 +39,8 @@
       [
         "@react-native-google-signin/google-signin",
         {
-          "iosUrlScheme": "com.googleusercontent.apps.1096354518994-1drt1oq3davk9bgab61v89t917a8kbpo"
+          "iosUrlScheme": "com.googleusercontent.apps.514703306740-h4gt50d8r59ht4m7pa5uv49820iu7l5r",
+          "webClientId": "514703306740-k198nhqpicru8gtlfr71ulk9qu963dhb.apps.googleusercontent.com"
         }
       ],
       [

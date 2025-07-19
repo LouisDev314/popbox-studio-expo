@@ -3,7 +3,7 @@ import { IUser } from '@/models/user';
 
 interface IUserState {
   user: IUser | null;
-  setUser: (user: IUser) => void;
+  setUser: (user: IUser | null) => void;
   clearUser: () => void;
 }
 
@@ -13,6 +13,6 @@ export const useUserStore = create<IUserState>((set) => ({
   clearUser: () => set({ user: null }),
 }));
 
-export const setUser = (user: IUser) => useUserStore.getState().setUser(user);
+export const setUser = (user: IUser | null) => useUserStore.getState().setUser(user);
 export const clearUser = () => useUserStore.getState().clearUser();
 export const getUser = () => useUserStore.getState().user;

@@ -6,12 +6,33 @@
   <component name="ChangeListManager">
     <list default="true" id="17ef7c58-bf7c-413e-b6ef-f4686d9e06c1" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.expo/devices.json" beforeDir="false" afterPath="$PROJECT_DIR$/.expo/devices.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.expo/prebuild/cached-packages.json" beforeDir="false" afterPath="$PROJECT_DIR$/.expo/prebuild/cached-packages.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.expo/types/router.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/.expo/types/router.d.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api/app-client.ts" beforeDir="false" afterPath="$PROJECT_DIR$/api/app-client.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api/handlers/error-handler.ts" beforeDir="false" afterPath="$PROJECT_DIR$/api/handlers/error-handler.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app.json" beforeDir="false" afterPath="$PROJECT_DIR$/app.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/(screens)/auth/login/google.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(screens)/auth/login/google.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/(screens)/auth/login/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(screens)/auth/login/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/(screens)/auth/login/login-success.handler.ts" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/app/(tabs)/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(tabs)/index.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hooks/use-products-infinite.ts" beforeDir="false" afterPath="$PROJECT_DIR$/hooks/use-products-infinite.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/auth-header.ts" beforeDir="false" afterPath="$PROJECT_DIR$/utils/auth-header.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/(tabs)/profile.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(tabs)/profile.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/configs/api/mutation-config.ts" beforeDir="false" afterPath="$PROJECT_DIR$/configs/api/mutation-config.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/configs/api/query-config.ts" beforeDir="false" afterPath="$PROJECT_DIR$/configs/api/query-config.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/configs/env.ts" beforeDir="false" afterPath="$PROJECT_DIR$/configs/env.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/context/auth-context.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/context/auth-context.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/enums/screens.ts" beforeDir="false" afterPath="$PROJECT_DIR$/enums/screens.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/enums/storage.ts" beforeDir="false" afterPath="$PROJECT_DIR$/enums/storage.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hooks/use-user-store.ts" beforeDir="false" afterPath="$PROJECT_DIR$/hooks/use-user-store.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/Podfile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Podfile.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/popboxstudio.xcodeproj/project.pbxproj" beforeDir="false" afterPath="$PROJECT_DIR$/ios/popboxstudio.xcodeproj/project.pbxproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/popboxstudio/Info.plist" beforeDir="false" afterPath="$PROJECT_DIR$/ios/popboxstudio/Info.plist" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/popboxstudio/PrivacyInfo.xcprivacy" beforeDir="false" afterPath="$PROJECT_DIR$/ios/popboxstudio/PrivacyInfo.xcprivacy" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/product.ts" beforeDir="false" afterPath="$PROJECT_DIR$/models/product.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/user.ts" beforeDir="false" afterPath="$PROJECT_DIR$/models/user.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pnpm-lock.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pnpm-lock.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/auth-header.ts" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -49,7 +70,7 @@
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "pnpm",
     "rearrange.code.on.save": "true",
-    "settings.editor.selected.configurable": "settings.javascript.prettier",
+    "settings.editor.selected.configurable": "actions.on.save",
     "ts.external.directory.path": "/Users/louischan/upo-expo/node_modules/typescript/lib",
     "vue.rearranger.settings.migration": "true"
   }
@@ -61,11 +82,11 @@
       <recent name="$PROJECT_DIR$" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
       <recent name="$PROJECT_DIR$/configs/api" />
       <recent name="$PROJECT_DIR$/assets/images" />
       <recent name="$PROJECT_DIR$/configs" />
       <recent name="$PROJECT_DIR$/app/(screens)/auth/login" />
-      <recent name="$PROJECT_DIR$/app/(screens)/auth" />
     </key>
   </component>
   <component name="SharedIndexes">
