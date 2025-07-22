@@ -5,11 +5,12 @@ import { Circle, XStack } from 'tamagui';
 
 interface IProgressIndicatorProps {
   currentStep: number;
+  hide: boolean;
 }
 
 const ProgressIndicator = (props: IProgressIndicatorProps) => {
   const steps = [1, 2, 3];
-  return (
+  return props.hide ? <></> : (
     <XStack style={styles.container}>
       {steps.map((step) => (
         <Circle

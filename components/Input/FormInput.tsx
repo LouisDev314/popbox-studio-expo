@@ -15,6 +15,7 @@ const FormInput = (props: IFormInput) => {
         {...props}
         flex={1}
         placeholder={props.placeholder}
+        autoComplete="off"
       />
       <Button
         unstyled

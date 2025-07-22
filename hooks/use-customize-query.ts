@@ -1,5 +1,5 @@
 import { useQuery, UseQueryResult } from '@tanstack/react-query';
-import { AxiosError, AxiosResponse } from 'axios';
+import { AxiosError, AxiosResponse, HttpStatusCode } from 'axios';
 import { useEffect } from 'react';
 import { IBaseApiResponse } from '@/interfaces/api-response';
 
@@ -38,6 +38,8 @@ function useCustomizeQuery<ApiResponse>(
       const err = queryResult.error;
       if (err.code === 'ECONNABORTED' && err.message.includes('timeout')) {
         console.error('Network Error: Please check your connection');
+      } else if (err.code === HttpStatusCode.InternalServerError.toString()) {
+        console.error('Internal Server Error:', err);
       } else {
         onError(err);
       }

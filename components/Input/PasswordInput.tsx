@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Button, GetProps, Input, XStack } from 'tamagui';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
-type IPasswordInputProps = GetProps<typeof Input>;
+type IPasswordInputProps = GetProps<typeof Input> & { placeholder: string };
 
 const PasswordInput = (props: IPasswordInputProps) => {
   const [show, setShow] = useState(false);
@@ -13,7 +13,7 @@ const PasswordInput = (props: IPasswordInputProps) => {
         {...props}
         flex={1}
         secureTextEntry={!show}
-        placeholder="Password"
+        placeholder={props.placeholder}
       />
       <Button
         unstyled

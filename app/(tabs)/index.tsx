@@ -2,8 +2,6 @@ import { SizableText } from 'tamagui';
 import React from 'react';
 import AppStyleSheet from '@/constants/app-stylesheet';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import useProductsInfinite from '@/hooks/use-products-infinite';
-import { ActivityIndicator } from 'react-native';
 import { getUser } from '@/hooks/use-user-store';
 import { useAuth } from '@/context/auth-context';
 import { Redirect } from 'expo-router';
@@ -11,24 +9,24 @@ import { Redirect } from 'expo-router';
 const Home = () => {
   const { isAuthenticated, isAuthLoading } = useAuth();
 
-  const {
-    data,
-    fetchNextPage,
-    hasNextPage,
-    isFetchingNextPage,
-    isLoading,
-    error,
-  } = useProductsInfinite(isAuthenticated);
+  // const {
+  //   data,
+  //   fetchNextPage,
+  //   hasNextPage,
+  //   isFetchingNextPage,
+  //   isLoading,
+  //   error,
+  // } = useProductsInfinite(isAuthenticated);
+  //
+  // const products = data?.pages.flatMap(page => page.products) ?? [];
+  //
+  // if (isLoading) {
+  //   return <ActivityIndicator size="large" />;
+  // }
 
-  const products = data?.pages.flatMap(page => page.products) ?? [];
-
-  if (isLoading) {
-    return <ActivityIndicator size="large" />;
-  }
-
-  if (error) {
-    console.log(error);
-  }
+  // if (error) {
+  //   console.log(error);
+  // }
 
   if (!isAuthLoading && !isAuthenticated) {
     return <Redirect href="/(screens)/auth/login" />;

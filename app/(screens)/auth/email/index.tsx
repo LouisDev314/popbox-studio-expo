@@ -1,18 +1,21 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { Button, SizableText, Spinner, Text } from 'tamagui';
 import useCustomizeMutation from '@/hooks/use-customize-mutation';
 import MutationConfigs from '@/configs/api/mutation-config';
-import { Keyboard } from 'react-native';
+import { Alert, Keyboard } from 'react-native';
 import FormInput from '@/components/Input/FormInput';
 import { emailPattern } from '@/constants/patterns';
 import { Step } from '@/enums/register-step';
-import { useLocalSearchParams } from 'expo-router';
+import { router, useLocalSearchParams } from 'expo-router';
+import { sendPasswordResetEmail } from 'firebase/auth';
+import { auth } from '@/configs/firebase';
 
 interface IEmailFormProps {
   email: string;
   setStep: (step: Step) => void;
   setEmail: (email: string) => void;
+  setHideProgress: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const EmailScreen = (props: IEmailFormProps) => {
@@ -20,12 +23,38 @@ const EmailScreen = (props: IEmailFormProps) => {
   const [isFormValid, setIsFormValid] = useState(true);
   const [errMsg, setErrMsg] = useState('');
 
+  useEffect(() => {
+    if (!!isForgotPassword) props.setHideProgress(true);
+  }, []);
+
   const { control, handleSubmit, formState: { errors } } = useForm<IEmailFormProps>();
+
+  const handleForgotPassword = async (email: string) => {
+    try {
+      await sendPasswordResetEmail(auth, email);
+      Alert.alert(
+        'Check Your Email',
+        'If an account is registered with that email, a password reset link has been sent. Please check your inbox and spam folder.',
+        [
+          {
+            text: 'Back to Login',
+            onPress: () => router.back(),
+          },
+        ],
+      );
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
   const { mutation: verifyEmail, isPending } = useCustomizeMutation({
     mutationFn: MutationConfigs.verifyEmail,
     onSuccess: async () => {
-      props.setStep(Step.Otp);
+      if (!!isForgotPassword) {
+        await handleForgotPassword(props.email);
+      } else {
+        props.setStep(Step.Otp);
+      }
     },
     onError: (err) => {
       setErrMsg(err.response?.data.message ?? 'Invalid credentials');

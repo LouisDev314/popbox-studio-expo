@@ -10,17 +10,8 @@ const MutationConfigs = {
   createUser: () => {
     return appClient.post('/users');
   },
-  google: (user: { email: string, googleId: string }) => {
-    return appClient.post('/auth/google', user);
-  },
   sendOtp: (email: string) => {
     return appClient.post('/auth/send-otp', { email });
-  },
-  forgotPassword: (user: { email: string, password: string }) => {
-    return appClient.post('/auth/forgot-password', user);
-  },
-  logout: () => {
-    return appClient.delete('/auth/logout');
   },
 };
 

@@ -22,7 +22,7 @@ const OtpScreen = (props: IOtpScreenProps) => {
 
   useEffect(() => {
     const initTimer = () => {
-      const savedTimer = storage.getString(StorageKey.OtpResetKey);
+      const savedTimer = storage.getString(StorageKey.OtpTimer);
       if (savedTimer) {
         const { startTime, duration } = JSON.parse(savedTimer);
         const elapsed = Math.floor((Date.now() - startTime) / 1000);
@@ -33,7 +33,7 @@ const OtpScreen = (props: IOtpScreenProps) => {
         } else {
           // Timer has expired
           setIsTimerActive(false);
-          storage.delete(StorageKey.OtpResetKey);
+          storage.delete(StorageKey.OtpTimer);
         }
       } else {
         sendOtpMutation(props.email);
@@ -46,7 +46,7 @@ const OtpScreen = (props: IOtpScreenProps) => {
     const duration = 59;
     const startTime = Date.now();
     const timerState = { startTime, duration };
-    storage.set(StorageKey.OtpResetKey, JSON.stringify(timerState));
+    storage.set(StorageKey.OtpTimer, JSON.stringify(timerState));
     setRemainingTime(duration);
     setIsTimerActive(true);
   };
@@ -58,7 +58,7 @@ const OtpScreen = (props: IOtpScreenProps) => {
           if (prev <= 0) {
             clearInterval(interval);
             setIsTimerActive(false);
-            storage.delete(StorageKey.OtpResetKey);
+            storage.delete(StorageKey.OtpTimer);
             return 0;
           }
           return prev - 1;

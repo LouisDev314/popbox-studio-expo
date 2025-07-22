@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { Button, Image, Separator, SizableText, Spinner, Text, XStack, YStack } from 'tamagui';
 import AppStyleSheet from '@/constants/app-stylesheet';
@@ -6,11 +6,9 @@ import { Keyboard, StyleSheet } from 'react-native';
 import Colors from '@/constants/colors';
 import PasswordInput from '@/components/Input/PasswordInput';
 import FormInput from '@/components/Input/FormInput';
-import { router } from 'expo-router';
+import { router, useNavigation } from 'expo-router';
 import { AppScreen } from '@/enums/screens';
 import GoogleLoginScreen from '@/app/(screens)/auth/login/google';
-import { useSignInWithEmailAndPasswordMutation } from '@tanstack-query-firebase/react/auth';
-import { auth } from '@/configs/firebase';
 import { useAuth } from '@/context/auth-context';
 
 interface ILoginFormProps {
@@ -20,22 +18,17 @@ interface ILoginFormProps {
 
 const LoginScreen = () => {
   const [isFormValid, setIsFormValid] = useState(true);
-  const { control, handleSubmit } = useForm<ILoginFormProps>();
-  const { fetchUser, isFetchingUser } = useAuth();
+  const { control, handleSubmit, reset } = useForm<ILoginFormProps>();
+  const { isError, isFetchingUser, login, isLoginPending, resetLogin } = useAuth();
 
-  // Firebase email/password sign in
-  const {
-    mutate: login,
-    isPending: isLoginPending,
-    isError,
-  } = useSignInWithEmailAndPasswordMutation(auth, {
-    onSuccess: async () => {
-      await fetchUser();
-    },
-    onError: (err) => {
-      console.log('Firebase login error:', err);
-    },
-  });
+  const navigation = useNavigation();
+  useEffect(() => {
+    return navigation.addListener('blur', () => {
+      reset();
+      setIsFormValid(true);
+      resetLogin();
+    });
+  }, [navigation, reset]);
 
   const isLoading = isFetchingUser || isLoginPending;
 
@@ -48,9 +41,12 @@ const LoginScreen = () => {
   return (
     <YStack padding="$4" style={{ ...styles.yStack, ...AppStyleSheet.bg }}>
       <Image style={styles.logoContainer} source={{
+
         uri: require('@/assets/images/logo.png'),
       }} />
-      {(!isFormValid || isError) && <Text color="red">Invalid username or password</Text>}
+      {(!isFormValid || isError) && <Text color="red">
+        Invalid username or password
+      </Text>}
       <Controller
         control={control}
         name="email"
@@ -69,6 +65,7 @@ const LoginScreen = () => {
         name="password"
         render={({ field: { onChange, onBlur, value } }) => (
           <PasswordInput
+            placeholder="Password"
             onBlur={onBlur}
             onChangeText={onChange}
             value={value}

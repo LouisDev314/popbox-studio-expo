@@ -13,14 +13,17 @@ import { Step } from '@/enums/register-step';
 const RegisterInitScreen = () => {
   const [step, setStep] = useState<Step>(Step.Email);
   const [email, setEmail] = useState('');
+  const [hideProgress, setHideProgress] = useState(false);
 
   const headerHeight = useHeaderHeight();
 
   let currentScreen;
   switch (step) {
     case Step.Email:
-      currentScreen = <EmailScreen setEmail={setEmail} email={email} setStep={setStep} />;
+      currentScreen =
+        <EmailScreen setEmail={setEmail} email={email} setStep={setStep} setHideProgress={setHideProgress} />;
       break;
+    // Only register will continue in following Steps
     case Step.Otp:
       currentScreen = <OtpScreen email={email} setStep={setStep} />;
       break;
@@ -38,7 +41,7 @@ const RegisterInitScreen = () => {
         }} />
         {currentScreen}
       </YStack>
-      <ProgressIndicator currentStep={step} />
+      <ProgressIndicator currentStep={step} hide={hideProgress} />
     </View>
   );
 };

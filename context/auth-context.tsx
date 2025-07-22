@@ -1,8 +1,7 @@
 import React, { createContext, useCallback, useContext, useEffect, useState } from 'react';
 import { IUser } from '@/models/user';
 import { clearUser, setUser } from '@/hooks/use-user-store';
-import { onAuthStateChanged, signOut } from 'firebase/auth';
-import { useCreateUserWithEmailAndPasswordMutation } from '@tanstack-query-firebase/react/auth';
+import { AuthError, onAuthStateChanged, signOut, UserCredential } from 'firebase/auth';
 import { auth } from '@/configs/firebase';
 import retrieveDeviceId from '@/utils/device-id';
 import { secureStorage } from '@/utils/mmkv';
@@ -17,13 +16,23 @@ import { AxiosError, AxiosResponse } from 'axios';
 import { IBaseApiResponse } from '@/interfaces/api-response';
 import { AppScreen } from '@/enums/screens';
 import { QueryObserverResult, RefetchOptions, UseMutateFunction } from '@tanstack/react-query';
+import {
+  useCreateUserWithEmailAndPasswordMutation,
+  useSignInWithEmailAndPasswordMutation,
+} from '@tanstack-query-firebase/react/auth';
 
 interface IAuthContext {
   isAuthenticated: boolean;
   isAuthLoading: boolean;
+  register: UseMutateFunction<UserCredential, AuthError, { email: string, password: string }, unknown>;
   createUser: UseMutateFunction<AxiosResponse<IBaseApiResponse<IUser>, any>, AxiosError<unknown, any>, unknown, unknown>;
+  isRegisterPending: boolean;
+  login: UseMutateFunction<UserCredential, AuthError, { email: string, password: string }, unknown>;
+  isLoginPending: boolean;
   fetchUser: (options?: RefetchOptions) => Promise<QueryObserverResult<AxiosResponse<IBaseApiResponse<IUser>, any>, AxiosError<IBaseApiResponse<unknown>, any>>>;
   isFetchingUser: boolean;
+  resetLogin: () => void;
+  isError: boolean;
   logout: () => Promise<void>;
 }
 
@@ -61,8 +70,22 @@ export const AuthProvider = (props: { children: React.ReactNode }) => {
     });
   }, []);
 
+  // Firebase email/password registration
+  const {
+    mutate: register,
+    isPending: isFirebaseRegisterPending,
+    isError: isRegisterError,
+  } = useCreateUserWithEmailAndPasswordMutation(auth, {
+    onSuccess: () => {
+      createUser({});
+    },
+    onError: (err) => {
+      console.error('Firebase register error:', err);
+    },
+  });
+
   // Register mutation - create user in backend
-  const { mutation: createUser, isPending: isRegistering } = useCustomizeMutation({
+  const { mutation: createUser, isPending: isCreatingUser, isError: isCreateUserError } = useCustomizeMutation({
     mutationFn: MutationConfigs.createUser,
     onSuccess: (data: AxiosResponse<IBaseApiResponse<IUser>>) => {
       setUser(data.data.data);
@@ -73,8 +96,23 @@ export const AuthProvider = (props: { children: React.ReactNode }) => {
     },
   });
 
+  // Firebase email/password sign in
+  const {
+    mutate: login,
+    isPending: isLoginPending,
+    isError: isLoginError,
+    reset: resetLogin,
+  } = useSignInWithEmailAndPasswordMutation(auth, {
+    onSuccess: async () => {
+      await fetchUser();
+    },
+    onError: (err) => {
+      console.log('Firebase login error:', err);
+    },
+  });
+
   // Login query - fetch user data from backend after Firebase auth
-  const { refetch: fetchUser, isFetching: isFetchingUser } = useCustomizeQuery({
+  const { refetch: fetchUser, isFetching: isFetchingUser, isError: isFetchingError } = useCustomizeQuery({
     queryKey: ['user', 'fetch'],
     queryFn: () => QueryConfigs.fetchUser(auth.currentUser?.uid!),
     onSuccess: (data: AxiosResponse<IBaseApiResponse<IUser>>) => {
@@ -84,30 +122,10 @@ export const AuthProvider = (props: { children: React.ReactNode }) => {
       router.replace(AppScreen.Tabs);
     },
     onError: (err: AxiosError<IBaseApiResponse>) => {
-      console.error('Internal Server fetch user error:', err);
+      console.error('Cannot fetch user:', err);
     },
     enabled: false, // Only run when manually triggered
   });
-
-  // TODO: implement firebase register & db create user
-  // Firebase email/password registration
-  const {
-    mutate: firebaseCreateUserMutation,
-    isPending: isFirebaseCreateUserPending,
-    isError: isFirebaseCreateUserError,
-  } = useCreateUserWithEmailAndPasswordMutation(auth, {
-    onSuccess: () => {
-      createUser({});
-    },
-    onError: (err) => {
-      console.error('Firebase register error:', err);
-    },
-  });
-
-  // TODO: implement firebase register & db create user
-  const register = useCallback((email: string, password: string) => {
-    firebaseCreateUserMutation({ email, password });
-  }, [firebaseCreateUserMutation]);
 
   const logout = useCallback(async () => {
     try {
@@ -124,12 +142,21 @@ export const AuthProvider = (props: { children: React.ReactNode }) => {
     }
   }, []);
 
+  const isError = isRegisterError || isLoginError || isFetchingError || isCreateUserError;
+  const isRegisterPending = isFirebaseRegisterPending || isCreatingUser;
+
   const contextValue: IAuthContext = {
     isAuthenticated,
     isAuthLoading,
-    createUser,
+    register,
+    isRegisterPending,
+    login,
+    isLoginPending,
     fetchUser,
     isFetchingUser,
+    resetLogin,
+    createUser,
+    isError,
     logout,
   };
 
