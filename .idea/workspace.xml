@@ -7,19 +7,10 @@
     <list default="true" id="17ef7c58-bf7c-413e-b6ef-f4686d9e06c1" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.expo/devices.json" beforeDir="false" afterPath="$PROJECT_DIR$/.expo/devices.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/(screens)/auth/email/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(screens)/auth/email/index.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/(screens)/auth/login/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(screens)/auth/login/index.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/(screens)/auth/otp/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(screens)/auth/otp/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/app-client.ts" beforeDir="false" afterPath="$PROJECT_DIR$/api/app-client.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/(screens)/auth/password/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(screens)/auth/password/index.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/(screens)/auth/register/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(screens)/auth/register/index.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/(tabs)/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(tabs)/index.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/Input/FormInput.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/Input/FormInput.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/Input/PasswordInput.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/Input/PasswordInput.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/ProgressIndicator.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/ProgressIndicator.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/configs/api/mutation-config.ts" beforeDir="false" afterPath="$PROJECT_DIR$/configs/api/mutation-config.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/constants/patterns.ts" beforeDir="false" afterPath="$PROJECT_DIR$/constants/patterns.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/context/auth-context.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/context/auth-context.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/enums/storage.ts" beforeDir="false" afterPath="$PROJECT_DIR$/enums/storage.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hooks/use-customize-query.ts" beforeDir="false" afterPath="$PROJECT_DIR$/hooks/use-customize-query.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

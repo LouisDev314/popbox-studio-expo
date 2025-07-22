@@ -26,12 +26,7 @@ const PasswordScreen = (props: IPasswordScreenProps) => {
 
   return (
     <>
-      {errors.password &&
-        <>
-          <Text color="red">Between 8-30 characters</Text>
-          <Text color="red">Include 1 letter, 1 digit, and 1 special character</Text>
-        </>
-      }
+      {errors.password && <Text color="red">Between 8-30 characters</Text>}
       <Controller
         control={control}
         name="password"

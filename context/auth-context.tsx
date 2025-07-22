@@ -1,4 +1,4 @@
-import React, { createContext, useCallback, useContext, useEffect, useState } from 'react';
+import React, { createContext, useContext, useEffect, useState } from 'react';
 import { IUser } from '@/models/user';
 import { clearUser, setUser } from '@/hooks/use-user-store';
 import { AuthError, onAuthStateChanged, signOut, UserCredential } from 'firebase/auth';
@@ -127,7 +127,7 @@ export const AuthProvider = (props: { children: React.ReactNode }) => {
     enabled: false, // Only run when manually triggered
   });
 
-  const logout = useCallback(async () => {
+  const logout = async () => {
     try {
       // Sign out from Google
       await GoogleSignin.signOut();
@@ -140,7 +140,7 @@ export const AuthProvider = (props: { children: React.ReactNode }) => {
     } catch (err) {
       console.error('Logout error:', err);
     }
-  }, []);
+  };
 
   const isError = isRegisterError || isLoginError || isFetchingError || isCreateUserError;
   const isRegisterPending = isFirebaseRegisterPending || isCreatingUser;
