@@ -5,12 +5,18 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="17ef7c58-bf7c-413e-b6ef-f4686d9e06c1" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/assets/images/macaron.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/components/Product/ProductDetails.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.expo/devices.json" beforeDir="false" afterPath="$PROJECT_DIR$/.expo/devices.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/app-client.ts" beforeDir="false" afterPath="$PROJECT_DIR$/api/app-client.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/(screens)/auth/password/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(screens)/auth/password/index.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/constants/patterns.ts" beforeDir="false" afterPath="$PROJECT_DIR$/constants/patterns.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/context/auth-context.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/context/auth-context.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/(screens)/auth/login/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(screens)/auth/login/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/(tabs)/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(tabs)/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/(tabs)/profile.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(tabs)/profile.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/Product/ProductCard.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/Product/ProductCard.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/configs/api/query-config.ts" beforeDir="false" afterPath="$PROJECT_DIR$/configs/api/query-config.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hooks/use-products-infinite.ts" beforeDir="false" afterPath="$PROJECT_DIR$/hooks/use-products-infinite.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/interfaces/products/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/interfaces/products/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/product.ts" beforeDir="false" afterPath="$PROJECT_DIR$/models/product.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -60,9 +66,9 @@
       <recent name="$PROJECT_DIR$" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/assets/images" />
       <recent name="$PROJECT_DIR$" />
       <recent name="$PROJECT_DIR$/configs/api" />
-      <recent name="$PROJECT_DIR$/assets/images" />
       <recent name="$PROJECT_DIR$/configs" />
       <recent name="$PROJECT_DIR$/app/(screens)/auth/login" />
     </key>

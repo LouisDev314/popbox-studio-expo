@@ -30,6 +30,7 @@ const LoginScreen = () => {
     });
   }, [navigation, reset]);
 
+  // TODO: use activity indicator
   const isLoading = isFetchingUser || isLoginPending;
 
   const onSubmit = (data: ILoginFormProps) => {
@@ -41,7 +42,6 @@ const LoginScreen = () => {
   return (
     <YStack padding="$4" style={{ ...styles.yStack, ...AppStyleSheet.bg }}>
       <Image style={styles.logoContainer} source={{
-
         uri: require('@/assets/images/logo.png'),
       }} />
       {(!isFormValid || isError) && <Text color="red">

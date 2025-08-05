@@ -1,6 +1,9 @@
 import IProduct from '@/models/product';
 
+export type IProductCardResponse = Pick<IProduct, '_id' | 'title' | 'images' | 'category' | 'price' | 'inventory' | 'createdAt'>
+
 export interface IProductsResponse {
-  products: Pick<IProduct, '_id' | 'title' | 'imgUrl' | 'price'>[];
+  items: IProductCardResponse[];
   nextCursor: string | null;
+  hasNextPage: boolean;
 }

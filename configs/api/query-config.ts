@@ -1,6 +1,5 @@
 import appClient from '@/api/app-client';
 import { IProductsResponse } from '@/interfaces/products';
-import { QueryFunctionContext } from '@tanstack/react-query';
 import { AxiosResponse } from 'axios';
 import { IBaseApiResponse } from '@/interfaces/api-response';
 import { IUser } from '@/models/user';
@@ -9,18 +8,29 @@ const QueryConfigs = {
   fetchUser: (uid: string): Promise<AxiosResponse<IBaseApiResponse<IUser>>> => {
     return appClient.get(`/users/${uid}`);
   },
-  fetchProducts: async (context: QueryFunctionContext): Promise<IProductsResponse> => {
-    const { queryKey, pageParam } = context;
-    const [, { search, category }] = queryKey as [string, { search?: string; category?: string }];
-    const res = await appClient.get<IProductsResponse>('/products', {
+  fetchProducts: async ({
+                          pageParam = undefined,
+                          search,
+                          category,
+                          sortBy,
+                          order = 'desc',
+                        }: {
+    pageParam?: string;
+    search?: string;
+    category?: string;
+    sortBy?: string;
+    order?: string;
+  }): Promise<AxiosResponse<IBaseApiResponse<IProductsResponse>>> => {
+    return await appClient.get('/products', {
       params: {
-        cursor: pageParam,
+        // limit: 10,
+        cursor: pageParam ?? '',
         search,
         category,
-        limit: 10,
+        sortBy,
+        order: order.toLowerCase(),
       },
     });
-    return res.data;
   },
   fetchProductById: (id: string) => {
     return appClient.get(`/products/${id}`);
