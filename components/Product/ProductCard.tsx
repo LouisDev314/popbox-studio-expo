@@ -11,7 +11,7 @@ interface IProductCardProps extends CardProps {
 }
 
 const ProductCard = (props: IProductCardProps) => {
-  const { title, images, price, originalPrice, currency = '$', ...cardProps } = props;
+  const { title, images, price, currency = '$', ...cardProps } = props;
 
   const formatPrice = (amount: number) => {
     return `${currency}${amount.toFixed(2)}`;
@@ -26,7 +26,7 @@ const ProductCard = (props: IProductCardProps) => {
       borderRadius="$6"
       overflow="hidden"
       width="49%"
-      height={320}
+      // height={320}
       pressStyle={{ scale: 0.875 }}
       {...cardProps}
     >

@@ -1,6 +1,6 @@
 export default interface ITicket {
   series: string;
   prizeName: string;
-  prizeRank: string,
-  isRedeemed: boolean,
-};
+  prizeRank: string;
+  isRedeemed: boolean;
+}

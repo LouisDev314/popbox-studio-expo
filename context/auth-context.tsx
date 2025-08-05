@@ -25,11 +25,11 @@ interface IAuthContext {
   isAuthenticated: boolean;
   isAuthLoading: boolean;
   register: UseMutateFunction<UserCredential, AuthError, { email: string, password: string }, unknown>;
-  createUser: UseMutateFunction<AxiosResponse<IBaseApiResponse<IUser>, any>, AxiosError<unknown, any>, unknown, unknown>;
+  createUser: UseMutateFunction<AxiosResponse<IBaseApiResponse<IUser>>, AxiosError<unknown>, unknown, unknown>;
   isRegisterPending: boolean;
   login: UseMutateFunction<UserCredential, AuthError, { email: string, password: string }, unknown>;
   isLoginPending: boolean;
-  fetchUser: (options?: RefetchOptions) => Promise<QueryObserverResult<AxiosResponse<IBaseApiResponse<IUser>, any>, AxiosError<IBaseApiResponse<unknown>, any>>>;
+  fetchUser: (options?: RefetchOptions) => Promise<QueryObserverResult<AxiosResponse<IBaseApiResponse<IUser>>, AxiosError<IBaseApiResponse<unknown>>>>;
   isFetchingUser: boolean;
   resetLogin: () => void;
   isError: boolean;

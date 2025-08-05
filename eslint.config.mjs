@@ -16,8 +16,8 @@ export default [
       '@typescript-eslint': plugin,
     },
     rules: {
-      semi: ['error', 'always'],
-      '@typescript-eslint/no-unused-vars': ['error'],
+      // semi: ['error', 'always'],
+      '@typescript-eslint/no-unused-vars': ['error', { 'caughtErrors': 'none' }],
       'no-unused-expressions': 'error',
       quotes: ['error', 'single'],
       'no-multi-spaces': 'error',

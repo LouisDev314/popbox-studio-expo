@@ -1,5 +1,5 @@
 import { Image, Spinner, YStack } from 'tamagui';
-import React from 'react';
+import React, { useCallback, useMemo } from 'react';
 import AppStyleSheet from '@/constants/app-stylesheet';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useAuth } from '@/context/auth-context';
@@ -19,8 +19,17 @@ const Home = () => {
     isFetchingNextPage,
     isLoading,
     refetch,
-    error,
   } = useProductsInfinite({}, isAuthenticated);
+
+  const flattenedData = useMemo(() => {
+    return data?.pages.flatMap(page => page.data.data.items) ?? [];
+  }, [data]);
+
+  const getItemLayout = useCallback((data: (ArrayLike<IProductCardResponse> | null | undefined), index: number) => ({
+    length: 320,
+    offset: 320 * index,
+    index,
+  }), []);
 
   if (isLoading) {
     return <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
@@ -59,12 +68,13 @@ const Home = () => {
         uri: require('@/assets/images/logo.png'),
       }} />
       <FlatList
-        data={data?.pages.flatMap(page => page.data.data.items)}
+        data={flattenedData}
         keyExtractor={(item) => item._id}
         renderItem={renderItem}
-        onEndReachedThreshold={0.3}
+        onEndReachedThreshold={0.5}
         onEndReached={handleLoadMore}
         numColumns={2}
+        getItemLayout={getItemLayout}
         columnWrapperStyle={{ gap: 8, marginBottom: 8 }}
         ListFooterComponent={renderFooter}
         refreshControl={

@@ -12,7 +12,7 @@ export default interface IKuji {
   title: string;
   price: number;
   category: 'Anime' | 'Game' | 'Other';
-  prizes: IPrize[],
-  totalTickets: number,
-  remainingTickets: number,
-};
+  prizes: IPrize[];
+  totalTickets: number;
+  remainingTickets: number;
+}
