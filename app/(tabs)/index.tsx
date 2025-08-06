@@ -1,91 +1,43 @@
-import { Image, Spinner, YStack } from 'tamagui';
-import React, { useCallback, useMemo } from 'react';
+import { Image, Text, ToggleGroup } from 'tamagui';
+import React, { useState } from 'react';
 import AppStyleSheet from '@/constants/app-stylesheet';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useAuth } from '@/context/auth-context';
 import { Redirect } from 'expo-router';
-import ProductCard from '@/components/Product/ProductCard';
-import { FlatList, RefreshControl, StyleSheet, View } from 'react-native';
-import useProductsInfinite from '@/hooks/use-products-infinite';
-import { IProductCardResponse } from '@/interfaces/products';
+import { StyleSheet } from 'react-native';
+import ProductList from '@/components/Product/ProductList';
+
+type toggleGroupType = 'product' | 'kuji';
 
 const Home = () => {
   const { isAuthenticated, isAuthLoading } = useAuth();
 
-  const {
-    data,
-    fetchNextPage,
-    hasNextPage,
-    isFetchingNextPage,
-    isLoading,
-    refetch,
-  } = useProductsInfinite({}, isAuthenticated);
-
-  const flattenedData = useMemo(() => {
-    return data?.pages.flatMap(page => page.data.data.items) ?? [];
-  }, [data]);
-
-  const getItemLayout = useCallback((data: (ArrayLike<IProductCardResponse> | null | undefined), index: number) => ({
-    length: 320,
-    offset: 320 * index,
-    index,
-  }), []);
-
-  if (isLoading) {
-    return <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Spinner size="large" />
-    </View>;
-  }
+  const [toggleGroupItem, setToggleGroupItem] = useState<toggleGroupType>('product');
 
   if (!isAuthLoading && !isAuthenticated) {
     return <Redirect href="/(screens)/auth/login" />;
   }
-
-  const renderItem = ({ item }: { item: IProductCardResponse }) => {
-    return (
-      <ProductCard title={item.title}
-                   images={[require('@/assets/images/macaron.jpg')]}
-                   price={item.price} />
-    );
-  };
-
-  const renderFooter = () => {
-    if (!isFetchingNextPage) return null;
-    return (
-      <YStack padding="$4" alignItems="center">
-        <Spinner size="large" />
-      </YStack>
-    );
-  };
-
-  const handleLoadMore = async () => {
-    if (hasNextPage && !isFetchingNextPage) await fetchNextPage();
-  };
 
   return (
     <SafeAreaView style={AppStyleSheet.bg}>
       <Image style={styles.logoContainer} source={{
         uri: require('@/assets/images/logo.png'),
       }} />
-      <FlatList
-        data={flattenedData}
-        keyExtractor={(item) => item._id}
-        renderItem={renderItem}
-        onEndReachedThreshold={0.5}
-        onEndReached={handleLoadMore}
-        numColumns={2}
-        getItemLayout={getItemLayout}
-        columnWrapperStyle={{ gap: 8, marginBottom: 8 }}
-        ListFooterComponent={renderFooter}
-        refreshControl={
-          <RefreshControl
-            refreshing={isFetchingNextPage}
-            onRefresh={refetch}
-            tintColor="white"
-          />
-        }
-        showsVerticalScrollIndicator={false}
-      />
+      <ToggleGroup
+        value={toggleGroupItem}
+        onValueChange={(val: toggleGroupType) => setToggleGroupItem(val)}
+        aria-label="Toggle group example"
+        type="single"
+        style={{ height: 40, alignItems: 'center' }}
+      >
+        <ToggleGroup.Item value="kuji" aria-label="Left aligned">
+          <Text>Ichiban Kuji</Text>
+        </ToggleGroup.Item>
+        <ToggleGroup.Item value="product" aria-label="Right aligned">
+          <Text>Products</Text>
+        </ToggleGroup.Item>
+      </ToggleGroup>
+      <ProductList isKuji={toggleGroupItem === 'kuji'} />
     </SafeAreaView>
   );
 };
@@ -93,7 +45,7 @@ const Home = () => {
 const styles = StyleSheet.create({
   logoContainer: {
     width: 200,
-    height: 100,
+    height: 70,
     marginHorizontal: 'auto',
   },
 });
