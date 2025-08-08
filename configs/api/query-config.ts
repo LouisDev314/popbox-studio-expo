@@ -16,7 +16,7 @@ const QueryConfigs = {
                           sortBy,
                           order = 'desc',
                         }: {
-    pageParam?: string;
+    pageParam?: string | unknown;
     search?: string;
     category?: string;
     sortBy?: string;
@@ -43,7 +43,7 @@ const QueryConfigs = {
                        sortBy,
                        order = 'desc',
                      }: {
-    pageParam?: string;
+    pageParam?: string | unknown;
     search?: string;
     category?: string;
     sortBy?: string;

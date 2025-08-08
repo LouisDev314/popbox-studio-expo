@@ -12,6 +12,7 @@ export default [
         project: './tsconfig.json',
       },
     },
+    ignores: ['**/*.d.ts'],
     plugins: {
       '@typescript-eslint': plugin,
     },
