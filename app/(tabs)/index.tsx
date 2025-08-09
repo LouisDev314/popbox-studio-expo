@@ -1,18 +1,19 @@
-import { Image, Text, ToggleGroup } from 'tamagui';
+import { Image } from 'tamagui';
 import React, { useState } from 'react';
 import AppStyleSheet from '@/constants/app-stylesheet';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useAuth } from '@/context/auth-context';
 import { Redirect } from 'expo-router';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import ProductList from '@/components/Product/ProductList';
+import SegmentedControl from '@react-native-segmented-control/segmented-control';
+import Colors from '@/constants/colors';
 
-type toggleGroupType = 'product' | 'kuji';
 
 const Home = () => {
   const { isAuthenticated, isAuthLoading } = useAuth();
 
-  const [toggleGroupItem, setToggleGroupItem] = useState<toggleGroupType>('product');
+  const [selectedIndex, setSelectedIndex] = useState(0);
 
   if (!isAuthLoading && !isAuthenticated) {
     return <Redirect href="/(screens)/auth/login" />;
@@ -23,21 +24,19 @@ const Home = () => {
       <Image style={styles.logoContainer} source={{
         uri: require('@/assets/images/logo.png'),
       }} />
-      <ToggleGroup
-        value={toggleGroupItem}
-        onValueChange={(val: toggleGroupType) => setToggleGroupItem(val)}
-        aria-label="Toggle group example"
-        type="single"
-        style={{ height: 40, alignItems: 'center' }}
-      >
-        <ToggleGroup.Item value="kuji" aria-label="Left aligned">
-          <Text>Ichiban Kuji</Text>
-        </ToggleGroup.Item>
-        <ToggleGroup.Item value="product" aria-label="Right aligned">
-          <Text>Products</Text>
-        </ToggleGroup.Item>
-      </ToggleGroup>
-      <ProductList isKuji={toggleGroupItem === 'kuji'} />
+      <View style={styles.segmentContainer}>
+        <SegmentedControl
+          style={styles.segmentedControl}
+          tintColor={Colors.primary}
+          backgroundColor="white"
+          values={['Products', 'Ichiban Kuji']}
+          selectedIndex={selectedIndex}
+          onChange={(event) => {
+            setSelectedIndex(event.nativeEvent.selectedSegmentIndex);
+          }}
+        />
+      </View>
+      <ProductList isKuji={selectedIndex === 1} />
     </SafeAreaView>
   );
 };
@@ -47,6 +46,22 @@ const styles = StyleSheet.create({
     width: 200,
     height: 70,
     marginHorizontal: 'auto',
+  },
+  segmentContainer: {
+    // flex: 1,
+    alignItems: 'center',
+    marginBottom: 10,
+  },
+  segmentedControl: {
+    width: 180,
+    borderRadius: 16,
+    borderWidth: 2,
+    borderColor: Colors.primary,
+    overflow: 'hidden',        // Ensure border radius is visible
+    fontWeight: 'bold',
+  },
+  segmentTab: {
+    borderRadius: 16,
   },
 });
 
