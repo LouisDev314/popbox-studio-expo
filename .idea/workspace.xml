@@ -5,11 +5,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="17ef7c58-bf7c-413e-b6ef-f4686d9e06c1" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/components/BottomSheet/Filters/CustomizeBottomSheetView.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/components/BottomSheet/Filters/index.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/constants/item-filters.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/hooks/use-items-infinite.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.expo/devices.json" beforeDir="false" afterPath="$PROJECT_DIR$/.expo/devices.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.expo/prebuild/cached-packages.json" beforeDir="false" afterPath="$PROJECT_DIR$/.expo/prebuild/cached-packages.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/(tabs)/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(tabs)/index.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ios/Podfile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Podfile.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/_layout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/_layout.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/Product/ProductList.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/Product/ProductList.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hooks/use-products-infinite.ts" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pnpm-lock.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pnpm-lock.yaml" afterDir="false" />
     </list>
@@ -61,11 +67,11 @@
       <recent name="$PROJECT_DIR$" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/components/BottomSheet" />
       <recent name="$PROJECT_DIR$/assets/images" />
       <recent name="$PROJECT_DIR$" />
       <recent name="$PROJECT_DIR$/configs/api" />
       <recent name="$PROJECT_DIR$/configs" />
-      <recent name="$PROJECT_DIR$/app/(screens)/auth/login" />
     </key>
   </component>
   <component name="SharedIndexes">

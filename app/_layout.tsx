@@ -7,6 +7,8 @@ import { StatusBar } from 'expo-status-bar';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import * as SplashScreen from 'expo-splash-screen';
 import { AuthProvider } from '@/context/auth-context';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { PortalProvider } from '@gorhom/portal';
 
 const config = createTamagui(defaultConfig);
 
@@ -42,11 +44,15 @@ export default function RootLayout() {
   return (
     <QueryClientProvider client={queryClient}>
       <TamaguiProvider config={config}>
-        <Theme name="dark">
-          <AuthProvider>
-            <RootLayoutNav />
-          </AuthProvider>
-        </Theme>
+        <GestureHandlerRootView>
+          <PortalProvider>
+            <Theme name="dark">
+              <AuthProvider>
+                <RootLayoutNav />
+              </AuthProvider>
+            </Theme>
+          </PortalProvider>
+        </GestureHandlerRootView>
       </TamaguiProvider>
     </QueryClientProvider>
   );

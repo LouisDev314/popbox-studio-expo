@@ -5,7 +5,7 @@ import { IBaseApiResponse } from '@/interfaces/api-response';
 import { IKujisResponse } from '@/interfaces/kujis';
 import { IProductsResponse } from '@/interfaces/products';
 
-export interface IProductParam {
+export interface IItemParam {
   search?: string;
   category?: string;
   sortBy?: string;
@@ -13,19 +13,19 @@ export interface IProductParam {
 }
 
 // Function overloads for type safety
-function useProductsInfinite(
-  productParam: IProductParam,
+function useItemsInfinite(
+  itemParam: IItemParam,
   isKuji: boolean,
   enabled?: boolean,
 ): ReturnType<typeof useInfiniteQuery<AxiosResponse<IBaseApiResponse<IKujisResponse>>>>;
 
-function useProductsInfinite(
-  productParam: IProductParam,
+function useItemsInfinite(
+  productParam: IItemParam,
   isKuji: boolean,
   enabled?: boolean,
 ): ReturnType<typeof useInfiniteQuery<AxiosResponse<IBaseApiResponse<IProductsResponse>>>>;
 
-function useProductsInfinite(productParam: IProductParam, isKuji: boolean, enabled?: boolean) {
+function useItemsInfinite(productParam: IItemParam, isKuji: boolean, enabled?: boolean) {
   if (isKuji) {
     return useInfiniteQuery<AxiosResponse<IBaseApiResponse<IKujisResponse>>>({
       queryKey: ['kujis', productParam],
@@ -53,4 +53,4 @@ function useProductsInfinite(productParam: IProductParam, isKuji: boolean, enabl
   });
 }
 
-export default useProductsInfinite;
+export default useItemsInfinite;

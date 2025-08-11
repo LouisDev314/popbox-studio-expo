@@ -1,11 +1,11 @@
 import { Spinner, YStack } from 'tamagui';
 import { useAuth } from '@/context/auth-context';
-import useProductsInfinite from '@/hooks/use-products-infinite';
 import React, { useCallback, useMemo } from 'react';
 import { FlatList, RefreshControl, View } from 'react-native';
 import ProductCard from '@/components/Product/ProductCard';
 import { IProductCard } from '@/interfaces/products';
 import { IKujiCard } from '@/interfaces/kujis';
+import useItemsInfinite from '@/hooks/use-items-infinite';
 
 interface IProductListProps {
   isKuji: boolean;
@@ -21,7 +21,7 @@ const ProductList = (props: IProductListProps) => {
     isFetchingNextPage,
     isLoading,
     refetch,
-  } = useProductsInfinite({}, props.isKuji, isAuthenticated);
+  } = useItemsInfinite({}, props.isKuji, isAuthenticated);
 
   const flattenedData = useMemo(() => {
     return data?.pages.flatMap(page => page.data.data.items) ?? [];

@@ -1,5 +1,5 @@
-import { Image } from 'tamagui';
-import React, { useState } from 'react';
+import { Button, Image, SizableText } from 'tamagui';
+import React, { useCallback, useRef, useState } from 'react';
 import AppStyleSheet from '@/constants/app-stylesheet';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useAuth } from '@/context/auth-context';
@@ -8,12 +8,26 @@ import { StyleSheet, View } from 'react-native';
 import ProductList from '@/components/Product/ProductList';
 import SegmentedControl from '@react-native-segmented-control/segmented-control';
 import Colors from '@/constants/colors';
-
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import BottomSheet from '@gorhom/bottom-sheet';
+import FiltersBottomSheet from '@/components/BottomSheet/Filters';
 
 const Home = () => {
   const { isAuthenticated, isAuthLoading } = useAuth();
 
   const [selectedIndex, setSelectedIndex] = useState(0);
+  const isKuji = selectedIndex === 1;
+
+  const bottomSheetRef = useRef<BottomSheet>(null);
+  const snapPoints = ['75%'];
+
+  const handleOpenBottomSheet = useCallback(() => {
+    bottomSheetRef.current?.expand();
+  }, []);
+
+  const handleCloseBottomSheet = useCallback(() => {
+    bottomSheetRef.current?.close();
+  }, []);
 
   if (!isAuthLoading && !isAuthenticated) {
     return <Redirect href="/(screens)/auth/login" />;
@@ -36,7 +50,19 @@ const Home = () => {
           }}
         />
       </View>
-      <ProductList isKuji={selectedIndex === 1} />
+      <View style={styles.filterContainer}>
+        <Button
+          icon={<Ionicons name="filter-outline" color="white" size={20} />}
+          onPress={handleOpenBottomSheet}
+        >
+          <SizableText size={'$5'}>
+            Filters
+          </SizableText>
+        </Button>
+      </View>
+      <ProductList isKuji={isKuji} />
+      <FiltersBottomSheet ref={bottomSheetRef} snapPoints={snapPoints} isKuji={isKuji}
+                          handleCloseBottomSheet={handleCloseBottomSheet} />
     </SafeAreaView>
   );
 };
@@ -47,10 +73,13 @@ const styles = StyleSheet.create({
     height: 70,
     marginHorizontal: 'auto',
   },
+  filterContainer: {
+    alignItems: 'flex-start',
+    marginVertical: 8,
+  },
+  filter: {},
   segmentContainer: {
-    // flex: 1,
     alignItems: 'center',
-    marginBottom: 10,
   },
   segmentedControl: {
     width: 180,
@@ -59,9 +88,6 @@ const styles = StyleSheet.create({
     borderColor: Colors.primary,
     overflow: 'hidden',        // Ensure border radius is visible
     fontWeight: 'bold',
-  },
-  segmentTab: {
-    borderRadius: 16,
   },
 });
 
