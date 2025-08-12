@@ -11,12 +11,15 @@ import Colors from '@/constants/colors';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import BottomSheet from '@gorhom/bottom-sheet';
 import FiltersBottomSheet from '@/components/BottomSheet/Filters';
+import useItemsInfinite from '@/hooks/use-items-infinite';
 
 const Home = () => {
   const { isAuthenticated, isAuthLoading } = useAuth();
 
   const [selectedIndex, setSelectedIndex] = useState(0);
   const isKuji = selectedIndex === 1;
+
+  const result = useItemsInfinite({}, isKuji, isAuthenticated);
 
   const bottomSheetRef = useRef<BottomSheet>(null);
   const snapPoints = ['75%'];
@@ -60,9 +63,9 @@ const Home = () => {
           </SizableText>
         </Button>
       </View>
-      <ProductList isKuji={isKuji} />
+      <ProductList isKuji={isKuji} result={result} />
       <FiltersBottomSheet ref={bottomSheetRef} snapPoints={snapPoints} isKuji={isKuji}
-                          handleCloseBottomSheet={handleCloseBottomSheet} />
+                          handleCloseBottomSheet={handleCloseBottomSheet} refetch={result.refetch} />
     </SafeAreaView>
   );
 };

@@ -1,76 +1,94 @@
-import { BottomSheetView } from '@gorhom/bottom-sheet';
-import React, { useState } from 'react';
+import { BottomSheetSectionList, BottomSheetView } from '@gorhom/bottom-sheet';
+import React from 'react';
 import { StyleSheet } from 'react-native';
-import { Text } from 'tamagui';
+import { Button, SizableText, View } from 'tamagui';
+import { IItemFilters } from '@/constants/item-filters';
+import Colors from '@/constants/colors';
 
 export interface IFilterOption {
+  title: string;
   label: string;
   value: string;
 }
 
 interface ICustomizeBottomSheetViewProps {
-  filters: Record<string, IFilterOption[]>;
+  filters: IItemFilters[];
+  selectedCategory: string;
+  setSelectedCategory: React.Dispatch<React.SetStateAction<string>>;
+  selectedSortBy: string;
+  setSelectedSortBy: React.Dispatch<React.SetStateAction<string>>;
+  selectedOrder: string;
+  setSelectedOrder: React.Dispatch<React.SetStateAction<string>>;
   isKuji?: boolean;
 }
 
 const CustomizeBottomSheetView = (props: ICustomizeBottomSheetViewProps) => {
-  const [selectedCategory, setSelectedCategory] = useState('');
-  const [selectedSortBy, setSelectedSortBy] = useState('');
-  const [selectedOrder, setSelectedOrder] = useState('');
+  const isSelected = (label: string) => {
+    return props.selectedCategory === label || props.selectedSortBy === label || props.selectedOrder === label;
+  };
 
-  // const FilterSection = () => (
-  //   <YStack gridRowGap="$3" marginBottom="$4">
-  //     <Text fontSize="$5" fontWeight="600" color="$color">
-  //       {title}
-  //     </Text>
-  //     <XStack flexWrap="wrap" gridColumnGap="$2">
-  //       {options.map((option) => (
-  //         <Button
-  //           key={option.value}
-  //           onPress={() => onSelect(option.value)}
-  //           style={[
-  //             styles.filterChip,
-  //             selectedValue === option.value && styles.selectedChip,
-  //           ]}
-  //         >
-  //           <Text
-  //             color={selectedValue === option.value ? '$color' : '$gray10'}
-  //             fontSize="$4"
-  //           >
-  //             {option.label}
-  //           </Text>
-  //         </Button>
-  //       ))}
-  //     </XStack>
-  //   </YStack>
-  // );
+  const handleButtonPress = (item: IFilterOption, sectionTitle: string) => {
+    switch (sectionTitle) {
+      case 'category':
+        props.setSelectedCategory(item.label);
+        break;
+      case 'sortBy':
+        props.setSelectedSortBy(item.label);
+        break;
+      case 'order':
+        props.setSelectedOrder(item.label);
+        break;
+      default:
+        break;
+    }
+  };
 
   return (
     <BottomSheetView style={styles.container}>
-      <Text>
-        Hello
-      </Text>
+      <View marginHorizontal="auto" marginBottom="10">
+        <SizableText size="$8">
+          Filters
+        </SizableText>
+      </View>
+      <BottomSheetSectionList
+        sections={props.filters}
+        stickySectionHeadersEnabled={true}
+        keyExtractor={item => item.value}
+        renderSectionHeader={({ section: { title } }) => (
+          <SizableText size="$6">{title}</SizableText>
+        )}
+        renderItem={({ item }) => (
+          <View
+            style={styles.filterChipContainer}
+          >
+            <Button
+              borderWidth={1}
+              backgroundColor="white"
+              borderColor={isSelected(item.label) ? Colors.primary : '#E0E0E0'}
+              borderRadius={16}
+              width="48%"
+              paddingHorizontal={16}
+              onPress={() => handleButtonPress(item, item.title)}
+            >
+              <SizableText size="$5">{item.label}</SizableText>
+            </Button>
+          </View>
+        )}
+      />
     </BottomSheetView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    paddingHorizontal: 20,
-    paddingBottom: 20,
+    paddingHorizontal: 12,
     backgroundColor: 'white',
   },
-  filterChip: {
-    paddingHorizontal: 16,
-    paddingVertical: 8,
-    borderRadius: 20,
-    borderWidth: 1,
-    borderColor: '#E0E0E0',
-    backgroundColor: 'white',
-  },
-  selectedChip: {
-    backgroundColor: '#FF6B35',
-    borderColor: '#FF6B35',
+  filterChipContainer: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-between',
+    gap: 8,
   },
 });
 

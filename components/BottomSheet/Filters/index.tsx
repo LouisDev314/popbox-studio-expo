@@ -1,27 +1,39 @@
-import React, { forwardRef } from 'react';
+import React, { forwardRef, useState } from 'react';
 import BottomSheet, { BottomSheetBackdrop, BottomSheetFooter } from '@gorhom/bottom-sheet';
 import { BottomSheetMethods } from '@gorhom/bottom-sheet/lib/typescript/types';
 import { Portal } from '@gorhom/portal';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet } from 'react-native';
 import CustomizeBottomSheetView from '@/components/BottomSheet/Filters/CustomizeBottomSheetView';
-import { Button } from 'tamagui';
+import { Button, View } from 'tamagui';
 import { filterOptions } from '@/constants/item-filters';
 import Colors from '@/constants/colors';
+import { InfiniteData, QueryObserverResult, RefetchOptions } from '@tanstack/react-query';
+import { AxiosResponse } from 'axios';
+import { IBaseApiResponse } from '@/interfaces/api-response';
+import { IKujisResponse } from '@/interfaces/kujis';
 
 interface IFiltersBottomSheetProps {
   snapPoints: string[];
   handleCloseBottomSheet: () => void;
+  refetch: (options?: RefetchOptions) => Promise<QueryObserverResult<InfiniteData<AxiosResponse<IBaseApiResponse<IKujisResponse>, any>, unknown>, Error>>;
   isKuji?: boolean;
 }
 
 const FiltersBottomSheet = forwardRef<BottomSheetMethods, IFiltersBottomSheetProps>(
   (props, ref) => {
-    const handleApply = () => {
-      // Handle apply logic here
-      console.log('Apply');
+    const [selectedCategory, setSelectedCategory] = useState('All');
+    const [selectedSortBy, setSelectedSortBy] = useState('Date');
+    const [selectedOrder, setSelectedOrder] = useState('Descending');
+
+    const handleApply = async () => {
+      props.handleCloseBottomSheet();
+      await props.refetch();
     };
 
     const handleCancel = () => {
+      setSelectedCategory('All');
+      setSelectedSortBy('Date');
+      setSelectedOrder('Descending');
       props.handleCloseBottomSheet();
     };
 
@@ -30,34 +42,30 @@ const FiltersBottomSheet = forwardRef<BottomSheetMethods, IFiltersBottomSheetPro
     return (
       <Portal>
         <BottomSheet
+          style={styles.container}
           ref={ref}
           index={-1} // starts closed
           snapPoints={props.snapPoints}
           enablePanDownToClose={true}
+          enableDynamicSizing={false}
           handleIndicatorStyle={styles.handleBar}
-          // backgroundComponent={(backgroundProps) => (
-          //   <View
-          //     {...backgroundProps}
-          //     style={{ borderRadius: 24 }}
-          //   />
-          // )}
           backdropComponent={(backdropProps) => (
             <BottomSheetBackdrop
               {...backdropProps}
-              appearsOnIndex={0}        // index at which backdrop appears
-              disappearsOnIndex={-1}    // index at which backdrop disappears
-              pressBehavior="close"     // press behavior to close the sheet
+              appearsOnIndex={0}
+              disappearsOnIndex={-1}
+              pressBehavior="close"
             />
           )}
           footerComponent={(props) => (
-            <BottomSheetFooter {...props} bottomInset={24}>
-              <View style={styles.footerContainer}>
+            <BottomSheetFooter {...props}>
+              <View paddingBottom={48} style={styles.footerContainer}>
                 <Button
                   borderRadius={16}
                   backgroundColor={Colors.primary}
                   onPress={handleApply}
                   fontWeight="bold"
-                  fontSize={18}
+                  fontSize="$7"
                   height={55}
                 >
                   Apply
@@ -65,7 +73,7 @@ const FiltersBottomSheet = forwardRef<BottomSheetMethods, IFiltersBottomSheetPro
                 <Button
                   borderRadius={16}
                   onPress={handleCancel}
-                  fontSize={18}
+                  fontSize="$6"
                   borderColor={Colors.primary}
                   borderWidth={2}
                   backgroundColor="white"
@@ -76,9 +84,17 @@ const FiltersBottomSheet = forwardRef<BottomSheetMethods, IFiltersBottomSheetPro
               </View>
             </BottomSheetFooter>
           )}
-          style={styles.container}
         >
-          <CustomizeBottomSheetView isKuji={props.isKuji} filters={filters} />
+          <CustomizeBottomSheetView
+            isKuji={props.isKuji}
+            filters={filters}
+            selectedCategory={selectedCategory}
+            setSelectedCategory={setSelectedCategory}
+            selectedSortBy={selectedSortBy}
+            setSelectedSortBy={setSelectedSortBy}
+            selectedOrder={selectedOrder}
+            setSelectedOrder={setSelectedOrder}
+          />
         </BottomSheet>
       </Portal>
     );
@@ -87,15 +103,18 @@ const FiltersBottomSheet = forwardRef<BottomSheetMethods, IFiltersBottomSheetPro
 
 const styles = StyleSheet.create({
   container: {
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: -2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 5,
+    // shadowColor: '#000',
+    // shadowOffset: {
+    //   width: 0,
+    //   height: -2,
+    // },
+    // shadowOpacity: 0.25,
+    // shadowRadius: 3.84,
+    // elevation: 5,
     padding: 12,
+    borderTopLeftRadius: 36,
+    borderTopRightRadius: 36,
+    overflow: 'hidden',
   },
   handleBar: {
     backgroundColor: '#E0E0E0',
@@ -104,7 +123,7 @@ const styles = StyleSheet.create({
   footerContainer: {
     padding: 12,
     rowGap: 12,
-    marginBottom: 16,
+    backgroundColor: 'white',
   },
   background: {
     borderRadius: 16,
