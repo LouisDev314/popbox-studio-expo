@@ -1,11 +1,15 @@
 import React, { forwardRef, useState } from 'react';
-import BottomSheet, { BottomSheetBackdrop, BottomSheetFooter } from '@gorhom/bottom-sheet';
+import BottomSheet, {
+  BottomSheetBackdrop,
+  BottomSheetFooter,
+  BottomSheetSectionList,
+  BottomSheetView,
+} from '@gorhom/bottom-sheet';
 import { BottomSheetMethods } from '@gorhom/bottom-sheet/lib/typescript/types';
 import { Portal } from '@gorhom/portal';
 import { StyleSheet } from 'react-native';
-import CustomizeBottomSheetView from '@/components/BottomSheet/Filters/CustomizeBottomSheetView';
-import { Button, View } from 'tamagui';
-import { filterOptions } from '@/constants/item-filters';
+import { filterOptions, IFilterOption } from '@/constants/item-filters';
+import { Button, SizableText, View } from 'tamagui';
 import Colors from '@/constants/colors';
 import { InfiniteData, QueryObserverResult, RefetchOptions } from '@tanstack/react-query';
 import { AxiosResponse } from 'axios';
@@ -21,20 +25,39 @@ interface IFiltersBottomSheetProps {
 
 const FiltersBottomSheet = forwardRef<BottomSheetMethods, IFiltersBottomSheetProps>(
   (props, ref) => {
-    const [selectedCategory, setSelectedCategory] = useState('All');
-    const [selectedSortBy, setSelectedSortBy] = useState('Date');
-    const [selectedOrder, setSelectedOrder] = useState('Descending');
+    const [selectedCategory, setSelectedCategory] = useState('all');
+    const [selectedSortBy, setSelectedSortBy] = useState('createdAt');
+    const [selectedOrder, setSelectedOrder] = useState('desc');
 
     const handleApply = async () => {
       props.handleCloseBottomSheet();
-      await props.refetch();
+      await props.refetch({});
     };
 
-    const handleCancel = () => {
-      setSelectedCategory('All');
-      setSelectedSortBy('Date');
-      setSelectedOrder('Descending');
-      props.handleCloseBottomSheet();
+    const handleReset = () => {
+      setSelectedCategory('all');
+      setSelectedSortBy('createdAt');
+      setSelectedOrder('desc');
+    };
+
+    const isSelected = (value: string) => {
+      return selectedCategory === value || selectedSortBy === value || selectedOrder === value;
+    };
+
+    const handleFilterBtnPress = (item: IFilterOption, sectionTitle: string) => {
+      switch (sectionTitle) {
+        case 'category':
+          setSelectedCategory(item.value);
+          break;
+        case 'sortBy':
+          setSelectedSortBy(item.value);
+          break;
+        case 'order':
+          setSelectedOrder(item.value);
+          break;
+        default:
+          break;
+      }
     };
 
     const filters = filterOptions(props.isKuji);
@@ -54,7 +77,7 @@ const FiltersBottomSheet = forwardRef<BottomSheetMethods, IFiltersBottomSheetPro
               {...backdropProps}
               appearsOnIndex={0}
               disappearsOnIndex={-1}
-              pressBehavior="close"
+              onPress={handleApply}
             />
           )}
           footerComponent={(props) => (
@@ -72,28 +95,46 @@ const FiltersBottomSheet = forwardRef<BottomSheetMethods, IFiltersBottomSheetPro
                 </Button>
                 <Button
                   borderRadius={16}
-                  onPress={handleCancel}
+                  onPress={handleReset}
                   fontSize="$6"
-                  borderColor={Colors.primary}
-                  borderWidth={2}
+                  borderColor="black"
+                  borderWidth={1}
                   backgroundColor="white"
                   height={55}
                 >
-                  Cancel
+                  Reset
                 </Button>
               </View>
             </BottomSheetFooter>
           )}
         >
-          <CustomizeBottomSheetView
-            isKuji={props.isKuji}
-            filters={filters}
-            selectedCategory={selectedCategory}
-            setSelectedCategory={setSelectedCategory}
-            selectedSortBy={selectedSortBy}
-            setSelectedSortBy={setSelectedSortBy}
-            selectedOrder={selectedOrder}
-            setSelectedOrder={setSelectedOrder}
+          <BottomSheetView style={styles.title}>
+            <SizableText size="$8">
+              Filters
+            </SizableText>
+          </BottomSheetView>
+
+          <BottomSheetSectionList
+            style={styles.sectionList}
+            sections={filters}
+            stickySectionHeadersEnabled={false}
+            keyExtractor={item => item.value}
+            contentContainerStyle={styles.contentContainer}
+            nestedScrollEnabled={true}
+            renderSectionHeader={({ section: { title } }) => (
+              <SizableText size="$6">{title}</SizableText>
+            )}
+            renderItem={({ item }) => (
+              <Button
+                borderWidth={isSelected(item.value) ? 2 : 1}
+                backgroundColor="white"
+                borderColor={isSelected(item.value) ? Colors.primary : Colors.grey}
+                borderRadius={16}
+                onPress={() => handleFilterBtnPress(item, item.title)}
+              >
+                <SizableText size="$5">{item.label}</SizableText>
+              </Button>
+            )}
           />
         </BottomSheet>
       </Portal>
@@ -116,17 +157,26 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 36,
     overflow: 'hidden',
   },
+  title: {
+    alignItems: 'center',
+  },
   handleBar: {
-    backgroundColor: '#E0E0E0',
+    backgroundColor: Colors.grey,
     width: 40,
+  },
+  sectionList: {
+    marginTop: 40,
+    padding: 12,
+    paddingTop: 20,
+    marginBottom: 200,
   },
   footerContainer: {
     padding: 12,
     rowGap: 12,
     backgroundColor: 'white',
   },
-  background: {
-    borderRadius: 16,
+  contentContainer: {
+    gap: 8,
   },
 });
 

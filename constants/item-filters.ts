@@ -1,8 +1,12 @@
-import { IFilterOption } from '@/components/BottomSheet/Filters/CustomizeBottomSheetView';
-
 export interface IItemFilters {
   title: string;
   data: IFilterOption[];
+}
+
+export interface IFilterOption {
+  title: string;
+  label: string;
+  value: string;
 }
 
 const categoryOptions: IFilterOption[] = [
@@ -25,8 +29,8 @@ const kujiSortByOptions: IFilterOption[] = [
 ];
 
 const orderOptions: IFilterOption[] = [
-  { title: 'order', label: 'Ascending', value: 'asc' },
   { title: 'order', label: 'Descending', value: 'desc' },
+  { title: 'order', label: 'Ascending', value: 'asc' },
 ];
 
 export const filterOptions = (isKuji?: boolean): IItemFilters[] => [
