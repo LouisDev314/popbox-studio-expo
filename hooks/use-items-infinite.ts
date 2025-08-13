@@ -20,19 +20,19 @@ function useItemsInfinite(
 ): ReturnType<typeof useInfiniteQuery<AxiosResponse<IBaseApiResponse<IKujisResponse>>>>;
 
 function useItemsInfinite(
-  productParam: IItemParam,
+  itemParam: IItemParam,
   isKuji: boolean,
   enabled?: boolean,
 ): ReturnType<typeof useInfiniteQuery<AxiosResponse<IBaseApiResponse<IProductsResponse>>>>;
 
-function useItemsInfinite(productParam: IItemParam, isKuji: boolean, enabled?: boolean) {
+function useItemsInfinite(itemParam: IItemParam, isKuji: boolean, enabled?: boolean) {
   if (isKuji) {
     return useInfiniteQuery<AxiosResponse<IBaseApiResponse<IKujisResponse>>>({
-      queryKey: ['kujis', productParam],
+      queryKey: ['kujis', itemParam],
       queryFn: ({ pageParam }) =>
         queryConfigs.fetchKujis({
           pageParam,
-          ...productParam,
+          ...itemParam,
         }),
       enabled: enabled ?? true,
       getNextPageParam: (lastPage) => lastPage.data.data.nextCursor ?? undefined,
@@ -41,11 +41,11 @@ function useItemsInfinite(productParam: IItemParam, isKuji: boolean, enabled?: b
   }
 
   return useInfiniteQuery<AxiosResponse<IBaseApiResponse<IProductsResponse>>>({
-    queryKey: ['products', productParam],
+    queryKey: ['products', itemParam],
     queryFn: ({ pageParam }) =>
       queryConfigs.fetchProducts({
         pageParam,
-        ...productParam,
+        ...itemParam,
       }),
     enabled: enabled ?? true,
     getNextPageParam: (lastPage) => lastPage.data.data.nextCursor ?? undefined,

@@ -10,7 +10,7 @@ import { IBaseApiResponse } from '@/interfaces/api-response';
 
 interface IProductListProps {
   isKuji: boolean;
-  result: UseInfiniteQueryResult<InfiniteData<AxiosResponse<IBaseApiResponse<IKujisResponse>, any>, unknown>, Error>;
+  queryResult: UseInfiniteQueryResult<InfiniteData<AxiosResponse<IBaseApiResponse<IKujisResponse>, unknown>, unknown>, Error>;
 }
 
 const ProductList = (props: IProductListProps) => {
@@ -21,7 +21,7 @@ const ProductList = (props: IProductListProps) => {
     isFetchingNextPage,
     isLoading,
     refetch,
-  } = props.result;
+  } = props.queryResult;
 
   const flattenedData = useMemo(() => {
     return data?.pages.flatMap(page => page.data.data.items) ?? [];

@@ -11,32 +11,33 @@ import { StyleSheet } from 'react-native';
 import { filterOptions, IFilterOption } from '@/constants/item-filters';
 import { Button, SizableText, View } from 'tamagui';
 import Colors from '@/constants/colors';
-import { InfiniteData, QueryObserverResult, RefetchOptions } from '@tanstack/react-query';
-import { AxiosResponse } from 'axios';
-import { IBaseApiResponse } from '@/interfaces/api-response';
-import { IKujisResponse } from '@/interfaces/kujis';
+import { IItemParam } from '@/hooks/use-items-infinite';
 
 interface IFiltersBottomSheetProps {
   snapPoints: string[];
   handleCloseBottomSheet: () => void;
-  refetch: (options?: RefetchOptions) => Promise<QueryObserverResult<InfiniteData<AxiosResponse<IBaseApiResponse<IKujisResponse>, any>, unknown>, Error>>;
+  setQueryKeyItemParam: React.Dispatch<React.SetStateAction<IItemParam>>;
   isKuji?: boolean;
 }
 
 const FiltersBottomSheet = forwardRef<BottomSheetMethods, IFiltersBottomSheetProps>(
   (props, ref) => {
     const [selectedCategory, setSelectedCategory] = useState('all');
-    const [selectedSortBy, setSelectedSortBy] = useState('createdAt');
+    const [selectedSortBy, setSelectedSortBy] = useState('date');
     const [selectedOrder, setSelectedOrder] = useState('desc');
 
     const handleApply = async () => {
       props.handleCloseBottomSheet();
-      await props.refetch({});
+      props.setQueryKeyItemParam({
+        category: selectedCategory,
+        sortBy: selectedSortBy,
+        order: selectedOrder,
+      });
     };
 
     const handleReset = () => {
       setSelectedCategory('all');
-      setSelectedSortBy('createdAt');
+      setSelectedSortBy('date');
       setSelectedOrder('desc');
     };
 

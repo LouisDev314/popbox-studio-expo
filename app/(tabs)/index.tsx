@@ -11,15 +11,20 @@ import Colors from '@/constants/colors';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import BottomSheet from '@gorhom/bottom-sheet';
 import FiltersBottomSheet from '@/components/BottomSheet/Filters';
-import useItemsInfinite from '@/hooks/use-items-infinite';
+import useItemsInfinite, { IItemParam } from '@/hooks/use-items-infinite';
 
 const Home = () => {
   const { isAuthenticated, isAuthLoading } = useAuth();
 
   const [selectedIndex, setSelectedIndex] = useState(0);
+  const [queryKeyItemParam, setQueryKeyItemParam] = useState<IItemParam>({
+    category: 'all',
+    sortBy: 'date',
+    order: 'desc',
+  });
   const isKuji = selectedIndex === 1;
 
-  const result = useItemsInfinite({}, isKuji, isAuthenticated);
+  const queryResult = useItemsInfinite(queryKeyItemParam, isKuji, isAuthenticated);
 
   const bottomSheetRef = useRef<BottomSheet>(null);
   const snapPoints = ['75%'];
@@ -63,9 +68,9 @@ const Home = () => {
           </SizableText>
         </Button>
       </View>
-      <ProductList isKuji={isKuji} result={result} />
+      <ProductList isKuji={isKuji} queryResult={queryResult} />
       <FiltersBottomSheet ref={bottomSheetRef} snapPoints={snapPoints} isKuji={isKuji}
-                          handleCloseBottomSheet={handleCloseBottomSheet} refetch={result.refetch} />
+                          handleCloseBottomSheet={handleCloseBottomSheet} setQueryKeyItemParam={setQueryKeyItemParam} />
     </SafeAreaView>
   );
 };
@@ -89,7 +94,8 @@ const styles = StyleSheet.create({
     borderRadius: 16,
     borderWidth: 2,
     borderColor: Colors.primary,
-    overflow: 'hidden',        // Ensure border radius is visible
+    // Ensure border radius is visible
+    overflow: 'hidden',
     fontWeight: 'bold',
   },
 });

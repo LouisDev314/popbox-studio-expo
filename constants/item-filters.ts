@@ -18,12 +18,12 @@ const categoryOptions: IFilterOption[] = [
 ];
 
 const productSortByOptions: IFilterOption[] = [
-  { title: 'sortBy', label: 'Date', value: 'createdAt' },
+  { title: 'sortBy', label: 'Date', value: 'date' },
   { title: 'sortBy', label: 'Price', value: 'price' },
 ];
 
 const kujiSortByOptions: IFilterOption[] = [
-  { title: 'sortBy', label: 'Date', value: 'createdAt' },
+  { title: 'sortBy', label: 'Date', value: 'date' },
   { title: 'sortBy', label: 'Price', value: 'price' },
   { title: 'sortBy', label: 'Remaining Tickets', value: 'remainingTickets' },
 ];
