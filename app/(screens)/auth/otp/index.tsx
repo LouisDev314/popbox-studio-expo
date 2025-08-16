@@ -36,7 +36,8 @@ const OtpScreen = (props: IOtpScreenProps) => {
           storage.delete(StorageKey.OtpTimer);
         }
       } else {
-        sendOtpMutation(props.email);
+        // Send otp on init
+        sendOtp(props.email);
       }
     };
     initTimer();
@@ -84,7 +85,7 @@ const OtpScreen = (props: IOtpScreenProps) => {
     },
   });
 
-  const { mutation: sendOtpMutation } = useCustomizeMutation({
+  const { mutation: sendOtp } = useCustomizeMutation({
     mutationFn: MutationConfigs.sendOtp,
     onError: () => {
       console.log('failed to resendOtp');
@@ -96,9 +97,9 @@ const OtpScreen = (props: IOtpScreenProps) => {
     verifyOtp({ email: props.email, otp });
   };
 
-  const sendOtp = () => {
+  const handleResendOtp = () => {
     startNewTimer();
-    sendOtpMutation(props.email);
+    sendOtp(props.email);
   };
 
   return (
@@ -108,7 +109,7 @@ const OtpScreen = (props: IOtpScreenProps) => {
         numberOfDigits={6}
         focusColor={Colors.primary}
         type="numeric"
-        textProps={{}}
+        // textProps={}
         theme={{
           pinCodeContainerStyle: { width: 50 },
           pinCodeTextStyle: { color: 'white' },
@@ -121,7 +122,7 @@ const OtpScreen = (props: IOtpScreenProps) => {
         disabled={isTimerActive}
         alignItems="flex-end"
         pressStyle={{ opacity: 0.5 }}
-        onPress={sendOtp}
+        onPress={handleResendOtp}
       >
         <Text color={Colors.primary}>
           {isTimerActive ? `${remainingTime}(s)` : 'Resend OTP'}

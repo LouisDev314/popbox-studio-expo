@@ -41,9 +41,12 @@ const ProductList = (props: IProductListProps) => {
 
   const renderItem = ({ item }: { item: IProductCard | IKujiCard }) => {
     return (
-      <ProductCard title={item.title}
-                   images={[require('@/assets/images/macaron.jpg')]}
-                   price={item.price} />
+      <ProductCard
+        title={item.title}
+        images={[require('@/assets/images/macaron.jpg')]}
+        price={item.price}
+        marginBottom={8}
+      />
     );
   };
 
@@ -69,7 +72,7 @@ const ProductList = (props: IProductListProps) => {
       onEndReached={handleLoadMore}
       numColumns={2}
       getItemLayout={getItemLayout}
-      columnWrapperStyle={{ gap: 8, marginBottom: 8 }}
+      columnWrapperStyle={{ gap: 8 }}
       ListFooterComponent={renderFooter}
       refreshControl={
         <RefreshControl

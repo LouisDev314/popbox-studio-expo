@@ -1,7 +1,6 @@
 import { Button, Image, SizableText } from 'tamagui';
 import React, { useCallback, useRef, useState } from 'react';
 import AppStyleSheet from '@/constants/app-stylesheet';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { useAuth } from '@/context/auth-context';
 import { Redirect } from 'expo-router';
 import { StyleSheet, View } from 'react-native';
@@ -42,7 +41,7 @@ const Home = () => {
   }
 
   return (
-    <SafeAreaView style={AppStyleSheet.bg}>
+    <View style={AppStyleSheet.bg}>
       <Image style={styles.logoContainer} source={{
         uri: require('@/assets/images/logo.png'),
       }} />
@@ -71,7 +70,7 @@ const Home = () => {
       <ProductList isKuji={isKuji} queryResult={queryResult} />
       <FiltersBottomSheet ref={bottomSheetRef} snapPoints={snapPoints} isKuji={isKuji}
                           handleCloseBottomSheet={handleCloseBottomSheet} setQueryKeyItemParam={setQueryKeyItemParam} />
-    </SafeAreaView>
+    </View>
   );
 };
 
@@ -80,6 +79,7 @@ const styles = StyleSheet.create({
     width: 200,
     height: 70,
     marginHorizontal: 'auto',
+    marginTop: 40,
   },
   filterContainer: {
     alignItems: 'flex-start',

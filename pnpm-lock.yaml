@@ -119,6 +119,9 @@ importers:
       react-native:
         specifier: 0.76.9
         version: 0.76.9(@babel/core@7.27.4)(@babel/preset-env@7.27.2(@babel/core@7.27.4))(@types/react@18.3.23)(react@18.3.1)
+      react-native-dynamic-search-bar:
+        specifier: ^2.0.2
+        version: 2.0.2(@freakycoder/react-native-bounceable@1.0.3)(react-native-spinkit@1.5.1)
       react-native-gesture-handler:
         specifier: ~2.20.2
         version: 2.20.2(react-native@0.76.9(@babel/core@7.27.4)(@babel/preset-env@7.27.2(@babel/core@7.27.4))(@types/react@18.3.23)(react@18.3.1))(react@18.3.1)
@@ -1309,6 +1312,9 @@ packages:
 
   '@floating-ui/utils@0.2.9':
     resolution: {integrity: sha512-MDWhGtE+eHw5JW7lq4qhc5yRLS11ERl1c7Z6Xd0a58DozHES6EnNNwUWbMiG4J9Cgj053Bhk8zvlhFYKVhULwg==}
+
+  '@freakycoder/react-native-bounceable@1.0.3':
+    resolution: {integrity: sha512-+iMq2tnqxCwFjitbPUz9nZ+VfJ8OU9waIlDJAAsoq1229QEwCmERCNy5zVtDsz75q3i4FLXX/n7fimdMzmP21A==}
 
   '@gorhom/bottom-sheet@5.1.8':
     resolution: {integrity: sha512-QuYIVjn3K9bW20n5bgOSjvxBYoWG4YQXiLGOheEAMgISuoT6sMcA270ViSkkb0fenPxcIOwzCnFNuxmr739T9A==}
@@ -5251,6 +5257,12 @@ packages:
   react-is@19.1.0:
     resolution: {integrity: sha512-Oe56aUPnkHyyDxxkvqtd7KkdQP5uIUfHxd5XTb3wE9d/kRnZLmKbDB0GWk919tdQ+mxxPtG6EAs6RMT6i1qtHg==}
 
+  react-native-dynamic-search-bar@2.0.2:
+    resolution: {integrity: sha512-VOJf43hwfA5TRmYPTmPd5+unosruKXxVL41vP/AaofMrYM90hen0LOgGxUkZquqjg/nQidv/PsQhzOx02orE7w==}
+    peerDependencies:
+      '@freakycoder/react-native-bounceable': '>= 0.2.2'
+      react-native-spinkit: '>= 1.5.0'
+
   react-native-gesture-handler@2.20.2:
     resolution: {integrity: sha512-HqzFpFczV4qCnwKlvSAvpzEXisL+Z9fsR08YV5LfJDkzuArMhBu2sOoSPUF/K62PCoAb+ObGlTC83TKHfUd0vg==}
     peerDependencies:
@@ -5298,6 +5310,9 @@ packages:
     peerDependencies:
       react: '*'
       react-native: '*'
+
+  react-native-spinkit@1.5.1:
+    resolution: {integrity: sha512-XkTgP4e+/MZpbI1GdZTIEQ+6WeMWQT4duWnSiXaaVW7py0rtaBLswtAEA6uXQGUhnxMnPWZhbLz7QponpH3ciQ==}
 
   react-native-vector-icons@10.2.0:
     resolution: {integrity: sha512-n5HGcxUuVaTf9QJPs/W22xQpC2Z9u0nb0KgLPnVltP8vdUvOp6+R26gF55kilP/fV4eL4vsAHUqUjewppJMBOQ==}
@@ -7999,6 +8014,8 @@ snapshots:
       tabbable: 6.2.0
 
   '@floating-ui/utils@0.2.9': {}
+
+  '@freakycoder/react-native-bounceable@1.0.3': {}
 
   '@gorhom/bottom-sheet@5.1.8(@types/react-native@0.70.19)(@types/react@18.3.23)(react-native-gesture-handler@2.20.2(react-native@0.76.9(@babel/core@7.27.4)(@babel/preset-env@7.27.2(@babel/core@7.27.4))(@types/react@18.3.23)(react@18.3.1))(react@18.3.1))(react-native-reanimated@3.16.7(@babel/core@7.27.4)(react-native@0.76.9(@babel/core@7.27.4)(@babel/preset-env@7.27.2(@babel/core@7.27.4))(@types/react@18.3.23)(react@18.3.1))(react@18.3.1))(react-native@0.76.9(@babel/core@7.27.4)(@babel/preset-env@7.27.2(@babel/core@7.27.4))(@types/react@18.3.23)(react@18.3.1))(react@18.3.1)':
     dependencies:
@@ -13353,6 +13370,11 @@ snapshots:
 
   react-is@19.1.0: {}
 
+  react-native-dynamic-search-bar@2.0.2(@freakycoder/react-native-bounceable@1.0.3)(react-native-spinkit@1.5.1):
+    dependencies:
+      '@freakycoder/react-native-bounceable': 1.0.3
+      react-native-spinkit: 1.5.1
+
   react-native-gesture-handler@2.20.2(react-native@0.76.9(@babel/core@7.27.4)(@babel/preset-env@7.27.2(@babel/core@7.27.4))(@types/react@18.3.23)(react@18.3.1))(react@18.3.1):
     dependencies:
       '@egjs/hammerjs': 2.0.17
@@ -13414,6 +13436,10 @@ snapshots:
       react-freeze: 1.0.4(react@18.3.1)
       react-native: 0.76.9(@babel/core@7.27.4)(@babel/preset-env@7.27.2(@babel/core@7.27.4))(@types/react@18.3.23)(react@18.3.1)
       warn-once: 0.1.1
+
+  react-native-spinkit@1.5.1:
+    dependencies:
+      prop-types: 15.8.1
 
   react-native-vector-icons@10.2.0:
     dependencies:
