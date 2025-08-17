@@ -7,7 +7,7 @@ import Colors from '@/constants/colors';
 import { OtpInput } from 'react-native-otp-entry';
 import { Step } from '@/enums/register-step';
 import { storage } from '@/utils/mmkv';
-import { StorageKey } from '@/enums/storage';
+import { StorageKey } from '@/enums/mmkv';
 
 interface IOtpScreenProps {
   email: string;

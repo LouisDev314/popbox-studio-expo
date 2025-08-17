@@ -1,7 +1,7 @@
 import axios, { AxiosInstance, InternalAxiosRequestConfig } from 'axios';
 import getEnvConfig from '@/configs/env';
 import { secureStorage } from '@/utils/mmkv';
-import { StorageKey } from '@/enums/storage';
+import { StorageKey } from '@/enums/mmkv';
 import { auth } from '@/configs/firebase';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import { signOut } from 'firebase/auth';
@@ -16,7 +16,7 @@ const appClient: AxiosInstance = axios.create({
   timeoutErrorMessage: 'timeout of 10000 ms exceeded',
 });
 
-const handleLogout = async () => {
+export const handleLogout = async () => {
   try {
     // Sign out from Google
     await GoogleSignin.signOut();

@@ -1,12 +1,11 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { IUser } from '@/models/user';
-import { clearUser, setUser } from '@/hooks/use-user-store';
-import { AuthError, onAuthStateChanged, signOut, UserCredential } from 'firebase/auth';
+import { setUser } from '@/hooks/use-user-store';
+import { AuthError, onAuthStateChanged, UserCredential } from 'firebase/auth';
 import { auth } from '@/configs/firebase';
 import retrieveDeviceId from '@/utils/device-id';
 import { secureStorage } from '@/utils/mmkv';
-import { StorageKey } from '@/enums/storage';
-import { GoogleSignin } from '@react-native-google-signin/google-signin';
+import { StorageKey } from '@/enums/mmkv';
 import { router } from 'expo-router';
 import useCustomizeQuery from '@/hooks/use-customize-query';
 import QueryConfigs from '@/configs/api/query-config';
@@ -20,6 +19,7 @@ import {
   useCreateUserWithEmailAndPasswordMutation,
   useSignInWithEmailAndPasswordMutation,
 } from '@tanstack-query-firebase/react/auth';
+import { handleLogout } from '@/api/app-client';
 
 interface IAuthContext {
   isAuthenticated: boolean;
@@ -127,21 +127,6 @@ export const AuthProvider = (props: { children: React.ReactNode }) => {
     enabled: false, // Only run when manually triggered
   });
 
-  const logout = async () => {
-    try {
-      // Sign out from Google
-      await GoogleSignin.signOut();
-      // Sign out from Firebase
-      await signOut(auth);
-      // Clear stored user data
-      clearUser();
-      secureStorage.clearAll();
-      router.replace(AppScreen.Login);
-    } catch (err) {
-      console.error('Logout error:', err);
-    }
-  };
-
   const isError = isRegisterError || isLoginError || isFetchingError || isCreateUserError;
   const isRegisterPending = isFirebaseRegisterPending || isCreatingUser;
 
@@ -157,7 +142,7 @@ export const AuthProvider = (props: { children: React.ReactNode }) => {
     resetLogin,
     createUser,
     isError,
-    logout,
+    logout: handleLogout,
   };
 
   return (
