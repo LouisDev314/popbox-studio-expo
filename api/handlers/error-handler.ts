@@ -37,7 +37,7 @@
 //
 
 // export const forbiddenHandler = () => {
-//   router.replace('/(screens)/auth/login');
+//   router.replace('/(screens)/auth/LoginScreen');
 // };
 
 //

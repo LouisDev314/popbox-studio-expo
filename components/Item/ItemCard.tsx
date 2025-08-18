@@ -10,7 +10,7 @@ interface IProductCardProps extends CardProps {
   currency?: string;
 }
 
-const ProductCard = (props: IProductCardProps) => {
+const ItemCard = (props: IProductCardProps) => {
   const { title, images, price, currency = '$', ...cardProps } = props;
 
   const formatPrice = (amount: number) => {
@@ -92,4 +92,4 @@ const ProductCard = (props: IProductCardProps) => {
   );
 };
 
-export default ProductCard;
+export default ItemCard;

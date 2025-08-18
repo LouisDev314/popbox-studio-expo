@@ -1,10 +1,10 @@
 const baseScreenPath = '/(screens)';
 
 export const enum AppScreen {
-  Login = `${baseScreenPath}/auth/login`,
-  VerifyEmail = `${baseScreenPath}/auth/register`,
+  Login = `${baseScreenPath}/auth/LoginScreen`,
+  VerifyEmail = `${baseScreenPath}/auth/RegisterInitScreen`,
   Tabs = '/(tabs)',
-  Otp = `${baseScreenPath}/auth/otp`,
+  SearchResult = `${baseScreenPath}/search/SearchResultScreen`,
 }
 
 // const errorScreenPath = `${baseScreenPath}/errors`;

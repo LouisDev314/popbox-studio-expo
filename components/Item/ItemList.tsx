@@ -1,19 +1,18 @@
 import { Spinner, YStack } from 'tamagui';
 import React, { useCallback, useMemo } from 'react';
 import { FlatList, RefreshControl, View } from 'react-native';
-import ProductCard from '@/components/Product/ProductCard';
-import { IProductCard } from '@/interfaces/products';
-import { IKujiCard, IKujisResponse } from '@/interfaces/kujis';
+import ItemCard from '@/components/Item/ItemCard';
+import { IItemsResponse, IKujiCard, IProductCard } from '@/interfaces/items';
 import { InfiniteData, UseInfiniteQueryResult } from '@tanstack/react-query';
 import { AxiosResponse } from 'axios';
 import { IBaseApiResponse } from '@/interfaces/api-response';
 
 interface IProductListProps {
   isKuji: boolean;
-  queryResult: UseInfiniteQueryResult<InfiniteData<AxiosResponse<IBaseApiResponse<IKujisResponse>, unknown>, unknown>, Error>;
+  queryResult: UseInfiniteQueryResult<InfiniteData<AxiosResponse<IBaseApiResponse<IItemsResponse>, unknown>, unknown>, Error>;
 }
 
-const ProductList = (props: IProductListProps) => {
+const ItemList = (props: IProductListProps) => {
   const {
     data,
     fetchNextPage,
@@ -41,7 +40,7 @@ const ProductList = (props: IProductListProps) => {
 
   const renderItem = ({ item }: { item: IProductCard | IKujiCard }) => {
     return (
-      <ProductCard
+      <ItemCard
         title={item.title}
         images={[require('@/assets/images/macaron.jpg')]}
         price={item.price}
@@ -86,4 +85,4 @@ const ProductList = (props: IProductListProps) => {
   );
 };
 
-export default ProductList;
+export default ItemList;

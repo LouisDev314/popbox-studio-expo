@@ -14,7 +14,6 @@ import Colors from '@/constants/colors';
 import { IItemParam } from '@/hooks/use-items-infinite';
 
 interface IFiltersBottomSheetProps {
-  snapPoints: string[];
   handleCloseBottomSheet: () => void;
   setQueryKeyItemParam: React.Dispatch<React.SetStateAction<IItemParam>>;
   isKuji?: boolean;
@@ -69,7 +68,7 @@ const FiltersBottomSheet = forwardRef<BottomSheetMethods, IFiltersBottomSheetPro
           style={styles.container}
           ref={ref}
           index={-1} // starts closed
-          snapPoints={props.snapPoints}
+          snapPoints={['75%']}
           enablePanDownToClose={true}
           enableDynamicSizing={false}
           handleIndicatorStyle={styles.handleBar}

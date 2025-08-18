@@ -1,9 +1,8 @@
 import appClient from '@/api/app-client';
-import { IProductsResponse } from '@/interfaces/products';
 import { AxiosResponse } from 'axios';
 import { IBaseApiResponse } from '@/interfaces/api-response';
 import { IUser } from '@/models/user';
-import { IKujisResponse } from '@/interfaces/kujis';
+import { IItemsResponse } from '@/interfaces/items';
 
 const QueryConfigs = {
   fetchUser: (uid: string): Promise<AxiosResponse<IBaseApiResponse<IUser>>> => {
@@ -21,7 +20,7 @@ const QueryConfigs = {
     category?: string;
     sortBy?: string;
     order?: string;
-  }): Promise<AxiosResponse<IBaseApiResponse<IProductsResponse>>> => {
+  }): Promise<AxiosResponse<IBaseApiResponse<IItemsResponse>>> => {
     return await appClient.get('/products', {
       params: {
         // limit: 10,
@@ -48,7 +47,7 @@ const QueryConfigs = {
     category?: string;
     sortBy?: string;
     order?: string;
-  }): Promise<AxiosResponse<IBaseApiResponse<IKujisResponse>>> => {
+  }): Promise<AxiosResponse<IBaseApiResponse<IItemsResponse>>> => {
     return await appClient.get('/kujis', {
       params: {
         // limit: 10,

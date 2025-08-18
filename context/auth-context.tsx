@@ -70,7 +70,7 @@ export const AuthProvider = (props: { children: React.ReactNode }) => {
     });
   }, []);
 
-  // Firebase email/password registration
+  // Firebase EmailScreen/PasswordScreen registration
   const {
     mutate: register,
     isPending: isFirebaseRegisterPending,
@@ -80,7 +80,7 @@ export const AuthProvider = (props: { children: React.ReactNode }) => {
       createUser({});
     },
     onError: (err) => {
-      console.error('Firebase register error:', err);
+      console.error('Firebase RegisterInitScreen error:', err);
     },
   });
 
@@ -96,7 +96,7 @@ export const AuthProvider = (props: { children: React.ReactNode }) => {
     },
   });
 
-  // Firebase email/password sign in
+  // Firebase EmailScreen/PasswordScreen sign in
   const {
     mutate: login,
     isPending: isLoginPending,
@@ -107,7 +107,7 @@ export const AuthProvider = (props: { children: React.ReactNode }) => {
       await fetchUser();
     },
     onError: (err) => {
-      console.log('Firebase login error:', err);
+      console.log('Firebase LoginScreen error:', err);
     },
   });
 

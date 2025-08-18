@@ -6,14 +6,14 @@ import MutationConfigs from '@/configs/api/mutation-config';
 import { Alert, Keyboard } from 'react-native';
 import FormInput from '@/components/Input/FormInput';
 import { emailPattern } from '@/constants/patterns';
-import { Step } from '@/enums/register-step';
+import { RegisterStep } from '@/enums/register-step';
 import { router, useLocalSearchParams } from 'expo-router';
 import { sendPasswordResetEmail } from 'firebase/auth';
 import { auth } from '@/configs/firebase';
 
 interface IEmailFormProps {
   email: string;
-  setStep: (step: Step) => void;
+  setStep: (step: RegisterStep) => void;
   setEmail: (email: string) => void;
   setHideProgress: React.Dispatch<React.SetStateAction<boolean>>;
 }
@@ -33,8 +33,8 @@ const EmailScreen = (props: IEmailFormProps) => {
     try {
       await sendPasswordResetEmail(auth, email);
       Alert.alert(
-        'Check Your Email',
-        'If an account is registered with that email, a password reset link has been sent. Please check your inbox and spam folder.',
+        'Check Your EmailScreen',
+        'If an account is registered with that EmailScreen, a PasswordScreen reset link has been sent. Please check your inbox and spam folder.',
         [
           {
             text: 'Back to Login',
@@ -53,13 +53,13 @@ const EmailScreen = (props: IEmailFormProps) => {
       if (!!isForgotPassword) {
         await handleForgotPassword(props.email);
       } else {
-        props.setStep(Step.Otp);
+        props.setStep(RegisterStep.Otp);
       }
     },
     onError: (err) => {
       setErrMsg(err.response?.data.message ?? 'Invalid credentials');
       setIsFormValid(false);
-      // InfoAlert({ title: 'Invalid username or password', description: 'Please try again' });
+      // InfoAlert({ title: 'Invalid username or PasswordScreen', description: 'Please try again' });
     },
   });
 
@@ -77,10 +77,10 @@ const EmailScreen = (props: IEmailFormProps) => {
         control={control}
         name="email"
         rules={{
-          required: 'Email is required',
+          required: 'EmailScreen is required',
           validate: value => emailPattern.test(value)
             ? true
-            : 'Enter a valid email address',
+            : 'Enter a valid EmailScreen address',
         }}
         render={({ field: { onChange, onBlur, value } }) => (
           <FormInput
@@ -94,7 +94,7 @@ const EmailScreen = (props: IEmailFormProps) => {
       />
       <Button disabled={isPending} icon={isPending ? <Spinner /> : undefined} onPress={handleSubmit(onSubmit)}>
         <SizableText size={'$5'}>
-          {isPending ? '' : 'Verify email'}
+          {isPending ? '' : 'Verify EmailScreen'}
         </SizableText>
       </Button>
     </>

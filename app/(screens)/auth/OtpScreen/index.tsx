@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Text } from 'tamagui';
+import { Button, Text, View } from 'tamagui';
 import useCustomizeMutation from '@/hooks/use-customize-mutation';
 import MutationConfigs from '@/configs/api/mutation-config';
 import { Keyboard } from 'react-native';
 import Colors from '@/constants/colors';
 import { OtpInput } from 'react-native-otp-entry';
-import { Step } from '@/enums/register-step';
+import { RegisterStep } from '@/enums/register-step';
 import { storage } from '@/utils/mmkv';
 import { StorageKey } from '@/enums/mmkv';
 
 interface IOtpScreenProps {
   email: string;
-  setStep: (step: Step) => void;
+  setStep: (step: RegisterStep) => void;
 }
 
 const OtpScreen = (props: IOtpScreenProps) => {
@@ -36,7 +36,7 @@ const OtpScreen = (props: IOtpScreenProps) => {
           storage.delete(StorageKey.OtpTimer);
         }
       } else {
-        // Send otp on init
+        // Send OtpScreen on init
         sendOtp(props.email);
       }
     };
@@ -76,12 +76,12 @@ const OtpScreen = (props: IOtpScreenProps) => {
   const { mutation: verifyOtp } = useCustomizeMutation({
     mutationFn: MutationConfigs.verifyOtp,
     onSuccess: async () => {
-      props.setStep(Step.Password);
+      props.setStep(RegisterStep.Password);
     },
     onError: () => {
       console.log('error');
       setIsOtpValid(false);
-      // InfoAlert({ title: 'Invalid username or password', description: 'Please try again' });
+      // InfoAlert({ title: 'Invalid username or PasswordScreen', description: 'Please try again' });
     },
   });
 
@@ -124,9 +124,12 @@ const OtpScreen = (props: IOtpScreenProps) => {
         pressStyle={{ opacity: 0.5 }}
         onPress={handleResendOtp}
       >
-        <Text color={Colors.primary}>
-          {isTimerActive ? `${remainingTime}(s)` : 'Resend OTP'}
-        </Text>
+        <View flexDirection="row" alignItems="center">
+          <Text>Didn't receive otp?</Text>
+          <Text color={Colors.primary}>
+            {isTimerActive ? `${remainingTime}(s)` : 'Resend OTP'}
+          </Text>
+        </View>
       </Button>
     </>
   );

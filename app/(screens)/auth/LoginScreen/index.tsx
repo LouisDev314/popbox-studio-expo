@@ -8,7 +8,7 @@ import PasswordInput from '@/components/Input/PasswordInput';
 import FormInput from '@/components/Input/FormInput';
 import { router, useNavigation } from 'expo-router';
 import { AppScreen } from '@/enums/screens';
-import GoogleLoginScreen from '@/app/(screens)/auth/login/google';
+import GoogleLoginScreen from '@/app/(screens)/auth/GoogleLoginScreen';
 import { useAuth } from '@/context/auth-context';
 
 interface ILoginFormProps {

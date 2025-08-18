@@ -1,43 +1,19 @@
-import { Button, Image, SizableText } from 'tamagui';
-import React, { useCallback, useRef, useState } from 'react';
+import { Image } from 'tamagui';
+import React, { useState } from 'react';
 import AppStyleSheet from '@/constants/app-stylesheet';
 import { useAuth } from '@/context/auth-context';
 import { Redirect } from 'expo-router';
 import { StyleSheet, View } from 'react-native';
-import ProductList from '@/components/Product/ProductList';
 import SegmentedControl from '@react-native-segmented-control/segmented-control';
 import Colors from '@/constants/colors';
-import Ionicons from 'react-native-vector-icons/Ionicons';
-import BottomSheet from '@gorhom/bottom-sheet';
-import FiltersBottomSheet from '@/components/BottomSheet/Filters';
-import useItemsInfinite, { IItemParam } from '@/hooks/use-items-infinite';
 
 const Home = () => {
   const { isAuthenticated, isAuthLoading } = useAuth();
-
   const [selectedIndex, setSelectedIndex] = useState(0);
-  const [queryKeyItemParam, setQueryKeyItemParam] = useState<IItemParam>({
-    category: 'all',
-    sortBy: 'date',
-    order: 'desc',
-  });
   const isKuji = selectedIndex === 1;
 
-  const queryResult = useItemsInfinite(queryKeyItemParam, isKuji, isAuthenticated);
-
-  const bottomSheetRef = useRef<BottomSheet>(null);
-  const snapPoints = ['75%'];
-
-  const handleOpenBottomSheet = useCallback(() => {
-    bottomSheetRef.current?.expand();
-  }, []);
-
-  const handleCloseBottomSheet = useCallback(() => {
-    bottomSheetRef.current?.close();
-  }, []);
-
   if (!isAuthLoading && !isAuthenticated) {
-    return <Redirect href="/(screens)/auth/login" />;
+    return <Redirect href="/(screens)/auth/LoginScreen" />;
   }
 
   return (
@@ -57,19 +33,7 @@ const Home = () => {
           }}
         />
       </View>
-      <View style={styles.filterContainer}>
-        <Button
-          icon={<Ionicons name="filter-outline" color="white" size={20} />}
-          onPress={handleOpenBottomSheet}
-        >
-          <SizableText size={'$5'}>
-            Filters
-          </SizableText>
-        </Button>
-      </View>
-      <ProductList isKuji={isKuji} queryResult={queryResult} />
-      <FiltersBottomSheet ref={bottomSheetRef} snapPoints={snapPoints} isKuji={isKuji}
-                          handleCloseBottomSheet={handleCloseBottomSheet} setQueryKeyItemParam={setQueryKeyItemParam} />
+      {/*  TODO: put Popular items here */}
     </View>
   );
 };

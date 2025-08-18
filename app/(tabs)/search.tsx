@@ -1,31 +1,45 @@
 import { SafeAreaView } from 'react-native-safe-area-context';
 import AppStyleSheet from '@/constants/app-stylesheet';
-import SearchBar from 'react-native-dynamic-search-bar';
-import { SizableText, View } from 'tamagui';
-import { useState } from 'react';
+import { View } from 'tamagui';
 import { StyleSheet } from 'react-native';
+import SearchFocusScreen from '@/app/(screens)/search/SearchFocusScreen';
+import React, { useState } from 'react';
+import { SearchStep } from '@/enums/search-step';
+import Colors from '@/constants/colors';
+import SegmentedControl from '@react-native-segmented-control/segmented-control';
+import SearchInitScreen from '@/app/(screens)/search/SearchInitScreen';
 
 const Search = () => {
-  const [search, setSearch] = useState('');
+  const [step, setStep] = useState(SearchStep.Init);
+  const [selectedIndex, setSelectedIndex] = useState(0);
+  const isKuji = selectedIndex === 1;
 
-  // TODO: search debounce
+  const handleSearchFocus = () => {
+    setStep(SearchStep.OnFocus);
+  };
+
+  const handleReturn = () => {
+    setStep(SearchStep.Init);
+  };
+
   return (
     <SafeAreaView style={AppStyleSheet.bg}>
       <View style={styles.searchBarContainer}>
-        <SearchBar
-          placeholder="Search"
-          onChangeText={(text) => setSearch(text)}
-          onClearPress={() => setSearch('')}
-          autoComplete="off"
-          autoCapitalize="none"
-          autoCorrect={false}
-          style={styles.searchBar}
-        />
-      </View>
-      <View>
-        <SizableText>History</SizableText>
 
       </View>
+      <View style={styles.segmentContainer}>
+        <SegmentedControl
+          style={styles.segmentedControl}
+          tintColor={Colors.primary}
+          backgroundColor="white"
+          values={['Products', 'Ichiban Kuji']}
+          selectedIndex={selectedIndex}
+          onChange={(event) => {
+            setSelectedIndex(event.nativeEvent.selectedSegmentIndex);
+          }}
+        />
+      </View>
+      {step === SearchStep.Init ? <SearchInitScreen isKuji={isKuji} /> : <SearchFocusScreen />}
     </SafeAreaView>
   );
 };
@@ -37,6 +51,18 @@ const styles = StyleSheet.create({
   searchBar: {
     width: '100%',
     borderRadius: 24,
+  },
+  segmentContainer: {
+    alignItems: 'center',
+  },
+  segmentedControl: {
+    width: 180,
+    borderRadius: 16,
+    borderWidth: 2,
+    borderColor: Colors.primary,
+    // Ensure border radius is visible
+    overflow: 'hidden',
+    fontWeight: 'bold',
   },
 });
 

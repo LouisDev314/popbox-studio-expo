@@ -5,13 +5,13 @@ import { StyleSheet, View } from 'react-native';
 import { useHeaderHeight } from '@react-navigation/elements';
 import CustomizeHeaderBack from '@/components/CustomizeHeaderBack';
 import ProgressIndicator from '@/components/ProgressIndicator';
-import EmailScreen from '@/app/(screens)/auth/email';
-import OtpScreen from '@/app/(screens)/auth/otp';
-import PasswordScreen from '@/app/(screens)/auth/password';
-import { Step } from '@/enums/register-step';
+import EmailScreen from '@/app/(screens)/auth/EmailScreen';
+import OtpScreen from '@/app/(screens)/auth/OtpScreen';
+import PasswordScreen from '@/app/(screens)/auth/PasswordScreen';
+import { RegisterStep } from '@/enums/register-step';
 
 const RegisterInitScreen = () => {
-  const [step, setStep] = useState<Step>(Step.Email);
+  const [step, setStep] = useState<RegisterStep>(RegisterStep.Email);
   const [email, setEmail] = useState('');
   const [hideProgress, setHideProgress] = useState(false);
 
@@ -19,15 +19,15 @@ const RegisterInitScreen = () => {
 
   let currentScreen;
   switch (step) {
-    case Step.Email:
+    case RegisterStep.Email:
       currentScreen =
         <EmailScreen setEmail={setEmail} email={email} setStep={setStep} setHideProgress={setHideProgress} />;
       break;
-    // Only register will continue in following Steps
-    case Step.Otp:
+    // Only RegisterInitScreen will continue in following Steps
+    case RegisterStep.Otp:
       currentScreen = <OtpScreen email={email} setStep={setStep} />;
       break;
-    case Step.Password:
+    case RegisterStep.Password:
       currentScreen = <PasswordScreen email={email} />;
       break;
   }

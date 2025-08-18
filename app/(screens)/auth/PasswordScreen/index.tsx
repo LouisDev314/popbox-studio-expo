@@ -47,7 +47,7 @@ const PasswordScreen = (props: IPasswordScreenProps) => {
         control={control}
         name="confirmPassword"
         rules={{
-          required: 'Please confirm your password',
+          required: 'Please confirm your PasswordScreen',
           validate: value => value === getValues('password') || 'Passwords do not match',
         }}
         render={({ field: { onChange, onBlur, value } }) => (
