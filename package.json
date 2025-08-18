@@ -8,7 +8,7 @@
     "reset-project": "node ./scripts/reset-project.js",
     "android": "expo run:android",
     "build-ios": "npx expo run:ios",
-    "ios": "expo run:ios",
+    "ios": "expo start -i",
     "web": "expo start --web",
     "test": "jest --watchAll",
     "lint": "npx expo lint"

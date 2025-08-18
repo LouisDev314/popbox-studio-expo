@@ -5,34 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="17ef7c58-bf7c-413e-b6ef-f4686d9e06c1" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/app/(screens)/search/SearchInitScreen/index.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/(screens)/search/SearchResultScreen/index.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/enums/search-step.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/interfaces/items/index.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/components/SearchBar.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.expo/devices.json" beforeDir="false" afterPath="$PROJECT_DIR$/.expo/devices.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.expo/types/router.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/.expo/types/router.d.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/handlers/error-handler.ts" beforeDir="false" afterPath="$PROJECT_DIR$/api/handlers/error-handler.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/(screens)/auth/email/index.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/(screens)/auth/login/google.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/(screens)/auth/login/index.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/(screens)/auth/otp/index.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/(screens)/auth/password/index.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/(screens)/auth/register/index.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/(tabs)/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(tabs)/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/(screens)/auth/EmailScreen/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(screens)/auth/EmailScreen/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/(screens)/auth/LoginScreen/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(screens)/auth/LoginScreen/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/(screens)/auth/PasswordScreen/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(screens)/auth/PasswordScreen/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/(screens)/search/SearchFocusScreen/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(screens)/search/SearchFocusScreen/index.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/(tabs)/search.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(tabs)/search.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/BottomSheet/Filters/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/BottomSheet/Filters/index.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/Product/ProductCard.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/Item/ItemCard.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/Product/ProductList.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/Item/ItemList.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/configs/api/query-config.ts" beforeDir="false" afterPath="$PROJECT_DIR$/configs/api/query-config.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/context/auth-context.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/context/auth-context.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/enums/register-step.ts" beforeDir="false" afterPath="$PROJECT_DIR$/enums/register-step.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/enums/screens.ts" beforeDir="false" afterPath="$PROJECT_DIR$/enums/screens.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hooks/use-items-infinite.ts" beforeDir="false" afterPath="$PROJECT_DIR$/hooks/use-items-infinite.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/interfaces/kujis/index.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/interfaces/products/index.ts" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pnpm-lock.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pnpm-lock.yaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -109,7 +90,7 @@
       <workItem from="1755116940993" duration="153000" />
       <workItem from="1755117109382" duration="21617000" />
       <workItem from="1755445368152" duration="145000" />
-      <workItem from="1755445519192" duration="13462000" />
+      <workItem from="1755445519192" duration="19158000" />
     </task>
     <servers />
   </component>

@@ -81,19 +81,19 @@ const LoginScreen = () => {
           params: { isForgotPassword: 'true' },
         })}
       >
-        <Text color={'$blue10'}>
+        <Text color="$blue10">
           Forgot password?
         </Text>
       </Button>
 
       <Button disabled={isLoading} icon={isLoading ? <Spinner /> : undefined} onPress={handleSubmit(onSubmit)}>
-        <SizableText size={'$5'}>
+        <SizableText size="$5">
           {isLoading ? '' : 'Login'}
         </SizableText>
       </Button>
 
       <XStack style={styles.xStack}>
-        <SizableText size={'$4'}>
+        <SizableText size="$4">
           Don't have an account yet?
         </SizableText>
         <Button unstyled color={Colors.primary} pressStyle={{ opacity: 0.5 }}
@@ -104,7 +104,7 @@ const LoginScreen = () => {
 
       <XStack alignItems="center" marginTop={30} marginBottom={10}>
         <Separator />
-        <SizableText size={'$5'} color="gray" marginHorizontal="13">or</SizableText>
+        <SizableText size="$5" color="gray" marginHorizontal="13">or</SizableText>
         <Separator />
       </XStack>
 

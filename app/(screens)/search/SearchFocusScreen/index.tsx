@@ -2,11 +2,12 @@ import { useEffect, useState } from 'react';
 import { IAutocompleteItem } from '@/interfaces/search';
 import { Button, debounce, SizableText, View } from 'tamagui';
 import useSearchHistory from '@/hooks/use-search-history';
-import { Keyboard } from 'react-native';
-import { router } from 'expo-router';
-import { AppScreen } from '@/enums/screens';
 
-const SearchFocusScreen = () => {
+interface ISearchFocusScreenProps {
+  handleSearch: (query: string) => void;
+}
+
+const SearchFocusScreen = (props: ISearchFocusScreenProps) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [autocompleteItems, setAutocompleteItems] = useState<IAutocompleteItem[]>([]);
 
@@ -17,17 +18,6 @@ const SearchFocusScreen = () => {
     removeFromHistory,
     clearHistory,
   } = useSearchHistory();
-
-  const handleSearch = (query: string) => {
-    if (query.trim()) {
-      addToHistory(query);
-      Keyboard.dismiss();
-      router.push({
-        pathname: AppScreen.SearchResult,
-      });
-      // TODO: Add search API call and push Search Result Screen
-    }
-  };
 
   useEffect(() => {
     loadHistory();
@@ -64,7 +54,7 @@ const SearchFocusScreen = () => {
     <View>
       <SizableText size="$5">History</SizableText>
       {history.map(item => (
-        <Button key={item.timestamp} onPress={() => handleSearch(item.query)}>
+        <Button key={item.timestamp} onPress={() => props.handleSearch(item.query)}>
           {item.query}
         </Button>
       ))}

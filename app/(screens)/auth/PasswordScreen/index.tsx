@@ -64,7 +64,7 @@ const PasswordScreen = (props: IPasswordScreenProps) => {
 
       <Button disabled={isRegisterPending} icon={isRegisterPending ? <Spinner /> : undefined}
               onPress={handleSubmit(onSubmit)}>
-        <SizableText size={'$5'}>
+        <SizableText size="$5">
           Register
         </SizableText>
       </Button>
