@@ -11,11 +11,11 @@ export interface IItemParam {
   order?: string;
 }
 
-const useItemsInfinite = (itemParam: IItemParam, isKuji: boolean, isPopular: boolean, enabled?: boolean) => {
+const useItemsInfinite = (itemParam: IItemParam, isKuji: boolean, enabled?: boolean) => {
   const queryFn = isKuji ? queryConfigs.fetchKujis : queryConfigs.fetchProducts;
 
   return useInfiniteQuery<AxiosResponse<IBaseApiResponse<IItemsResponse>>>({
-    queryKey: [isKuji ? 'kujis' : 'products', isPopular ? 'popular' : '', itemParam],
+    queryKey: [isKuji ? 'kujis' : 'products', itemParam],
     queryFn: ({ pageParam }) => queryFn({
       pageParam,
       ...itemParam,

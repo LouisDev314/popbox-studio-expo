@@ -1,4 +1,3 @@
-import { SafeAreaView } from 'react-native-safe-area-context';
 import AppStyleSheet from '@/constants/app-stylesheet';
 import { Button, View, XStack } from 'tamagui';
 import { Keyboard, StyleSheet } from 'react-native';
@@ -47,8 +46,9 @@ const Search = () => {
   };
 
   return (
-    <SafeAreaView style={AppStyleSheet.bg}>
-      <XStack alignItems="center" justifyContent="space-between">
+    <View style={AppStyleSheet.bg}>
+      {/* TODO: when scroll up the header fades out */}
+      <XStack alignItems="center" justifyContent="space-between" marginTop={60}>
         {step === SearchStep.OnFocus &&
           <Button
             size="$1"
@@ -56,7 +56,6 @@ const Search = () => {
             marginBottom={12}
             height="100%"
             onPress={handleReturn}
-            // circular
             icon={<Ionicons name="chevron-back-outline" color="white" size={32} />}
           />
         }
@@ -80,7 +79,7 @@ const Search = () => {
       </View>
       {step === SearchStep.Init ? <SearchInitScreen isKuji={isKuji} /> :
         <SearchFocusScreen handleSearch={handleSearch} />}
-    </SafeAreaView>
+    </View>
   );
 };
 
@@ -93,7 +92,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   segmentedControl: {
-    width: 180,
+    width: 240,
     borderRadius: 16,
     borderWidth: 2,
     borderColor: Colors.primary,

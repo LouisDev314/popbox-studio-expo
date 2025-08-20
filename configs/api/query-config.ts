@@ -32,6 +32,9 @@ const QueryConfigs = {
       },
     });
   },
+  fetchTrendingProducts: () => {
+    return appClient.get('/products/trending');
+  },
   fetchProductById: (id: string) => {
     return appClient.get(`/products/${id}`);
   },

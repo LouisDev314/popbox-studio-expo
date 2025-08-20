@@ -1,11 +1,12 @@
-import { Spinner, YStack } from 'tamagui';
+import { Spinner, View, YStack } from 'tamagui';
 import React, { useCallback, useMemo } from 'react';
-import { FlatList, RefreshControl, View } from 'react-native';
+import { FlatList, RefreshControl } from 'react-native';
 import ItemCard from '@/components/Item/ItemCard';
 import { IItemsResponse, IKujiCard, IProductCard } from '@/interfaces/items';
 import { InfiniteData, UseInfiniteQueryResult } from '@tanstack/react-query';
 import { AxiosResponse } from 'axios';
 import { IBaseApiResponse } from '@/interfaces/api-response';
+import { SCREEN_HEIGHT } from '@gorhom/bottom-sheet';
 
 interface IProductListProps {
   isKuji: boolean;
@@ -33,9 +34,11 @@ const ItemList = (props: IProductListProps) => {
   }), []);
 
   if (isLoading) {
-    return <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Spinner size="large" />
-    </View>;
+    return (
+      <View marginTop={SCREEN_HEIGHT / 5}>
+        <Spinner size="large" color="white" />
+      </View>
+    );
   }
 
   const renderItem = ({ item }: { item: IProductCard | IKujiCard }) => {
@@ -53,7 +56,7 @@ const ItemList = (props: IProductListProps) => {
     if (!isFetchingNextPage) return null;
     return (
       <YStack padding="$4" alignItems="center">
-        <Spinner size="large" />
+        <Spinner size="large" color="white" />
       </YStack>
     );
   };

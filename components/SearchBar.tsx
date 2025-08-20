@@ -26,6 +26,7 @@ const SearchBar = (props: ISearchBarProps) => {
 
   return (
     <XStack
+      height={40}
       alignItems="center"
       backgroundColor="white"
       borderRadius="$10"
@@ -37,7 +38,7 @@ const SearchBar = (props: ISearchBarProps) => {
         ref={inputRef}
         onPressIn={handleFocus}
         flex={1}
-        placeholder="Search..."
+        placeholder="Search"
         value={searchQuery}
         onChangeText={setSearchQuery}
         backgroundColor="transparent"

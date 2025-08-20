@@ -7,6 +7,7 @@ import { StyleSheet } from 'react-native';
 import useItemsInfinite, { IItemParam } from '@/hooks/use-items-infinite';
 import { useAuth } from '@/context/auth-context';
 import BottomSheet from '@gorhom/bottom-sheet';
+import { ProductCategory, ProductsOrder, ProductSortBy } from '@/enums/sort-by-filters';
 
 interface ISearchInitScreenProps {
   isKuji: boolean;
@@ -15,11 +16,11 @@ interface ISearchInitScreenProps {
 const SearchInitScreen = (props: ISearchInitScreenProps) => {
   const { isAuthenticated } = useAuth();
   const [queryKeyItemParam, setQueryKeyItemParam] = useState<IItemParam>({
-    category: 'all',
-    sortBy: 'date',
-    order: 'desc',
+    category: ProductCategory.All,
+    sortBy: ProductSortBy.SalesVolume,
+    order: ProductsOrder.Desc,
   });
-  const queryResult = useItemsInfinite(queryKeyItemParam, props.isKuji, false, isAuthenticated);
+  const queryResult = useItemsInfinite(queryKeyItemParam, props.isKuji, isAuthenticated);
 
   const bottomSheetRef = useRef<BottomSheet>(null);
   const handleOpenBottomSheet = useCallback(() => {
@@ -30,8 +31,8 @@ const SearchInitScreen = (props: ISearchInitScreenProps) => {
   }, []);
 
   return (
-    <View>
-      <SizableText size="$9" marginVertical="12">New Drops</SizableText>
+    <>
+      <SizableText size="$9" marginVertical={8}>Products</SizableText>
       <View style={styles.filterContainer}>
         <Button
           icon={<Ionicons name="filter-outline" color="white" size={20} />}
@@ -45,7 +46,7 @@ const SearchInitScreen = (props: ISearchInitScreenProps) => {
       <ItemList isKuji={props.isKuji} queryResult={queryResult} />
       <FiltersBottomSheet ref={bottomSheetRef} isKuji={props.isKuji}
                           handleCloseBottomSheet={handleCloseBottomSheet} setQueryKeyItemParam={setQueryKeyItemParam} />
-    </View>
+    </>
   );
 };
 

@@ -12,6 +12,7 @@ import { filterOptions, IFilterOption } from '@/constants/item-filters';
 import { Button, SizableText, View } from 'tamagui';
 import Colors from '@/constants/colors';
 import { IItemParam } from '@/hooks/use-items-infinite';
+import { ProductCategory, ProductsOrder, ProductSortBy } from '@/enums/sort-by-filters';
 
 interface IFiltersBottomSheetProps {
   handleCloseBottomSheet: () => void;
@@ -21,9 +22,9 @@ interface IFiltersBottomSheetProps {
 
 const FiltersBottomSheet = forwardRef<BottomSheetMethods, IFiltersBottomSheetProps>(
   (props, ref) => {
-    const [selectedCategory, setSelectedCategory] = useState('all');
-    const [selectedSortBy, setSelectedSortBy] = useState('date');
-    const [selectedOrder, setSelectedOrder] = useState('desc');
+    const [selectedCategory, setSelectedCategory] = useState(ProductCategory.All);
+    const [selectedSortBy, setSelectedSortBy] = useState(ProductSortBy.SalesVolume);
+    const [selectedOrder, setSelectedOrder] = useState(ProductsOrder.Desc);
 
     const handleApply = async () => {
       props.handleCloseBottomSheet();
@@ -35,9 +36,9 @@ const FiltersBottomSheet = forwardRef<BottomSheetMethods, IFiltersBottomSheetPro
     };
 
     const handleReset = () => {
-      setSelectedCategory('all');
-      setSelectedSortBy('date');
-      setSelectedOrder('desc');
+      setSelectedCategory(ProductCategory.All);
+      setSelectedSortBy(ProductSortBy.SalesVolume);
+      setSelectedOrder(ProductsOrder.Desc);
     };
 
     const isSelected = (value: string) => {
@@ -47,13 +48,13 @@ const FiltersBottomSheet = forwardRef<BottomSheetMethods, IFiltersBottomSheetPro
     const handleFilterBtnPress = (item: IFilterOption, sectionTitle: string) => {
       switch (sectionTitle) {
         case 'category':
-          setSelectedCategory(item.value);
+          setSelectedCategory(item.value as ProductCategory);
           break;
         case 'sortBy':
-          setSelectedSortBy(item.value);
+          setSelectedSortBy(item.value as ProductSortBy);
           break;
         case 'order':
-          setSelectedOrder(item.value);
+          setSelectedOrder(item.value as ProductsOrder);
           break;
         default:
           break;

@@ -1,4 +1,4 @@
-import { Image } from 'tamagui';
+import { Image, SizableText } from 'tamagui';
 import React, { useState } from 'react';
 import AppStyleSheet from '@/constants/app-stylesheet';
 import { useAuth } from '@/context/auth-context';
@@ -6,6 +6,8 @@ import { Redirect } from 'expo-router';
 import { StyleSheet, View } from 'react-native';
 import SegmentedControl from '@react-native-segmented-control/segmented-control';
 import Colors from '@/constants/colors';
+import useItemsInfinite from '@/hooks/use-items-infinite';
+import TrendingItemList from '@/components/Item/TrendingItemList';
 
 const Home = () => {
   const { isAuthenticated, isAuthLoading } = useAuth();
@@ -15,6 +17,8 @@ const Home = () => {
   if (!isAuthLoading && !isAuthenticated) {
     return <Redirect href="/(screens)/auth/LoginScreen" />;
   }
+
+  const queryResult = useItemsInfinite({}, isKuji, isAuthenticated);
 
   return (
     <View style={AppStyleSheet.bg}>
@@ -33,7 +37,10 @@ const Home = () => {
           }}
         />
       </View>
-      {/*  TODO: put Popular items here */}
+      <SizableText size="$9" marginVertical={8}>Trending</SizableText>
+      {/* TODO: scroll up and header fades out */}
+      {/*<ItemList isKuji={isKuji} queryResult={queryResult} />*/}
+      <TrendingItemList />
     </View>
   );
 };
@@ -49,12 +56,11 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
     marginVertical: 8,
   },
-  filter: {},
   segmentContainer: {
     alignItems: 'center',
   },
   segmentedControl: {
-    width: 180,
+    width: 240,
     borderRadius: 16,
     borderWidth: 2,
     borderColor: Colors.primary,
