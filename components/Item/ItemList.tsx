@@ -68,7 +68,7 @@ const ItemList = (props: IProductListProps) => {
   };
 
   return (
-    <View marginBottom={280}>
+    <View marginBottom={285}>
       <Animated.FlatList
         scrollEventThrottle={16}
         data={flattenedData}

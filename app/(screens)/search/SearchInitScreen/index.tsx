@@ -38,7 +38,7 @@ const SearchInitScreen = (props: ISearchInitScreenProps) => {
 
   return (
     <>
-      <SizableText size="$9" marginVertical={8} fontWeight="bold">Products</SizableText>
+      <SizableText size="$9" marginTop={8} fontWeight="bold">Products</SizableText>
       <View style={styles.filterContainer}>
         <Button
           icon={<Ionicons name="filter-outline" color="white" size={20} />}
