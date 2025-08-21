@@ -1,6 +1,6 @@
 import { Spinner, View, YStack } from 'tamagui';
-import React, { useCallback, useMemo } from 'react';
-import { FlatList, RefreshControl } from 'react-native';
+import React, { ReactElement, useCallback, useMemo } from 'react';
+import { Animated, RefreshControl } from 'react-native';
 import ItemCard from '@/components/Item/ItemCard';
 import { IItemsResponse, IKujiCard, IProductCard } from '@/interfaces/items';
 import { InfiniteData, UseInfiniteQueryResult } from '@tanstack/react-query';
@@ -11,6 +11,8 @@ import { SCREEN_HEIGHT } from '@gorhom/bottom-sheet';
 interface IProductListProps {
   isKuji: boolean;
   queryResult: UseInfiniteQueryResult<InfiniteData<AxiosResponse<IBaseApiResponse<IItemsResponse>, unknown>, unknown>, Error>;
+  listTitle: ReactElement;
+  handleScroll: () => void;
 }
 
 const ItemList = (props: IProductListProps) => {
@@ -66,25 +68,29 @@ const ItemList = (props: IProductListProps) => {
   };
 
   return (
-    <FlatList
-      data={flattenedData}
-      keyExtractor={(item) => item._id}
-      renderItem={renderItem}
-      onEndReachedThreshold={0.5}
-      onEndReached={handleLoadMore}
-      numColumns={2}
-      getItemLayout={getItemLayout}
-      columnWrapperStyle={{ gap: 8 }}
-      ListFooterComponent={renderFooter}
-      refreshControl={
-        <RefreshControl
-          refreshing={isFetchingNextPage}
-          onRefresh={refetch}
-          tintColor="white"
-        />
-      }
-      showsVerticalScrollIndicator={false}
-    />
+    <View marginBottom={280}>
+      <Animated.FlatList
+        scrollEventThrottle={16}
+        data={flattenedData}
+        onScroll={props.handleScroll}
+        keyExtractor={(item) => item._id}
+        renderItem={renderItem}
+        onEndReachedThreshold={0.5}
+        onEndReached={handleLoadMore}
+        numColumns={2}
+        getItemLayout={getItemLayout}
+        columnWrapperStyle={{ gap: 8 }}
+        ListFooterComponent={renderFooter}
+        refreshControl={
+          <RefreshControl
+            refreshing={isFetchingNextPage}
+            onRefresh={refetch}
+            tintColor="white"
+          />
+        }
+        showsVerticalScrollIndicator={false}
+      />
+    </View>
   );
 };
 

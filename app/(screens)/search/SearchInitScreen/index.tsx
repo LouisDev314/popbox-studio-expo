@@ -3,7 +3,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import ItemList from '@/components/Item/ItemList';
 import FiltersBottomSheet from '@/components/BottomSheet/Filters';
 import React, { useCallback, useRef, useState } from 'react';
-import { StyleSheet } from 'react-native';
+import { Animated, StyleSheet } from 'react-native';
 import useItemsInfinite, { IItemParam } from '@/hooks/use-items-infinite';
 import { useAuth } from '@/context/auth-context';
 import BottomSheet from '@gorhom/bottom-sheet';
@@ -11,6 +11,7 @@ import { ProductCategory, ProductsOrder, ProductSortBy } from '@/enums/sort-by-f
 
 interface ISearchInitScreenProps {
   isKuji: boolean;
+  scrollY: Animated.Value;
 }
 
 const SearchInitScreen = (props: ISearchInitScreenProps) => {
@@ -30,9 +31,14 @@ const SearchInitScreen = (props: ISearchInitScreenProps) => {
     bottomSheetRef.current?.close();
   }, []);
 
+  const handleScroll = Animated.event(
+    [{ nativeEvent: { contentOffset: { y: props.scrollY } } }],
+    { useNativeDriver: true },
+  );
+
   return (
     <>
-      <SizableText size="$9" marginVertical={8}>Products</SizableText>
+      <SizableText size="$9" marginVertical={8} fontWeight="bold">Products</SizableText>
       <View style={styles.filterContainer}>
         <Button
           icon={<Ionicons name="filter-outline" color="white" size={20} />}
@@ -43,7 +49,10 @@ const SearchInitScreen = (props: ISearchInitScreenProps) => {
           </SizableText>
         </Button>
       </View>
-      <ItemList isKuji={props.isKuji} queryResult={queryResult} />
+      <ItemList isKuji={props.isKuji} queryResult={queryResult}
+                listTitle={<></>}
+                handleScroll={handleScroll}
+      />
       <FiltersBottomSheet ref={bottomSheetRef} isKuji={props.isKuji}
                           handleCloseBottomSheet={handleCloseBottomSheet} setQueryKeyItemParam={setQueryKeyItemParam} />
     </>

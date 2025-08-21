@@ -12,16 +12,8 @@ const SearchBar = (props: ISearchBarProps) => {
   const [searchQuery, setSearchQuery] = useState('');
   const inputRef = useRef<Input>(null);
 
-  let timer: NodeJS.Timeout;
   const handleFocus = () => {
     props.handleSearchBarFocus();
-    // Use setTimeout to ensure the input is ready to receive focus
-    if (timer) {
-      clearTimeout(timer);
-    }
-    timer = setTimeout(() => {
-      inputRef?.current?.focus();
-    }, 100);
   };
 
   return (
@@ -49,6 +41,7 @@ const SearchBar = (props: ISearchBarProps) => {
         autoComplete="off"
         autoCapitalize="none"
         autoCorrect={false}
+        autoFocus={true}
         color="black"
         onSubmitEditing={() => props.handleSearch(searchQuery)}
         editable={props.editable}

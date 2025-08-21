@@ -26,7 +26,7 @@ const TrendingItemList = (props: ITrendingItemListProps) => {
 
   if (isLoading) {
     return (
-      <View style={styles.loadingContainer}>
+      <View marginTop={SCREEN_HEIGHT / 4}>
         <Spinner size="large" color="white" />
       </View>
     );
@@ -40,7 +40,7 @@ const TrendingItemList = (props: ITrendingItemListProps) => {
   return (
     <View marginBottom={180}>
       {/* Sticky Trending Header */}
-      <SizableText marginVertical={12} size="$9" color="white" fontWeight="bold">Trending</SizableText>
+      <SizableText marginVertical={12} size="$9" fontWeight="bold">Trending</SizableText>
 
       {/* Scrollable Product List */}
       <Animated.ScrollView
@@ -75,11 +75,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'space-between',
-  },
-  loadingContainer: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginTop: SCREEN_HEIGHT / 5,
   },
 });
 

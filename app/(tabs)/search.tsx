@@ -1,8 +1,8 @@
 import AppStyleSheet from '@/constants/app-stylesheet';
 import { Button, View, XStack } from 'tamagui';
-import { Keyboard, StyleSheet } from 'react-native';
+import { Animated, Keyboard, StyleSheet } from 'react-native';
 import SearchFocusScreen from '@/app/(screens)/search/SearchFocusScreen';
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { SearchStep } from '@/enums/search-step';
 import Colors from '@/constants/colors';
 import SegmentedControl from '@react-native-segmented-control/segmented-control';
@@ -12,6 +12,9 @@ import SearchBar from '@/components/SearchBar';
 import { router } from 'expo-router';
 import { AppScreen } from '@/enums/screens';
 import useSearchHistory from '@/hooks/use-search-history';
+import AnimatedHeader from '@/components/AnimatedHeader';
+
+const HEADER_HEIGHT = 150;
 
 const Search = () => {
   const [step, setStep] = useState(SearchStep.Init);
@@ -45,9 +48,10 @@ const Search = () => {
     }
   };
 
-  return (
-    <View style={AppStyleSheet.bg}>
-      {/* TODO: when scroll up the header fades out */}
+  const scrollY = useRef(new Animated.Value(0)).current;
+
+  const searchHeader = (
+    <>
       <XStack alignItems="center" justifyContent="space-between" marginTop={60}>
         {step === SearchStep.OnFocus &&
           <Button
@@ -77,7 +81,25 @@ const Search = () => {
           }}
         />}
       </View>
-      {step === SearchStep.Init ? <SearchInitScreen isKuji={isKuji} /> :
+    </>
+  );
+
+  return (
+    <View style={AppStyleSheet.bg}>
+      {step === SearchStep.Init ? <AnimatedHeader header={searchHeader} scrollY={scrollY} /> : searchHeader}
+      {step === SearchStep.Init ? (
+          <Animated.View style={{
+            transform: [{
+              translateY: scrollY.interpolate({
+                inputRange: [0, HEADER_HEIGHT],
+                outputRange: [HEADER_HEIGHT, 50], // Start below header, move to top snap point
+                extrapolate: 'clamp',
+              }),
+            }],
+          }}>
+            <SearchInitScreen isKuji={isKuji} scrollY={scrollY} />
+          </Animated.View>
+        ) :
         <SearchFocusScreen handleSearch={handleSearch} />}
     </View>
   );

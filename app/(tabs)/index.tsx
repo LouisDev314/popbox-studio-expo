@@ -7,8 +7,8 @@ import { Animated, StyleSheet } from 'react-native';
 import SegmentedControl from '@react-native-segmented-control/segmented-control';
 import Colors from '@/constants/colors';
 import TrendingItemList from '@/components/Item/TrendingItemList';
-
-const HEADER_HEIGHT = 150; // Adjust based on your actual header height
+import AnimatedHeader from '@/components/AnimatedHeader';
+import { HEADER_HEIGHT } from '@/constants/app';
 
 const Home = () => {
   const { isAuthenticated, isAuthLoading } = useAuth();
@@ -17,50 +17,33 @@ const Home = () => {
 
   const scrollY = useRef(new Animated.Value(0)).current;
 
-  // Header fade out animation
-  const headerOpacity = scrollY.interpolate({
-    inputRange: [0, 100],
-    outputRange: [1, 0],
-    extrapolate: 'clamp',
-  });
-
-  // Header translate up animation
-  const headerTranslateY = scrollY.interpolate({
-    inputRange: [0, HEADER_HEIGHT],
-    outputRange: [0, -HEADER_HEIGHT],
-    extrapolate: 'clamp',
-  });
-
   if (!isAuthLoading && !isAuthenticated) {
     return <Redirect href="/(screens)/auth/LoginScreen" />;
   }
 
   return (
     <View style={AppStyleSheet.bg}>
-      {/* Animated Header */}
-      <Animated.View style={[
-        styles.headerContainer,
-        {
-          opacity: headerOpacity,
-          transform: [{ translateY: headerTranslateY }],
-        },
-      ]}>
-        <Image style={styles.logoContainer} source={{
-          uri: require('@/assets/images/logo.png'),
-        }} />
-        <View style={styles.segmentContainer}>
-          <SegmentedControl
-            style={styles.segmentedControl}
-            tintColor={Colors.primary}
-            backgroundColor="white"
-            values={['Products', 'Ichiban Kuji']}
-            selectedIndex={selectedIndex}
-            onChange={(event) => {
-              setSelectedIndex(event.nativeEvent.selectedSegmentIndex);
-            }}
-          />
-        </View>
-      </Animated.View>
+      <AnimatedHeader
+        scrollY={scrollY}
+        header={
+          <>
+            <Image style={styles.logoContainer} source={{
+              uri: require('@/assets/images/logo.png'),
+            }} />
+            <View style={styles.segmentContainer}>
+              <SegmentedControl
+                style={styles.segmentedControl}
+                tintColor={Colors.primary}
+                backgroundColor="white"
+                values={['Products', 'Ichiban Kuji']}
+                selectedIndex={selectedIndex}
+                onChange={(event) => {
+                  setSelectedIndex(event.nativeEvent.selectedSegmentIndex);
+                }}
+              />
+            </View>
+          </>
+        } />
 
       {/* Content that moves up as header disappears */}
       <Animated.View style={{
@@ -79,12 +62,6 @@ const Home = () => {
 };
 
 const styles = StyleSheet.create({
-  headerContainer: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-  },
   logoContainer: {
     width: 200,
     height: 70,
