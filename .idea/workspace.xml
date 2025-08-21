@@ -5,19 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="17ef7c58-bf7c-413e-b6ef-f4686d9e06c1" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/components/Item/TrendingItemList.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/enums/sort-by-filters.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.expo/devices.json" beforeDir="false" afterPath="$PROJECT_DIR$/.expo/devices.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/(screens)/search/SearchInitScreen/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(screens)/search/SearchInitScreen/index.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/(tabs)/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(tabs)/index.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/(tabs)/search.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(tabs)/search.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/BottomSheet/Filters/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/BottomSheet/Filters/index.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/Item/ItemList.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/Item/ItemList.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/SearchBar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/SearchBar.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/configs/api/query-config.ts" beforeDir="false" afterPath="$PROJECT_DIR$/configs/api/query-config.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/constants/item-filters.ts" beforeDir="false" afterPath="$PROJECT_DIR$/constants/item-filters.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hooks/use-items-infinite.ts" beforeDir="false" afterPath="$PROJECT_DIR$/hooks/use-items-infinite.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/Item/TrendingItemList.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/Item/TrendingItemList.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -94,7 +85,7 @@
       <workItem from="1755116940993" duration="153000" />
       <workItem from="1755117109382" duration="21617000" />
       <workItem from="1755445368152" duration="145000" />
-      <workItem from="1755445519192" duration="29221000" />
+      <workItem from="1755445519192" duration="40319000" />
     </task>
     <servers />
   </component>

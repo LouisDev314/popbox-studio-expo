@@ -3,18 +3,22 @@ import QueryConfigs from '@/configs/api/query-config';
 import { AxiosError } from 'axios';
 import { IBaseApiResponse } from '@/interfaces/api-response';
 import { IProductCard } from '@/interfaces/items';
-import { ScrollView, Spinner, View } from 'tamagui';
+import { SizableText, Spinner, View } from 'tamagui';
 import ItemCard from '@/components/Item/ItemCard';
 import React from 'react';
-import { RefreshControl, StyleSheet } from 'react-native';
+import { Animated, RefreshControl, StyleSheet } from 'react-native';
 import { SCREEN_HEIGHT } from '@gorhom/bottom-sheet';
 
-const TrendingItemList = () => {
+interface ITrendingItemListProps {
+  scrollY: Animated.Value;
+}
+
+const TrendingItemList = (props: ITrendingItemListProps) => {
   const { data, refetch, isFetching, isLoading } = useCustomizeQuery({
     queryKey: ['product', 'trending', 'fetch'],
     queryFn: QueryConfigs.fetchTrendingProducts,
     onError: (err: AxiosError<IBaseApiResponse>) => {
-      console.error('Cannot fetch user:', err);
+      console.error('Cannot fetch products:', err);
     },
   });
 
@@ -22,42 +26,60 @@ const TrendingItemList = () => {
 
   if (isLoading) {
     return (
-      <View marginTop={SCREEN_HEIGHT / 5}>
+      <View style={styles.loadingContainer}>
         <Spinner size="large" color="white" />
       </View>
     );
   }
 
+  const handleScroll = Animated.event(
+    [{ nativeEvent: { contentOffset: { y: props.scrollY } } }],
+    { useNativeDriver: true },
+  );
+
   return (
-    <ScrollView
-      contentContainerStyle={styles.container}
-      showsVerticalScrollIndicator={false}
-      refreshControl={
-        <RefreshControl
-          refreshing={isFetching}
-          onRefresh={refetch}
-          tintColor="white"
-        />
-      }
-    >
-      {trendingItemListData.map((item: IProductCard) => (
-        <ItemCard
-          key={item._id}
-          title={item.title}
-          images={[require('@/assets/images/macaron.jpg')]}
-          price={item.price}
-          marginBottom={8}
-        />
-      ))}
-    </ScrollView>
+    <View marginBottom={180}>
+      {/* Sticky Trending Header */}
+      <SizableText marginVertical={12} size="$9" color="white" fontWeight="bold">Trending</SizableText>
+
+      {/* Scrollable Product List */}
+      <Animated.ScrollView
+        contentContainerStyle={styles.scrollContent}
+        showsVerticalScrollIndicator={false}
+        onScroll={handleScroll}
+        scrollEventThrottle={16}
+        refreshControl={
+          <RefreshControl
+            refreshing={isFetching}
+            onRefresh={refetch}
+            tintColor="white"
+          />
+        }
+      >
+        {trendingItemListData?.map((item: IProductCard) => (
+          <ItemCard
+            key={item._id}
+            title={item.title}
+            images={[require('@/assets/images/macaron.jpg')]}
+            price={item.price}
+            marginBottom={8}
+          />
+        ))}
+      </Animated.ScrollView>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
+  scrollContent: {
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'space-between',
+  },
+  loadingContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: SCREEN_HEIGHT / 5,
   },
 });
 
