@@ -1,11 +1,11 @@
-import { useCallback, useState } from 'react';
+import { useCallback } from 'react';
 import { secureStorage } from '@/utils/mmkv';
 import { StorageKey } from '@/enums/mmkv';
 import { ISearchHistoryItem } from '@/interfaces/search';
+import { clearAllHistory, getHistory, setHistory } from '@/hooks/use-search-history-store';
 
 const useSearchHistory = () => {
   const MAX_HISTORY_ITEMS = 10;
-  const [history, setHistory] = useState<ISearchHistoryItem[]>([]);
 
   const loadHistory = useCallback(() => {
     try {
@@ -24,45 +24,38 @@ const useSearchHistory = () => {
   const addToHistory = useCallback((query: string) => {
     if (!query.trim()) return;
 
-    setHistory(prev => {
-      // Remove existing entry if it exists
-      const filtered = prev.filter(item =>
-        item.query.toLowerCase() !== query.toLowerCase(),
-      );
+    const filtered = getHistory().filter(item =>
+      item.query.toLowerCase() !== query.toLowerCase(),
+    );
+    const newItem: ISearchHistoryItem = {
+      query: query.trim(),
+      timestamp: Date.now(),
+    };
+    const updated = [newItem, ...filtered].slice(0, MAX_HISTORY_ITEMS);
 
-      const newItem: ISearchHistoryItem = {
-        query: query.trim(),
-        timestamp: Date.now(),
-      };
+    try {
+      secureStorage.set(StorageKey.SearchHistory, JSON.stringify(updated));
+    } catch (error) {
+      console.error('Error saving search history:', error);
+    }
 
-      const updated = [newItem, ...filtered].slice(0, MAX_HISTORY_ITEMS);
-
-      try {
-        secureStorage.set(StorageKey.SearchHistory, JSON.stringify(updated));
-      } catch (error) {
-        console.error('Error saving search history:', error);
-      }
-
-      return updated;
-    });
+    setHistory(updated);
   }, []);
 
   const removeFromHistory = useCallback((query: string) => {
-    setHistory(prev => {
-      const updated = prev.filter(item => item.query !== query);
+    const updated = getHistory().filter(item => item.query !== query);
 
-      try {
-        secureStorage.set(StorageKey.SearchHistory, JSON.stringify(updated));
-      } catch (error) {
-        console.error('Error removing from search history:', error);
-      }
+    try {
+      secureStorage.set(StorageKey.SearchHistory, JSON.stringify(updated));
+    } catch (error) {
+      console.error('Error removing from search history:', error);
+    }
 
-      return updated;
-    });
+    setHistory(updated);
   }, []);
 
   const clearHistory = useCallback(() => {
-    setHistory([]);
+    clearAllHistory();
     try {
       secureStorage.delete(StorageKey.SearchHistory);
     } catch (error) {
@@ -72,7 +65,6 @@ const useSearchHistory = () => {
 
   return {
     loadHistory,
-    history,
     addToHistory,
     removeFromHistory,
     clearHistory,

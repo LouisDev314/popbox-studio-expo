@@ -1,7 +1,10 @@
 import { useEffect, useState } from 'react';
 import { IAutocompleteItem } from '@/interfaces/search';
-import { Button, debounce, SizableText, View } from 'tamagui';
+import { Button, debounce, ScrollView, SizableText, View, XStack } from 'tamagui';
 import useSearchHistory from '@/hooks/use-search-history';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import Colors from '@/constants/colors';
+import { useHistoryStore } from '@/hooks/use-search-history-store';
 
 interface ISearchFocusScreenProps {
   handleSearch: (query: string) => void;
@@ -10,11 +13,10 @@ interface ISearchFocusScreenProps {
 const SearchFocusScreen = (props: ISearchFocusScreenProps) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [autocompleteItems, setAutocompleteItems] = useState<IAutocompleteItem[]>([]);
+  const history = useHistoryStore(state => state.history);
 
   const {
     loadHistory,
-    history,
-    addToHistory,
     removeFromHistory,
     clearHistory,
   } = useSearchHistory();
@@ -52,12 +54,52 @@ const SearchFocusScreen = (props: ISearchFocusScreenProps) => {
 
   return (
     <View>
-      <SizableText size="$5">History</SizableText>
-      {history.map(item => (
-        <Button key={item.timestamp} onPress={() => props.handleSearch(item.query)}>
-          {item.query}
-        </Button>
-      ))}
+      <XStack alignItems="center" justifyContent="space-between">
+        <SizableText size="$9" fontWeight="bold">History</SizableText>
+        {history.length > 0 && (
+          <Button marginTop={8} size="$2" backgroundColor="transparent" onPress={clearHistory}>
+            <SizableText size="$6" color={Colors.primary}>Clear</SizableText>
+          </Button>
+        )}
+      </XStack>
+      <ScrollView marginTop={8} height="100%" bounces={false}>
+        {searchQuery.trim() === '' ? history.map(item => (
+          <Button
+            key={item.timestamp}
+            onPress={() => props.handleSearch(item.query)}
+            unstyled
+            backgroundColor="transparent"
+            paddingVertical={8}
+            paddingHorizontal={12}
+            pressStyle={{
+              backgroundColor: 'grey',
+            }}
+          >
+            <XStack
+              justifyContent="space-between"
+              alignItems="center"
+            >
+              <SizableText fontSize="$7">
+                {item.query}
+              </SizableText>
+              <Button
+                circular
+                backgroundColor="transparent"
+                size="$2"
+                onPress={() => removeFromHistory(item.query)}
+              >
+                <Ionicons
+                  name="close-outline"
+                  color="white"
+                  size={20}
+                />
+              </Button>
+            </XStack>
+          </Button>
+        )) : (
+          <></>
+        )}
+      </ScrollView>
     </View>
   );
 };

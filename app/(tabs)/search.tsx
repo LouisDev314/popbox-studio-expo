@@ -9,8 +9,6 @@ import SegmentedControl from '@react-native-segmented-control/segmented-control'
 import SearchInitScreen from '@/app/(screens)/search/SearchInitScreen';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import SearchBar from '@/components/SearchBar';
-import { router } from 'expo-router';
-import { AppScreen } from '@/enums/screens';
 import useSearchHistory from '@/hooks/use-search-history';
 import AnimatedHeader from '@/components/AnimatedHeader';
 
@@ -20,11 +18,7 @@ const Search = () => {
   const [step, setStep] = useState(SearchStep.Init);
   const [selectedIndex, setSelectedIndex] = useState(0);
   const {
-    loadHistory,
-    history,
     addToHistory,
-    removeFromHistory,
-    clearHistory,
   } = useSearchHistory();
 
   const isKuji = selectedIndex === 1;
@@ -41,9 +35,9 @@ const Search = () => {
     if (query.trim()) {
       addToHistory(query);
       Keyboard.dismiss();
-      router.push({
-        pathname: AppScreen.SearchResult,
-      });
+      // router.push({
+      //   pathname: AppScreen.SearchResult,
+      // });
       // TODO: Add search API call and push Search Result Screen
     }
   };
@@ -64,7 +58,7 @@ const Search = () => {
           />
         }
         <View marginBottom={12} marginHorizontal={step === SearchStep.Init ? 12 : 0}
-              width={step === SearchStep.Init ? '95%' : '90%'}>
+              width={step === SearchStep.Init ? '95%' : '90%'} marginRight={step === SearchStep.OnFocus ? 8 : 0}>
           <SearchBar handleSearchBarFocus={handleSearchBarFocus} editable={step === SearchStep.OnFocus}
                      handleSearch={handleSearch} />
         </View>
