@@ -21,6 +21,7 @@ const Home = () => {
     return <Redirect href="/(screens)/auth/LoginScreen" />;
   }
 
+  // TODO: Segmented Control -> ['Products', 'Ichiban Kuji']
   return (
     <View style={AppStyleSheet.bg}>
       <AnimatedHeader
@@ -35,7 +36,7 @@ const Home = () => {
                 style={styles.segmentedControl}
                 tintColor={Colors.primary}
                 backgroundColor="white"
-                values={['Products', 'Ichiban Kuji']}
+                values={['Products']}
                 selectedIndex={selectedIndex}
                 onChange={(event) => {
                   setSelectedIndex(event.nativeEvent.selectedSegmentIndex);
@@ -55,7 +56,7 @@ const Home = () => {
           }),
         }],
       }}>
-        <TrendingItemList scrollY={scrollY} />
+        <TrendingItemList scrollY={scrollY} isKuji={isKuji} />
       </Animated.View>
     </View>
   );

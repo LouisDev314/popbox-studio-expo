@@ -27,7 +27,7 @@ const ItemCard = (props: IProductCardProps) => {
       overflow="hidden"
       width="49%"
       // height={320}
-      pressStyle={{ scale: 0.875 }}
+      pressStyle={{ scale: 0.95 }}
       {...cardProps}
     >
       {/* Image Container */}
@@ -51,7 +51,7 @@ const ItemCard = (props: IProductCardProps) => {
       <YStack padding="$3" height={120}>
         {/* Title */}
         <SizableText
-          size="$4"
+          // size="$4"
           fontWeight="300"
           fontSize="$3"
           ellipsizeMode="tail"

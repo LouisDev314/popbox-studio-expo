@@ -11,12 +11,13 @@ import { SCREEN_HEIGHT } from '@gorhom/bottom-sheet';
 
 interface ITrendingItemListProps {
   scrollY: Animated.Value;
+  isKuji: boolean;
 }
 
 const TrendingItemList = (props: ITrendingItemListProps) => {
   const { data, refetch, isFetching, isLoading } = useCustomizeQuery({
-    queryKey: ['product', 'trending', 'fetch'],
-    queryFn: QueryConfigs.fetchTrendingProducts,
+    queryKey: [props.isKuji ? 'kuji' : 'product', 'trending', 'fetch'],
+    queryFn: props.isKuji ? QueryConfigs.fetchTrendingKujis : QueryConfigs.fetchTrendingProducts,
     onError: (err: AxiosError<IBaseApiResponse>) => {
       console.error('Cannot fetch products:', err);
     },
@@ -38,7 +39,7 @@ const TrendingItemList = (props: ITrendingItemListProps) => {
   );
 
   return (
-    <View marginBottom={180}>
+    <View marginBottom={182}>
       {/* Sticky Trending Header */}
       <SizableText marginVertical={12} size="$9" fontWeight="bold">Trending</SizableText>
 

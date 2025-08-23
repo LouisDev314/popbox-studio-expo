@@ -49,9 +49,11 @@ const SearchInitScreen = (props: ISearchInitScreenProps) => {
           </SizableText>
         </Button>
       </View>
-      <ItemList isKuji={props.isKuji} queryResult={queryResult}
-                listTitle={<></>}
-                handleScroll={handleScroll}
+      <ItemList
+        isKuji={props.isKuji}
+        queryResult={queryResult}
+        listTitle={<></>}
+        handleScroll={handleScroll}
       />
       <FiltersBottomSheet ref={bottomSheetRef} isKuji={props.isKuji}
                           handleCloseBottomSheet={handleCloseBottomSheet} setQueryKeyItemParam={setQueryKeyItemParam} />

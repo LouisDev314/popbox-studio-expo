@@ -11,8 +11,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import SearchBar from '@/components/SearchBar';
 import useSearchHistory from '@/hooks/use-search-history';
 import AnimatedHeader from '@/components/AnimatedHeader';
-
-const HEADER_HEIGHT = 150;
+import { HEADER_HEIGHT } from '@/constants/app';
 
 const Search = () => {
   const [step, setStep] = useState(SearchStep.Init);
@@ -20,7 +19,6 @@ const Search = () => {
   const {
     addToHistory,
   } = useSearchHistory();
-
   const isKuji = selectedIndex === 1;
 
   const handleSearchBarFocus = () => {
@@ -64,16 +62,17 @@ const Search = () => {
         </View>
       </XStack>
       <View style={styles.segmentContainer}>
-        {step === SearchStep.Init && <SegmentedControl
+        <SegmentedControl
           style={styles.segmentedControl}
           tintColor={Colors.primary}
           backgroundColor="white"
-          values={['Products', 'Ichiban Kuji']}
+          // TODO: Segmented Control -> ['Products', 'Ichiban Kuji']
+          values={['Products']}
           selectedIndex={selectedIndex}
           onChange={(event) => {
             setSelectedIndex(event.nativeEvent.selectedSegmentIndex);
           }}
-        />}
+        />
       </View>
     </>
   );
@@ -94,7 +93,7 @@ const Search = () => {
             <SearchInitScreen isKuji={isKuji} scrollY={scrollY} />
           </Animated.View>
         ) :
-        <SearchFocusScreen handleSearch={handleSearch} />}
+        <SearchFocusScreen handleSearch={handleSearch} isKuji={isKuji} />}
     </View>
   );
 };

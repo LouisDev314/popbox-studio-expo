@@ -8,6 +8,7 @@ import { useHistoryStore } from '@/hooks/use-search-history-store';
 
 interface ISearchFocusScreenProps {
   handleSearch: (query: string) => void;
+  isKuji: boolean;
 }
 
 const SearchFocusScreen = (props: ISearchFocusScreenProps) => {
@@ -57,12 +58,12 @@ const SearchFocusScreen = (props: ISearchFocusScreenProps) => {
       <XStack alignItems="center" justifyContent="space-between">
         <SizableText size="$9" fontWeight="bold">History</SizableText>
         {history.length > 0 && (
-          <Button marginTop={8} size="$2" backgroundColor="transparent" onPress={clearHistory}>
+          <Button size="$2" backgroundColor="transparent" onPress={clearHistory}>
             <SizableText size="$6" color={Colors.primary}>Clear</SizableText>
           </Button>
         )}
       </XStack>
-      <ScrollView marginTop={8} height="100%" bounces={false}>
+      <ScrollView marginTop={8} height="100%">
         {searchQuery.trim() === '' ? history.map(item => (
           <Button
             key={item.timestamp}
@@ -79,7 +80,7 @@ const SearchFocusScreen = (props: ISearchFocusScreenProps) => {
               justifyContent="space-between"
               alignItems="center"
             >
-              <SizableText fontSize="$7">
+              <SizableText fontSize="$6">
                 {item.query}
               </SizableText>
               <Button

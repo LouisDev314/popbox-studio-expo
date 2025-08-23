@@ -5,12 +5,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="17ef7c58-bf7c-413e-b6ef-f4686d9e06c1" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/hooks/use-search-history-store.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.expo/devices.json" beforeDir="false" afterPath="$PROJECT_DIR$/.expo/devices.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/(screens)/search/SearchFocusScreen/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(screens)/search/SearchFocusScreen/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/(screens)/search/SearchInitScreen/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(screens)/search/SearchInitScreen/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/(tabs)/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(tabs)/index.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/(tabs)/search.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(tabs)/search.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hooks/use-search-history.ts" beforeDir="false" afterPath="$PROJECT_DIR$/hooks/use-search-history.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/Item/ItemCard.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/Item/ItemCard.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/Item/ItemList.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/Item/ItemList.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/Item/TrendingItemList.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/Item/TrendingItemList.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/configs/api/query-config.ts" beforeDir="false" afterPath="$PROJECT_DIR$/configs/api/query-config.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -89,7 +93,7 @@
       <workItem from="1755445368152" duration="145000" />
       <workItem from="1755445519192" duration="54504000" />
       <workItem from="1755839937610" duration="688000" />
-      <workItem from="1755883369677" duration="4538000" />
+      <workItem from="1755883369677" duration="12464000" />
     </task>
     <servers />
   </component>

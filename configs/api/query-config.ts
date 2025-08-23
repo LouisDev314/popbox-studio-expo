@@ -35,6 +35,9 @@ const QueryConfigs = {
   fetchTrendingProducts: () => {
     return appClient.get('/products/trending');
   },
+  fetchTrendingKujis: () => {
+    return appClient.get('/kujis/trending');
+  },
   fetchProductById: (id: string) => {
     return appClient.get(`/products/${id}`);
   },
