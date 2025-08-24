@@ -6,7 +6,7 @@ import { Keyboard } from 'react-native';
 import Colors from '@/constants/colors';
 import { OtpInput } from 'react-native-otp-entry';
 import { RegisterStep } from '@/enums/register-step';
-import { storage } from '@/utils/mmkv';
+import { secureStorage } from '@/utils/mmkv';
 import { StorageKey } from '@/enums/mmkv';
 
 interface IOtpScreenProps {
@@ -22,7 +22,7 @@ const OtpScreen = (props: IOtpScreenProps) => {
 
   useEffect(() => {
     const initTimer = () => {
-      const savedTimer = storage.getString(StorageKey.OtpTimer);
+      const savedTimer = secureStorage().getString(StorageKey.OtpTimer);
       if (savedTimer) {
         const { startTime, duration } = JSON.parse(savedTimer);
         const elapsed = Math.floor((Date.now() - startTime) / 1000);
@@ -33,7 +33,7 @@ const OtpScreen = (props: IOtpScreenProps) => {
         } else {
           // Timer has expired
           setIsTimerActive(false);
-          storage.delete(StorageKey.OtpTimer);
+          secureStorage().delete(StorageKey.OtpTimer);
         }
       } else {
         // Send OtpScreen on init
@@ -47,7 +47,7 @@ const OtpScreen = (props: IOtpScreenProps) => {
     const duration = 59;
     const startTime = Date.now();
     const timerState = { startTime, duration };
-    storage.set(StorageKey.OtpTimer, JSON.stringify(timerState));
+    secureStorage().set(StorageKey.OtpTimer, JSON.stringify(timerState));
     setRemainingTime(duration);
     setIsTimerActive(true);
   };
@@ -59,7 +59,7 @@ const OtpScreen = (props: IOtpScreenProps) => {
           if (prev <= 0) {
             clearInterval(interval);
             setIsTimerActive(false);
-            storage.delete(StorageKey.OtpTimer);
+            secureStorage().delete(StorageKey.OtpTimer);
             return 0;
           }
           return prev - 1;

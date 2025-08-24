@@ -24,7 +24,7 @@ export const handleLogout = async () => {
     await signOut(auth);
     // Clear stored user data
     clearUser();
-    secureStorage.clearAll();
+    secureStorage().clearAll();
     router.replace(AppScreen.Login);
   } catch (err) {
     console.error('Logout error:', err);
@@ -32,7 +32,7 @@ export const handleLogout = async () => {
 };
 
 appClient.interceptors.request.use(async (config: InternalAxiosRequestConfig) => {
-  config.headers['device-id'] = secureStorage.getString(StorageKey.DeviceId);
+  config.headers['device-id'] = secureStorage().getString(StorageKey.DeviceId);
 
   try {
     const token = await auth.currentUser?.getIdToken();

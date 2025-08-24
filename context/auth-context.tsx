@@ -4,7 +4,7 @@ import { setUser } from '@/hooks/use-user-store';
 import { AuthError, onAuthStateChanged, UserCredential } from 'firebase/auth';
 import { auth } from '@/configs/firebase';
 import retrieveDeviceId from '@/utils/device-id';
-import { secureStorage } from '@/utils/mmkv';
+import { initializeSecureStorage, secureStorage } from '@/utils/mmkv';
 import { StorageKey } from '@/enums/mmkv';
 import { router } from 'expo-router';
 import useCustomizeQuery from '@/hooks/use-customize-query';
@@ -41,13 +41,23 @@ const AuthContext = createContext<IAuthContext | undefined>(undefined);
 export const AuthProvider = (props: { children: React.ReactNode }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isAuthLoading, setIsAuthLoading] = useState(true);
+  const [storageReady, setStorageReady] = useState(false);
 
-  // Initialize device ID once
   useEffect(() => {
+    const initStorage = async () => {
+      await initializeSecureStorage();
+      setStorageReady(true);
+    };
+    initStorage();
+  }, []);
+
+  useEffect(() => {
+    if (!storageReady) return; // Wait for storage to be ready
+
     const initializeDeviceId = async () => {
       try {
         const deviceId = await retrieveDeviceId();
-        if (deviceId) secureStorage.set(StorageKey.DeviceId, deviceId);
+        if (deviceId) secureStorage().set(StorageKey.DeviceId, deviceId);
       } catch (error) {
         console.error('Failed to set device ID:', error);
       }
@@ -60,7 +70,7 @@ export const AuthProvider = (props: { children: React.ReactNode }) => {
     return onAuthStateChanged(auth, async (user) => {
       if (user) {
         setIsAuthenticated(true);
-        const storedUser = secureStorage.getString(StorageKey.User);
+        const storedUser = secureStorage().getString(StorageKey.User);
         setUser(storedUser ? JSON.parse(storedUser) : null);
       } else {
         setIsAuthenticated(false);
@@ -118,7 +128,7 @@ export const AuthProvider = (props: { children: React.ReactNode }) => {
     onSuccess: (data: AxiosResponse<IBaseApiResponse<IUser>>) => {
       const user = data.data.data as IUser;
       setUser(user);
-      secureStorage.set(StorageKey.User, JSON.stringify(user));
+      secureStorage().set(StorageKey.User, JSON.stringify(user));
       router.replace(AppScreen.Tabs);
     },
     onError: (err: AxiosError<IBaseApiResponse>) => {

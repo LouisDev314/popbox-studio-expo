@@ -9,7 +9,7 @@ const useSearchHistory = () => {
 
   const loadHistory = useCallback(() => {
     try {
-      const stored = secureStorage.getString(StorageKey.SearchHistory);
+      const stored = secureStorage().getString(StorageKey.SearchHistory);
       if (stored) {
         const parsedHistory: ISearchHistoryItem[] = JSON.parse(stored);
         // Sort by timestamp descending (most recent first)
@@ -34,7 +34,7 @@ const useSearchHistory = () => {
     const updated = [newItem, ...filtered].slice(0, MAX_HISTORY_ITEMS);
 
     try {
-      secureStorage.set(StorageKey.SearchHistory, JSON.stringify(updated));
+      secureStorage().set(StorageKey.SearchHistory, JSON.stringify(updated));
     } catch (error) {
       console.error('Error saving search history:', error);
     }
@@ -46,7 +46,7 @@ const useSearchHistory = () => {
     const updated = getHistory().filter(item => item.query !== query);
 
     try {
-      secureStorage.set(StorageKey.SearchHistory, JSON.stringify(updated));
+      secureStorage().set(StorageKey.SearchHistory, JSON.stringify(updated));
     } catch (error) {
       console.error('Error removing from search history:', error);
     }
@@ -57,7 +57,7 @@ const useSearchHistory = () => {
   const clearHistory = useCallback(() => {
     clearAllHistory();
     try {
-      secureStorage.delete(StorageKey.SearchHistory);
+      secureStorage().delete(StorageKey.SearchHistory);
     } catch (error) {
       console.error('Error clearing search history:', error);
     }

@@ -9,6 +9,7 @@ import * as SplashScreen from 'expo-splash-screen';
 import { AuthProvider } from '@/context/auth-context';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { PortalProvider } from '@gorhom/portal';
+import 'react-native-get-random-values';
 
 const config = createTamagui(defaultConfig);
 

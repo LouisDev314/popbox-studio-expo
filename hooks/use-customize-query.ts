@@ -8,6 +8,7 @@ interface ICustomizeQueryConfig<ApiResponse> {
   queryFn: () => Promise<AxiosResponse<IBaseApiResponse<ApiResponse>>>;
   retry?: boolean | number;
   enabled?: boolean;
+  staleTime?: number;
   onSuccess?: (data: AxiosResponse<IBaseApiResponse<ApiResponse>>) => void;
   onError?: (err: AxiosError<IBaseApiResponse>) => void;
 }
@@ -25,6 +26,7 @@ function useCustomizeQuery<ApiResponse>(
     queryFn: queryConfig.queryFn,
     retry: queryConfig.retry,
     enabled: queryConfig.enabled,
+    staleTime: queryConfig.staleTime,
   });
 
   useEffect(() => {

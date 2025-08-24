@@ -3,6 +3,7 @@ import { AxiosResponse } from 'axios';
 import { IBaseApiResponse } from '@/interfaces/api-response';
 import { IUser } from '@/models/user';
 import { IItemsResponse } from '@/interfaces/items';
+import { IAutocompleteItem } from '@/interfaces/search';
 
 const QueryConfigs = {
   fetchUser: (uid: string): Promise<AxiosResponse<IBaseApiResponse<IUser>>> => {
@@ -37,6 +38,14 @@ const QueryConfigs = {
   },
   fetchTrendingKujis: () => {
     return appClient.get('/kujis/trending');
+  },
+  fetchAutocomplete: (query: string, isKuji: boolean): Promise<AxiosResponse<IBaseApiResponse<IAutocompleteItem[]>>> => {
+    return appClient.get('/search/autocomplete', {
+      params: {
+        search: query,
+        isKuji,
+      },
+    });
   },
   fetchProductById: (id: string) => {
     return appClient.get(`/products/${id}`);

@@ -1,19 +1,19 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { IAutocompleteItem } from '@/interfaces/search';
-import { Button, debounce, ScrollView, SizableText, View, XStack } from 'tamagui';
+import { Button, ScrollView, SizableText, View, XStack } from 'tamagui';
 import useSearchHistory from '@/hooks/use-search-history';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Colors from '@/constants/colors';
 import { useHistoryStore } from '@/hooks/use-search-history-store';
+import { StyleSheet } from 'react-native';
 
 interface ISearchFocusScreenProps {
   handleSearch: (query: string) => void;
-  isKuji: boolean;
+  searchQuery: string;
+  autocompleteItems: IAutocompleteItem[];
 }
 
 const SearchFocusScreen = (props: ISearchFocusScreenProps) => {
-  const [searchQuery, setSearchQuery] = useState('');
-  const [autocompleteItems, setAutocompleteItems] = useState<IAutocompleteItem[]>([]);
   const history = useHistoryStore(state => state.history);
 
   const {
@@ -26,51 +26,24 @@ const SearchFocusScreen = (props: ISearchFocusScreenProps) => {
     loadHistory();
   }, []);
 
-  useEffect(() => {
-    if (!searchQuery.trim()) {
-      setAutocompleteItems([]);
-      return;
-    }
-
-    debounce(() => {
-      try {
-        // TODO: Replace with your actual API call
-        // const response = await fetch(`/api/autocomplete?q=${encodeURIComponent(searchQuery)}`);
-        // const data = await response.json();
-        // setAutocompleteItems(data.suggestions || []);
-
-        // Mock data for demonstration
-        const mockSuggestions: IAutocompleteItem[] = [
-          { id: '1', text: `${searchQuery} suggestion 1` },
-          { id: '2', text: `${searchQuery} suggestion 2` },
-          { id: '3', text: `${searchQuery} suggestion 3` },
-        ];
-        setAutocompleteItems(mockSuggestions);
-      } catch (error) {
-        console.error('Autocomplete error:', error);
-        setAutocompleteItems([]);
-      }
-    }, 300);
-  }, [searchQuery]);
-
   return (
     <View>
       <XStack alignItems="center" justifyContent="space-between">
-        <SizableText size="$9" fontWeight="bold">History</SizableText>
-        {history.length > 0 && (
+        {!props.searchQuery.trim() && <SizableText size="$9" fontWeight="bold">History</SizableText>}
+        {!props.searchQuery.trim() && history.length > 0 && (
           <Button size="$2" backgroundColor="transparent" onPress={clearHistory}>
             <SizableText size="$6" color={Colors.primary}>Clear</SizableText>
           </Button>
         )}
       </XStack>
-      <ScrollView marginTop={8} height="100%">
-        {searchQuery.trim() === '' ? history.map(item => (
+      <ScrollView marginTop={8} height="100%" keyboardShouldPersistTaps="handled">
+        {!props.searchQuery.trim() ? history.map(item => (
           <Button
             key={item.timestamp}
             onPress={() => props.handleSearch(item.query)}
             unstyled
             backgroundColor="transparent"
-            paddingVertical={8}
+            paddingVertical={4}
             paddingHorizontal={12}
             pressStyle={{
               backgroundColor: 'grey',
@@ -98,11 +71,31 @@ const SearchFocusScreen = (props: ISearchFocusScreenProps) => {
             </XStack>
           </Button>
         )) : (
-          <></>
+          <>
+            {props.autocompleteItems?.map(item => (
+              <XStack key={item._id} alignItems="center" justifyContent="space-between"
+                      pressStyle={{ backgroundColor: 'red' }}>
+                <SizableText
+                  paddingVertical={8}
+                  paddingHorizontal={12}
+                  size="$6"
+                >
+                  {item.title}
+                </SizableText>
+                <Ionicons name="arrow-up-outline" color="white" size={20} style={styles.arrow} />
+              </XStack>
+            ))}
+          </>
         )}
       </ScrollView>
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  arrow: {
+    transform: [{ rotate: '45deg' }],
+  },
+});
 
 export default SearchFocusScreen;

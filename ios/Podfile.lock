@@ -1585,6 +1585,8 @@ PODS:
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
     - Yoga
+  - react-native-get-random-values (1.11.0):
+    - React-Core
   - react-native-mmkv (3.3.0):
     - DoubleConversion
     - glog
@@ -2031,6 +2033,27 @@ PODS:
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
     - Yoga
+  - RNKeychain (10.0.0):
+    - DoubleConversion
+    - glog
+    - hermes-engine
+    - RCT-Folly (= 2024.10.14.00)
+    - RCTRequired
+    - RCTTypeSafety
+    - React-Core
+    - React-debug
+    - React-Fabric
+    - React-featureflags
+    - React-graphics
+    - React-ImageManager
+    - React-NativeModulesApple
+    - React-RCTFabric
+    - React-rendererdebug
+    - React-utils
+    - ReactCodegen
+    - ReactCommon/turbomodule/bridging
+    - ReactCommon/turbomodule/core
+    - Yoga
   - RNReanimated (3.16.7):
     - DoubleConversion
     - glog
@@ -2250,6 +2273,7 @@ DEPENDENCIES:
   - "React-logger (from `../node_modules/.pnpm/react-native@0.76.9_@babel+core@7.27.4_@babel+preset-env@7.27.2_@babel+core@7.27.4__@types+react@18.3.23_react@18.3.1/node_modules/react-native/ReactCommon/logger`)"
   - "React-Mapbuffer (from `../node_modules/.pnpm/react-native@0.76.9_@babel+core@7.27.4_@babel+preset-env@7.27.2_@babel+core@7.27.4__@types+react@18.3.23_react@18.3.1/node_modules/react-native/ReactCommon`)"
   - "React-microtasksnativemodule (from `../node_modules/.pnpm/react-native@0.76.9_@babel+core@7.27.4_@babel+preset-env@7.27.2_@babel+core@7.27.4__@types+react@18.3.23_react@18.3.1/node_modules/react-native/ReactCommon/react/nativemodule/microtasks`)"
+  - react-native-get-random-values (from `../node_modules/react-native-get-random-values`)
   - react-native-mmkv (from `../node_modules/react-native-mmkv`)
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
   - "react-native-segmented-control (from `../node_modules/@react-native-segmented-control/segmented-control`)"
@@ -2284,6 +2308,7 @@ DEPENDENCIES:
   - "RNCAsyncStorage (from `../node_modules/@react-native-async-storage/async-storage`)"
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
   - "RNGoogleSignin (from `../node_modules/@react-native-google-signin/google-signin`)"
+  - RNKeychain (from `../node_modules/react-native-keychain`)
   - RNReanimated (from `../node_modules/react-native-reanimated`)
   - RNScreens (from `../node_modules/react-native-screens`)
   - RNVectorIcons (from `../node_modules/react-native-vector-icons`)
@@ -2422,6 +2447,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/.pnpm/react-native@0.76.9_@babel+core@7.27.4_@babel+preset-env@7.27.2_@babel+core@7.27.4__@types+react@18.3.23_react@18.3.1/node_modules/react-native/ReactCommon"
   React-microtasksnativemodule:
     :path: "../node_modules/.pnpm/react-native@0.76.9_@babel+core@7.27.4_@babel+preset-env@7.27.2_@babel+core@7.27.4__@types+react@18.3.23_react@18.3.1/node_modules/react-native/ReactCommon/react/nativemodule/microtasks"
+  react-native-get-random-values:
+    :path: "../node_modules/react-native-get-random-values"
   react-native-mmkv:
     :path: "../node_modules/react-native-mmkv"
   react-native-safe-area-context:
@@ -2490,6 +2517,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-gesture-handler"
   RNGoogleSignin:
     :path: "../node_modules/@react-native-google-signin/google-signin"
+  RNKeychain:
+    :path: "../node_modules/react-native-keychain"
   RNReanimated:
     :path: "../node_modules/react-native-reanimated"
   RNScreens:
@@ -2567,6 +2596,7 @@ SPEC CHECKSUMS:
   React-logger: c4052eb941cca9a097ef01b59543a656dc088559
   React-Mapbuffer: 9343a5c14536d4463c80f09a960653d754daae21
   React-microtasksnativemodule: c7cafd8f4470cf8a4578ee605daa4c74d3278bf8
+  react-native-get-random-values: d16467cf726c618e9c7a8c3c39c31faa2244bbba
   react-native-mmkv: d58eade7147587cc5c5a990b645476c9d0e6a587
   react-native-safe-area-context: 3ec0dbf4635e3344cb1303d15fcc4a22876b3e59
   react-native-segmented-control: 7578bb8808205cc5d09fbb026eb32829d7b0b56f
@@ -2601,6 +2631,7 @@ SPEC CHECKSUMS:
   RNCAsyncStorage: 23733864a6b8a7848d562b61792ad09ea79308a8
   RNGestureHandler: de2b7ccdbf18766609fb9490c7f11c18805705a3
   RNGoogleSignin: 424a643b24c3dd69b74cf7f79b409647fca376c9
+  RNKeychain: 471ceef8c13f15a5534c3cd2674dbbd9d0680e52
   RNReanimated: 3e754f53c2645d0e57b00f6abdc96a1be2b49846
   RNScreens: 2fe3d999c2dee6ef1d5e863fec0fb6f7de60c45a
   RNVectorIcons: 7075443f1ecfe4012b7a2f65f684baf3faa9d8c1

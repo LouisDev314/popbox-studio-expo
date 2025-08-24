@@ -4,6 +4,6 @@ export interface ISearchHistoryItem {
 }
 
 export interface IAutocompleteItem {
-  id: string;
-  text: string;
+  _id: string;
+  title: string;
 }

@@ -12,13 +12,16 @@ import SearchBar from '@/components/SearchBar';
 import useSearchHistory from '@/hooks/use-search-history';
 import AnimatedHeader from '@/components/AnimatedHeader';
 import { HEADER_HEIGHT } from '@/constants/app';
+import { IAutocompleteItem } from '@/interfaces/search';
 
 const Search = () => {
   const [step, setStep] = useState(SearchStep.Init);
   const [selectedIndex, setSelectedIndex] = useState(0);
-  const {
-    addToHistory,
-  } = useSearchHistory();
+  const { addToHistory } = useSearchHistory();
+  const scrollY = useRef(new Animated.Value(0)).current;
+  const [searchQuery, setSearchQuery] = useState('');
+  const [autocompleteItems, setAutocompleteItems] = useState<IAutocompleteItem[]>([]);
+
   const isKuji = selectedIndex === 1;
 
   const handleSearchBarFocus = () => {
@@ -26,6 +29,7 @@ const Search = () => {
   };
 
   const handleReturn = () => {
+    setSearchQuery('');
     setStep(SearchStep.Init);
   };
 
@@ -36,11 +40,9 @@ const Search = () => {
       // router.push({
       //   pathname: AppScreen.SearchResult,
       // });
-      // TODO: Add search API call and push Search Result Screen
+      // TODO: Add fuzzy search API call and push Search Result Screen
     }
   };
-
-  const scrollY = useRef(new Animated.Value(0)).current;
 
   const searchHeader = (
     <>
@@ -58,7 +60,11 @@ const Search = () => {
         <View marginBottom={12} marginHorizontal={step === SearchStep.Init ? 12 : 0}
               width={step === SearchStep.Init ? '95%' : '90%'} marginRight={step === SearchStep.OnFocus ? 8 : 0}>
           <SearchBar handleSearchBarFocus={handleSearchBarFocus} editable={step === SearchStep.OnFocus}
-                     handleSearch={handleSearch} />
+                     handleSearch={handleSearch} setSearchQuery={setSearchQuery} searchQuery={searchQuery}
+                     isKuji={isKuji}
+                     setAutocompleteItems={setAutocompleteItems}
+                     autocompleteItems={autocompleteItems}
+          />
         </View>
       </XStack>
       <View style={styles.segmentContainer}>
@@ -93,7 +99,8 @@ const Search = () => {
             <SearchInitScreen isKuji={isKuji} scrollY={scrollY} />
           </Animated.View>
         ) :
-        <SearchFocusScreen handleSearch={handleSearch} isKuji={isKuji} />}
+        <SearchFocusScreen handleSearch={handleSearch} searchQuery={searchQuery}
+                           autocompleteItems={autocompleteItems} />}
     </View>
   );
 };
