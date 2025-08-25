@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import { IUser } from '@/models/user';
+import { IUser } from '@/interfaces/user';
 import { setUser } from '@/hooks/use-user-store';
 import { AuthError, onAuthStateChanged, UserCredential } from 'firebase/auth';
 import { auth } from '@/configs/firebase';

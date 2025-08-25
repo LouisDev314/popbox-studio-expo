@@ -1,4 +1,4 @@
-import ITicket from '@/models/ticket';
+import ITicket from '@/interfaces/ticket';
 
 export interface IOrder {
   tickets: ITicket[],

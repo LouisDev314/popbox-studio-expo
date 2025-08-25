@@ -1,47 +1,25 @@
 import AppStyleSheet from '@/constants/app-stylesheet';
 import { Button, View, XStack } from 'tamagui';
-import { Animated, Keyboard, StyleSheet } from 'react-native';
+import { Animated, StyleSheet } from 'react-native';
 import SearchFocusScreen from '@/app/(screens)/search/SearchFocusScreen';
-import React, { useRef, useState } from 'react';
+import React, { useRef } from 'react';
 import { SearchStep } from '@/enums/search-step';
 import Colors from '@/constants/colors';
 import SegmentedControl from '@react-native-segmented-control/segmented-control';
 import SearchInitScreen from '@/app/(screens)/search/SearchInitScreen';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import SearchBar from '@/components/SearchBar';
-import useSearchHistory from '@/hooks/use-search-history';
 import AnimatedHeader from '@/components/AnimatedHeader';
 import { HEADER_HEIGHT } from '@/constants/app';
-import { IAutocompleteItem } from '@/interfaces/search';
+import { useSearch } from '@/context/search-context';
 
 const Search = () => {
-  const [step, setStep] = useState(SearchStep.Init);
-  const [selectedIndex, setSelectedIndex] = useState(0);
-  const { addToHistory } = useSearchHistory();
+  const { step, setStep, setSearchQuery, setIsKuji, isKuji } = useSearch();
   const scrollY = useRef(new Animated.Value(0)).current;
-  const [searchQuery, setSearchQuery] = useState('');
-  const [autocompleteItems, setAutocompleteItems] = useState<IAutocompleteItem[]>([]);
-
-  const isKuji = selectedIndex === 1;
-
-  const handleSearchBarFocus = () => {
-    setStep(SearchStep.OnFocus);
-  };
 
   const handleReturn = () => {
     setSearchQuery('');
     setStep(SearchStep.Init);
-  };
-
-  const handleSearch = (query: string) => {
-    if (query.trim()) {
-      addToHistory(query);
-      Keyboard.dismiss();
-      // router.push({
-      //   pathname: AppScreen.SearchResult,
-      // });
-      // TODO: Add fuzzy search API call and push Search Result Screen
-    }
   };
 
   const searchHeader = (
@@ -59,12 +37,7 @@ const Search = () => {
         }
         <View marginBottom={12} marginHorizontal={step === SearchStep.Init ? 12 : 0}
               width={step === SearchStep.Init ? '95%' : '90%'} marginRight={step === SearchStep.OnFocus ? 8 : 0}>
-          <SearchBar handleSearchBarFocus={handleSearchBarFocus} editable={step === SearchStep.OnFocus}
-                     handleSearch={handleSearch} setSearchQuery={setSearchQuery} searchQuery={searchQuery}
-                     isKuji={isKuji}
-                     setAutocompleteItems={setAutocompleteItems}
-                     autocompleteItems={autocompleteItems}
-          />
+          <SearchBar />
         </View>
       </XStack>
       <View style={styles.segmentContainer}>
@@ -74,9 +47,9 @@ const Search = () => {
           backgroundColor="white"
           // TODO: Segmented Control -> ['Products', 'Ichiban Kuji']
           values={['Products']}
-          selectedIndex={selectedIndex}
+          selectedIndex={+isKuji}
           onChange={(event) => {
-            setSelectedIndex(event.nativeEvent.selectedSegmentIndex);
+            setIsKuji(Boolean(event.nativeEvent.selectedSegmentIndex));
           }}
         />
       </View>
@@ -99,8 +72,7 @@ const Search = () => {
             <SearchInitScreen isKuji={isKuji} scrollY={scrollY} />
           </Animated.View>
         ) :
-        <SearchFocusScreen handleSearch={handleSearch} searchQuery={searchQuery}
-                           autocompleteItems={autocompleteItems} />}
+        <SearchFocusScreen />}
     </View>
   );
 };

@@ -5,26 +5,24 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="17ef7c58-bf7c-413e-b6ef-f4686d9e06c1" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/hooks/use-debounce-input.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/utils/helper.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/interfaces/setting.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.expo/devices.json" beforeDir="false" afterPath="$PROJECT_DIR$/.expo/devices.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.expo/prebuild/cached-packages.json" beforeDir="false" afterPath="$PROJECT_DIR$/.expo/prebuild/cached-packages.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/app-client.ts" beforeDir="false" afterPath="$PROJECT_DIR$/api/app-client.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/(screens)/auth/OtpScreen/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(screens)/auth/OtpScreen/index.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/(screens)/search/SearchFocusScreen/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(screens)/search/SearchFocusScreen/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/(screens)/search/SearchResultScreen/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(screens)/search/SearchResultScreen/index.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/(tabs)/search.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(tabs)/search.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/_layout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/_layout.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/components/SearchBar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/SearchBar.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/configs/api/query-config.ts" beforeDir="false" afterPath="$PROJECT_DIR$/configs/api/query-config.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/context/auth-context.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/context/auth-context.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hooks/use-customize-query.ts" beforeDir="false" afterPath="$PROJECT_DIR$/hooks/use-customize-query.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hooks/use-search-history.ts" beforeDir="false" afterPath="$PROJECT_DIR$/hooks/use-search-history.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/interfaces/search/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/interfaces/search/index.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ios/Podfile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Podfile.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pnpm-lock.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pnpm-lock.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/mmkv.ts" beforeDir="false" afterPath="$PROJECT_DIR$/utils/mmkv.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hooks/use-user-store.ts" beforeDir="false" afterPath="$PROJECT_DIR$/hooks/use-user-store.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/interfaces/items/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/interfaces/items/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/kuji.ts" beforeDir="false" afterPath="$PROJECT_DIR$/interfaces/kuji.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/order.ts" beforeDir="false" afterPath="$PROJECT_DIR$/interfaces/order.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/product.ts" beforeDir="false" afterPath="$PROJECT_DIR$/interfaces/product.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/setting.ts" beforeDir="false" afterPath="$PROJECT_DIR$/context/search-context.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/ticket.ts" beforeDir="false" afterPath="$PROJECT_DIR$/interfaces/ticket.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/user.ts" beforeDir="false" afterPath="$PROJECT_DIR$/interfaces/user.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -74,11 +72,11 @@
       <recent name="$PROJECT_DIR$" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/interfaces" />
       <recent name="$PROJECT_DIR$/app/(screens)/search/OnFocus" />
       <recent name="$PROJECT_DIR$/components/BottomSheet" />
       <recent name="$PROJECT_DIR$/assets/images" />
       <recent name="$PROJECT_DIR$" />
-      <recent name="$PROJECT_DIR$/configs/api" />
     </key>
   </component>
   <component name="SharedIndexes">
@@ -103,7 +101,7 @@
       <workItem from="1755445368152" duration="145000" />
       <workItem from="1755445519192" duration="54504000" />
       <workItem from="1755839937610" duration="688000" />
-      <workItem from="1755883369677" duration="41327000" />
+      <workItem from="1755883369677" duration="51676000" />
     </task>
     <servers />
   </component>

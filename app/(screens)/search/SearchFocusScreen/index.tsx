@@ -1,46 +1,66 @@
-import { useEffect } from 'react';
-import { IAutocompleteItem } from '@/interfaces/search';
+import { useEffect, useState } from 'react';
 import { Button, ScrollView, SizableText, View, XStack } from 'tamagui';
 import useSearchHistory from '@/hooks/use-search-history';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Colors from '@/constants/colors';
 import { useHistoryStore } from '@/hooks/use-search-history-store';
 import { StyleSheet } from 'react-native';
+import useCustomizeQuery from '@/hooks/use-customize-query';
+import QueryConfigs from '@/configs/api/query-config';
+import { AxiosError } from 'axios';
+import { IBaseApiResponse } from '@/interfaces/api-response';
+import { useSearch } from '@/context/search-context';
+import { IAutocompleteItem } from '@/interfaces/search';
 
-interface ISearchFocusScreenProps {
-  handleSearch: (query: string) => void;
-  searchQuery: string;
-  autocompleteItems: IAutocompleteItem[];
-}
-
-const SearchFocusScreen = (props: ISearchFocusScreenProps) => {
+const SearchFocusScreen = () => {
+  const { searchQuery, handleSearch, autocompleteItems, isKuji } = useSearch();
   const history = useHistoryStore(state => state.history);
+  const [itemId, setItemId] = useState('');
 
   const {
     loadHistory,
     removeFromHistory,
     clearHistory,
+    addToHistory,
   } = useSearchHistory();
 
   useEffect(() => {
     loadHistory();
   }, []);
 
+  const { refetch: fetchProductById } = useCustomizeQuery({
+    queryKey: ['id', 'product', 'fetch'],
+    queryFn: () => QueryConfigs.fetchItemById(itemId, isKuji),
+    onSuccess: (data) => {
+      // TODO: push the detailed item screen
+    },
+    onError: (err: AxiosError<IBaseApiResponse>) => {
+      console.error('Cannot fetch user:', err);
+    },
+    enabled: false,
+  });
+
+  const handleSearchById = (item: IAutocompleteItem) => {
+    addToHistory(item.title);
+    setItemId(item._id);
+    fetchProductById();
+  };
+
   return (
     <View>
       <XStack alignItems="center" justifyContent="space-between">
-        {!props.searchQuery.trim() && <SizableText size="$9" fontWeight="bold">History</SizableText>}
-        {!props.searchQuery.trim() && history.length > 0 && (
-          <Button size="$2" backgroundColor="transparent" onPress={clearHistory}>
+        {!searchQuery.trim() && <SizableText size="$9" fontWeight="bold">History</SizableText>}
+        {!searchQuery.trim() && history.length > 0 && (
+          <Button size="$2" unstyled marginRight={-4} onPress={clearHistory}>
             <SizableText size="$6" color={Colors.primary}>Clear</SizableText>
           </Button>
         )}
       </XStack>
       <ScrollView marginTop={8} height="100%" keyboardShouldPersistTaps="handled">
-        {!props.searchQuery.trim() ? history.map(item => (
+        {!searchQuery.trim() ? history.map(item => (
           <Button
             key={item.timestamp}
-            onPress={() => props.handleSearch(item.query)}
+            onPress={() => handleSearch(item.query)}
             unstyled
             backgroundColor="transparent"
             paddingVertical={4}
@@ -53,7 +73,7 @@ const SearchFocusScreen = (props: ISearchFocusScreenProps) => {
               justifyContent="space-between"
               alignItems="center"
             >
-              <SizableText fontSize="$6">
+              <SizableText fontSize="$6" ellipse={true} maxWidth="80%">
                 {item.query}
               </SizableText>
               <Button
@@ -72,9 +92,10 @@ const SearchFocusScreen = (props: ISearchFocusScreenProps) => {
           </Button>
         )) : (
           <>
-            {props.autocompleteItems?.map(item => (
+            {autocompleteItems?.map(item => (
               <XStack key={item._id} alignItems="center" justifyContent="space-between"
-                      pressStyle={{ backgroundColor: 'red' }}>
+                      onPress={() => handleSearchById(item)}
+                      pressStyle={{ backgroundColor: 'grey' }}>
                 <SizableText
                   paddingVertical={8}
                   paddingHorizontal={12}

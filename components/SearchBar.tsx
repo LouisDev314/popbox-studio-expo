@@ -5,46 +5,46 @@ import { IAutocompleteItem } from '@/interfaces/search';
 import useCustomizeQuery from '@/hooks/use-customize-query';
 import QueryConfigs from '@/configs/api/query-config';
 import useDebounceInput from '@/hooks/use-debounce-input';
+import { useSearch } from '@/context/search-context';
+import { SearchStep } from '@/enums/search-step';
 
-interface ISearchBarProps {
-  handleSearchBarFocus: () => void;
-  editable: boolean;
-  handleSearch: (query: string) => void;
-  isKuji: boolean;
-  setSearchQuery: (query: string) => void;
-  searchQuery: string;
-  setAutocompleteItems: (items: IAutocompleteItem[]) => void;
-  autocompleteItems: IAutocompleteItem[];
-}
-
-const SearchBar = (props: ISearchBarProps) => {
+const SearchBar = () => {
+  const {
+    searchQuery,
+    setSearchQuery,
+    isKuji,
+    setAutocompleteItems,
+    handleSearchBarFocus,
+    handleSearch,
+    step,
+  } = useSearch();
   const inputRef = useRef<Input>(null);
 
-  const debouncedQuery = useDebounceInput(props.searchQuery.trim(), 300);
+  const debouncedQuery = useDebounceInput(searchQuery.trim(), 300);
 
   const { isFetching } = useCustomizeQuery({
-    queryKey: [props.isKuji ? 'kuji' : 'product', 'autocomplete', debouncedQuery, 'fetch'],
-    queryFn: () => QueryConfigs.fetchAutocomplete(debouncedQuery, props.isKuji),
+    queryKey: [isKuji ? 'kuji' : 'product', 'autocomplete', debouncedQuery, 'fetch'],
+    queryFn: () => QueryConfigs.fetchAutocomplete(debouncedQuery, isKuji),
     enabled: !!debouncedQuery,
     staleTime: 0,
     onSuccess: (data) => {
       const items = data?.data?.data as IAutocompleteItem[];
-      props.setAutocompleteItems(items);
+      setAutocompleteItems(items);
     },
   });
 
   useEffect(() => {
     if (!debouncedQuery) {
-      props.setAutocompleteItems([]);
+      setAutocompleteItems([]);
     }
   }, [debouncedQuery]);
 
   const handleFocus = () => {
-    props.handleSearchBarFocus();
+    handleSearchBarFocus();
   };
 
   const handleClearSearchQuery = () => {
-    props.setSearchQuery('');
+    setSearchQuery('');
   };
 
   return (
@@ -62,8 +62,8 @@ const SearchBar = (props: ISearchBarProps) => {
         onPressIn={handleFocus}
         flex={1}
         placeholder="Search"
-        value={props.searchQuery}
-        onChangeText={props.setSearchQuery}
+        value={searchQuery}
+        onChangeText={setSearchQuery}
         backgroundColor="transparent"
         borderWidth={0}
         marginLeft={-4}
@@ -74,10 +74,10 @@ const SearchBar = (props: ISearchBarProps) => {
         autoCorrect={false}
         autoFocus={true}
         color="black"
-        onSubmitEditing={() => props.handleSearch(props.searchQuery)}
-        editable={props.editable}
+        onSubmitEditing={() => handleSearch(searchQuery)}
+        editable={step === SearchStep.OnFocus}
       />
-      {props.searchQuery.length > 0 && (
+      {searchQuery.length > 0 && (
         <Button
           size="$2"
           circular

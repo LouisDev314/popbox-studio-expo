@@ -10,6 +10,7 @@ import { AuthProvider } from '@/context/auth-context';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { PortalProvider } from '@gorhom/portal';
 import 'react-native-get-random-values';
+import { SearchProvider } from '@/context/search-context';
 
 const config = createTamagui(defaultConfig);
 
@@ -49,7 +50,9 @@ export default function RootLayout() {
           <PortalProvider>
             <Theme name="dark">
               <AuthProvider>
-                <RootLayoutNav />
+                <SearchProvider>
+                  <RootLayoutNav />
+                </SearchProvider>
               </AuthProvider>
             </Theme>
           </PortalProvider>

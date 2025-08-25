@@ -1,5 +1,5 @@
-import IKuji from '@/models/kuji';
-import IProduct from '@/models/product';
+import IKuji from '@/interfaces/kuji';
+import IProduct from '@/interfaces/product';
 
 export interface IItemsResponse {
   items: IKujiCard[];

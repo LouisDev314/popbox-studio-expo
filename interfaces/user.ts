@@ -1,5 +1,5 @@
-import IKuji from '@/models/kuji';
-import { IOrder } from '@/models/order';
+import IKuji from '@/interfaces/kuji';
+import { IOrder } from '@/interfaces/order';
 import { User } from 'firebase/auth';
 
 export interface IUser extends User {
