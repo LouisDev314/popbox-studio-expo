@@ -15,9 +15,10 @@ const SearchResultScreen = (props: ISearchResultScreenProps) => {
   const { searchQuery, isKuji } = useSearch();
   const [searchResult, setSearchResult] = useState<IProductCard[] | IKujiCard[] | []>([]);
 
-  const { isLoading, data, isFetched } = useCustomizeQuery({
+  const { isLoading, data, isSuccess } = useCustomizeQuery({
     queryKey: ['fuzzy', 'search', 'fetch'],
     queryFn: () => QueryConfigs.fetchFuzzySearch(searchQuery, isKuji),
+    enabled: !!searchQuery.trim(),
     gcTime: 0,
   });
 
@@ -47,7 +48,7 @@ const SearchResultScreen = (props: ISearchResultScreenProps) => {
               marginBottom={8}
             />
           ))}
-        {(!isLoading && isFetched && !searchResult.length)
+        {(isSuccess && !data?.data.data)
           && (
             <View marginHorizontal="auto" marginTop={30}>
               <SizableText size="$8">No results</SizableText>
