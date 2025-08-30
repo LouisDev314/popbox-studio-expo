@@ -21,13 +21,14 @@ const useSearchHistory = () => {
     }
   }, []);
 
-  const addToHistory = useCallback((query: string) => {
+  const addToHistory = useCallback((query: string, _id?: string) => {
     if (!query.trim()) return;
 
     const filtered = getHistory().filter(item =>
       item.query.toLowerCase() !== query.toLowerCase(),
     );
     const newItem: ISearchHistoryItem = {
+      _id,
       query: query.trim(),
       timestamp: Date.now(),
     };

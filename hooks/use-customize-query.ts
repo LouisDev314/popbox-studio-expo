@@ -2,6 +2,7 @@ import { useQuery, UseQueryResult } from '@tanstack/react-query';
 import { AxiosError, AxiosResponse, HttpStatusCode } from 'axios';
 import { useEffect } from 'react';
 import { IBaseApiResponse } from '@/interfaces/api-response';
+import { Alert } from 'react-native';
 
 interface ICustomizeQueryConfig<ApiResponse> {
   queryKey: readonly unknown[];
@@ -9,6 +10,7 @@ interface ICustomizeQueryConfig<ApiResponse> {
   retry?: boolean | number;
   enabled?: boolean;
   staleTime?: number;
+  gcTime?: number;
   onSuccess?: (data: AxiosResponse<IBaseApiResponse<ApiResponse>>) => void;
   onError?: (err: AxiosError<IBaseApiResponse>) => void;
 }
@@ -27,6 +29,7 @@ function useCustomizeQuery<ApiResponse>(
     retry: queryConfig.retry,
     enabled: queryConfig.enabled,
     staleTime: queryConfig.staleTime,
+    gcTime: queryConfig.gcTime,
   });
 
   useEffect(() => {
@@ -39,7 +42,11 @@ function useCustomizeQuery<ApiResponse>(
     if (queryResult.isError && onError) {
       const err = queryResult.error;
       if (err.code === 'ECONNABORTED' && err.message.includes('timeout')) {
-        console.error('Network Error: Please check your connection');
+        Alert.alert('Network Error', 'Please check your connection', [
+          {
+            text: 'OK',
+          },
+        ]);
       } else if (err.code === HttpStatusCode.InternalServerError.toString()) {
         console.error('Internal Server Error:', err);
       } else {

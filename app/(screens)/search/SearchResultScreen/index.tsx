@@ -1,28 +1,69 @@
-import { useLocalSearchParams } from 'expo-router';
-import { Text, View, YStack } from 'tamagui';
-import AppStyleSheet from '@/constants/app-stylesheet';
+import { ScrollView, SizableText, Spinner, View } from 'tamagui';
+import React, { useEffect, useState } from 'react';
+import ItemCard from '@/components/Item/ItemCard';
+import { useSearch } from '@/context/search-context';
+import { SCREEN_HEIGHT } from '@gorhom/bottom-sheet';
+import { StyleSheet } from 'react-native';
+import QueryConfigs from '@/configs/api/query-config';
+import useCustomizeQuery from '@/hooks/use-customize-query';
 import { IKujiCard, IProductCard } from '@/interfaces/items';
-import CustomizeHeaderBack from '@/components/CustomizeHeaderBack';
-import React from 'react';
 
-const SearchResultScreen = () => {
-  const { results } = useLocalSearchParams();
-  const items: IProductCard[] | IKujiCard[] | [] = results ? JSON.parse(results as string) : [];
+interface ISearchResultScreenProps {
+}
+
+const SearchResultScreen = (props: ISearchResultScreenProps) => {
+  const { searchQuery, isKuji } = useSearch();
+  const [searchResult, setSearchResult] = useState<IProductCard[] | IKujiCard[] | []>([]);
+
+  const { isLoading, data, isFetched } = useCustomizeQuery({
+    queryKey: ['fuzzy', 'search', 'fetch'],
+    queryFn: () => QueryConfigs.fetchFuzzySearch(searchQuery, isKuji),
+    gcTime: 0,
+  });
+
+  useEffect(() => {
+    setSearchResult(data?.data.data ?? []);
+  }, [data]);
 
   return (
-    <View style={AppStyleSheet.bg}>
-      <Text>Search results</Text>
-      <CustomizeHeaderBack title="Login" />
-      {/* TODO: use scrollView to show the fixed max 20 results as item cards */}
-      <YStack alignItems="center">
-        {items.length > 0 ? items.map(item => (
-          <Text color="red" key={item._id}>{item.title}</Text>
-        )) : (
-          <Text>No results</Text>
-        )}
-      </YStack>
-    </View>
+    <>
+      {isLoading &&
+        <View marginTop={SCREEN_HEIGHT / 4}>
+          <Spinner size="small" color="white" />
+        </View>}
+      <ScrollView
+        contentContainerStyle={styles.scrollContent}
+        marginTop={8}
+        height="100%"
+        keyboardShouldPersistTaps="handled"
+      >
+        {searchResult.length > 0
+          && searchResult.map(item => (
+            <ItemCard
+              key={item._id}
+              title={item.title}
+              images={[require('@/assets/images/macaron.jpg')]}
+              price={item.price}
+              marginBottom={8}
+            />
+          ))}
+        {(!isLoading && isFetched && !searchResult.length)
+          && (
+            <View marginHorizontal="auto" marginTop={30}>
+              <SizableText size="$8">No results</SizableText>
+            </View>
+          )}
+      </ScrollView>
+    </>
   );
 };
+
+const styles = StyleSheet.create({
+  scrollContent: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-between',
+  },
+});
 
 export default SearchResultScreen;

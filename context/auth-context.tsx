@@ -34,6 +34,7 @@ interface IAuthContext {
   resetLogin: () => void;
   isError: boolean;
   logout: () => Promise<void>;
+  isStorageReady: boolean;
 }
 
 const AuthContext = createContext<IAuthContext | undefined>(undefined);
@@ -41,18 +42,18 @@ const AuthContext = createContext<IAuthContext | undefined>(undefined);
 export const AuthProvider = (props: { children: React.ReactNode }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isAuthLoading, setIsAuthLoading] = useState(true);
-  const [storageReady, setStorageReady] = useState(false);
+  const [isStorageReady, setIsStorageReady] = useState(false);
 
   useEffect(() => {
     const initStorage = async () => {
       await initializeSecureStorage();
-      setStorageReady(true);
+      setIsStorageReady(true);
     };
     initStorage();
   }, []);
 
   useEffect(() => {
-    if (!storageReady) return; // Wait for storage to be ready
+    if (!isStorageReady) return; // Wait for storage to be ready
 
     const initializeDeviceId = async () => {
       try {
@@ -153,6 +154,7 @@ export const AuthProvider = (props: { children: React.ReactNode }) => {
     createUser,
     isError,
     logout: handleLogout,
+    isStorageReady,
   };
 
   return (

@@ -28,7 +28,7 @@ const TrendingItemList = (props: ITrendingItemListProps) => {
   if (isLoading) {
     return (
       <View marginTop={SCREEN_HEIGHT / 4}>
-        <Spinner size="large" color="white" />
+        <Spinner size="small" color="white" />
       </View>
     );
   }

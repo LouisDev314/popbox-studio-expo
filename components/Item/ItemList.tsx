@@ -38,7 +38,7 @@ const ItemList = (props: IProductListProps) => {
   if (isLoading) {
     return (
       <View marginTop={SCREEN_HEIGHT / 5}>
-        <Spinner size="large" color="white" />
+        <Spinner size="small" color="white" />
       </View>
     );
   }
@@ -58,7 +58,7 @@ const ItemList = (props: IProductListProps) => {
     if (!isFetchingNextPage) return null;
     return (
       <YStack padding="$4" alignItems="center">
-        <Spinner size="large" color="white" />
+        <Spinner size="small" color="white" />
       </YStack>
     );
   };

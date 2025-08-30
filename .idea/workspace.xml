@@ -5,24 +5,22 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="17ef7c58-bf7c-413e-b6ef-f4686d9e06c1" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/interfaces/setting.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/components/AutocompleteItemList.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/components/SearchHeader.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.expo/devices.json" beforeDir="false" afterPath="$PROJECT_DIR$/.expo/devices.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/(screens)/search/SearchFocusScreen/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(screens)/search/SearchFocusScreen/index.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/(screens)/search/SearchResultScreen/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(screens)/search/SearchResultScreen/index.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/(tabs)/search.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(tabs)/search.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/_layout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/_layout.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/Item/ItemList.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/Item/ItemList.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/Item/TrendingItemList.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/Item/TrendingItemList.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/components/SearchBar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/SearchBar.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/configs/api/query-config.ts" beforeDir="false" afterPath="$PROJECT_DIR$/configs/api/query-config.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/context/auth-context.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/context/auth-context.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hooks/use-user-store.ts" beforeDir="false" afterPath="$PROJECT_DIR$/hooks/use-user-store.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/interfaces/items/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/interfaces/items/index.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/kuji.ts" beforeDir="false" afterPath="$PROJECT_DIR$/interfaces/kuji.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/order.ts" beforeDir="false" afterPath="$PROJECT_DIR$/interfaces/order.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/product.ts" beforeDir="false" afterPath="$PROJECT_DIR$/interfaces/product.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/setting.ts" beforeDir="false" afterPath="$PROJECT_DIR$/context/search-context.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/ticket.ts" beforeDir="false" afterPath="$PROJECT_DIR$/interfaces/ticket.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/user.ts" beforeDir="false" afterPath="$PROJECT_DIR$/interfaces/user.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/context/search-context.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/context/search-context.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/enums/search-step.ts" beforeDir="false" afterPath="$PROJECT_DIR$/enums/search-step.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hooks/use-customize-query.ts" beforeDir="false" afterPath="$PROJECT_DIR$/hooks/use-customize-query.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hooks/use-search-history.ts" beforeDir="false" afterPath="$PROJECT_DIR$/hooks/use-search-history.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/interfaces/search/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/interfaces/search/index.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -46,25 +44,25 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;code.cleanup.on.save&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/louischan/upo-expo&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;pnpm&quot;,
-    &quot;rearrange.code.on.save&quot;: &quot;true&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;actions.on.save&quot;,
-    &quot;ts.external.directory.path&quot;: &quot;/Users/louischan/upo-expo/node_modules/typescript/lib&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "code.cleanup.on.save": "true",
+    "git-widget-placeholder": "main",
+    "last_opened_file_path": "/Users/louischan/upo-expo",
+    "node.js.detected.package.eslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "pnpm",
+    "rearrange.code.on.save": "true",
+    "settings.editor.selected.configurable": "reference.settingsdialog.IDE.editor.colors.General",
+    "ts.external.directory.path": "/Users/louischan/upo-expo/node_modules/typescript/lib",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/hooks" />
@@ -101,7 +99,7 @@
       <workItem from="1755445368152" duration="145000" />
       <workItem from="1755445519192" duration="54504000" />
       <workItem from="1755839937610" duration="688000" />
-      <workItem from="1755883369677" duration="51676000" />
+      <workItem from="1755883369677" duration="107722000" />
     </task>
     <servers />
   </component>

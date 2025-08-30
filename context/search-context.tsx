@@ -1,10 +1,13 @@
 import { IAutocompleteItem } from '@/interfaces/search';
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, Ref, useContext, useEffect, useRef, useState } from 'react';
 import { SearchStep } from '@/enums/search-step';
 import useCustomizeQuery from '@/hooks/use-customize-query';
 import QueryConfigs from '@/configs/api/query-config';
-import { Keyboard } from 'react-native';
 import useSearchHistory from '@/hooks/use-search-history';
+import { useAuth } from '@/context/auth-context';
+import { IKujiCard, IProductCard } from '@/interfaces/items';
+import { Input } from 'tamagui';
+import useDebounceInput from '@/hooks/use-debounce-input';
 
 interface ISearchContext {
   isKuji: boolean;
@@ -12,60 +15,80 @@ interface ISearchContext {
   step: SearchStep;
   setStep: (step: SearchStep) => void;
   handleSearchBarFocus: () => void;
-  handleSearch: (query: string) => void;
-  setSearchQuery: (query: string) => void;
-  searchQuery: string;
+  handleSearchByItem: (item: IAutocompleteItem) => void;
   setAutocompleteItems: (items: IAutocompleteItem[]) => void;
   autocompleteItems: IAutocompleteItem[];
+  isSearchBarFocused: boolean;
+  setIsSearchBarFocused: (focused: boolean) => void;
+  searchQuery: string;
+  setSearchQuery: (query: string) => void;
+  searchResults: IProductCard[] | IKujiCard[] | [];
+  setSearchResults: (searchResults: IProductCard[] | IKujiCard[] | []) => void;
+  debouncedQuery: string;
+  searchBarRef: Ref<Input>;
 }
 
 const SearchContext = createContext<ISearchContext | undefined>(undefined);
 
 export const SearchProvider = (props: { children: React.ReactNode }) => {
-  const { addToHistory } = useSearchHistory();
+  const { addToHistory, loadHistory } = useSearchHistory();
+  const { isStorageReady } = useAuth();
   const [step, setStep] = useState(SearchStep.Init);
-  const [searchQuery, setSearchQuery] = useState('');
   const [isKuji, setIsKuji] = useState(false);
   const [autocompleteItems, setAutocompleteItems] = useState<IAutocompleteItem[]>([]);
+  const [itemId, setItemId] = useState('');
+  const [isSearchBarFocused, setIsSearchBarFocused] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [searchResults, setSearchResults] = useState<IProductCard[] | IKujiCard[] | []>([]);
+  const searchBarRef = useRef<Input>(null);
 
-  const { refetch: fuzzySearch } = useCustomizeQuery({
-    queryKey: ['fuzzy', 'search', searchQuery, 'fetch'],
-    queryFn: () => QueryConfigs.fetchFuzzySearch(searchQuery, isKuji),
+  const debouncedQuery = useDebounceInput(searchQuery.trim(), 300);
+
+  useEffect(() => {
+    if (isStorageReady) loadHistory();
+  }, [isStorageReady]);
+
+  const { refetch: fetchProductById } = useCustomizeQuery({
+    queryKey: ['id', 'product', 'fetch'],
+    queryFn: () => QueryConfigs.fetchItemById(itemId, isKuji),
     onSuccess: (data) => {
-      const results = data.data.data;
-      const serialized = results ? JSON.stringify(results) : '';
-      // router.push({
-      //   pathname: AppScreen.SearchResult,
-      //   params: { serialized },
-      // });
+      // TODO: push the detailed item screen
     },
-    enabled: false, // Only run when manually triggered
+    onError: (err) => {
+      console.error('Cannot fetch user:', err);
+    },
+    enabled: false,
   });
 
-  const handleSearch = (query: string) => {
-    console.log(query);
-    if (query.trim()) {
-      addToHistory(query);
-      Keyboard.dismiss();
-      fuzzySearch();
-    }
+  const handleSearchByItem = (item: IAutocompleteItem) => {
+    addToHistory(item.title, item._id);
+    setItemId(item._id);
+    console.log('Search item by id');
+    // fetchProductById();
   };
 
   const handleSearchBarFocus = () => {
     setStep(SearchStep.OnFocus);
+    searchBarRef.current?.focus();
   };
 
   const contextValue: ISearchContext = {
     step,
     setStep,
-    searchQuery,
-    setSearchQuery,
     isKuji,
     setIsKuji,
-    handleSearch,
+    handleSearchByItem,
     autocompleteItems,
     setAutocompleteItems,
     handleSearchBarFocus,
+    isSearchBarFocused,
+    setIsSearchBarFocused,
+    searchQuery,
+    setSearchQuery,
+    searchResults,
+    setSearchResults,
+    debouncedQuery,
+    searchBarRef,
   };
 
   return (

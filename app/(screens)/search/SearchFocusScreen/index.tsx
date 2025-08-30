@@ -1,79 +1,63 @@
-import { useEffect, useState } from 'react';
-import { Button, ScrollView, SizableText, View, XStack } from 'tamagui';
+import { Button, ScrollView, SizableText, XStack } from 'tamagui';
 import useSearchHistory from '@/hooks/use-search-history';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Colors from '@/constants/colors';
-import { useHistoryStore } from '@/hooks/use-search-history-store';
-import { StyleSheet } from 'react-native';
-import useCustomizeQuery from '@/hooks/use-customize-query';
-import QueryConfigs from '@/configs/api/query-config';
-import { AxiosError } from 'axios';
-import { IBaseApiResponse } from '@/interfaces/api-response';
 import { useSearch } from '@/context/search-context';
-import { IAutocompleteItem } from '@/interfaces/search';
+import AutocompleteItemList from '@/components/AutocompleteItemList';
+import { ISearchHistoryItem } from '@/interfaces/search';
+import { useHistoryStore } from '@/hooks/use-search-history-store';
+import { SearchStep } from '@/enums/search-step';
+import { Keyboard, KeyboardAvoidingView, Platform } from 'react-native';
 
-const SearchFocusScreen = () => {
-  const { searchQuery, handleSearch, autocompleteItems, isKuji } = useSearch();
+interface ISearchFocusScreenProps {
+}
+
+const SearchFocusScreen = (props: ISearchFocusScreenProps) => {
+  const { handleSearchByItem, setStep, searchQuery, setSearchQuery } = useSearch();
+  const { removeFromHistory, clearHistory, addToHistory } = useSearchHistory();
+  // Reactive
   const history = useHistoryStore(state => state.history);
-  const [itemId, setItemId] = useState('');
 
-  const {
-    loadHistory,
-    removeFromHistory,
-    clearHistory,
-    addToHistory,
-  } = useSearchHistory();
-
-  useEffect(() => {
-    loadHistory();
-  }, []);
-
-  const { refetch: fetchProductById } = useCustomizeQuery({
-    queryKey: ['id', 'product', 'fetch'],
-    queryFn: () => QueryConfigs.fetchItemById(itemId, isKuji),
-    onSuccess: (data) => {
-      // TODO: push the detailed item screen
-    },
-    onError: (err: AxiosError<IBaseApiResponse>) => {
-      console.error('Cannot fetch user:', err);
-    },
-    enabled: false,
-  });
-
-  const handleSearchById = (item: IAutocompleteItem) => {
-    addToHistory(item.title);
-    setItemId(item._id);
-    fetchProductById();
+  const handleHistoryItemOnPress = (item: ISearchHistoryItem) => {
+    if (item._id) {
+      handleSearchByItem({ _id: item._id, title: item.query });
+    } else {
+      addToHistory(item.query);
+      setSearchQuery(item.query);
+      Keyboard.dismiss();
+      setStep(SearchStep.Result);
+    }
   };
 
   return (
-    <View>
+    <>
       <XStack alignItems="center" justifyContent="space-between">
-        {!searchQuery.trim() && <SizableText size="$9" fontWeight="bold">History</SizableText>}
-        {!searchQuery.trim() && history.length > 0 && (
+        {!searchQuery && <SizableText size="$9" fontWeight="bold">History</SizableText>}
+        {!searchQuery && history.length > 0 && (
           <Button size="$2" unstyled marginRight={-4} onPress={clearHistory}>
             <SizableText size="$6" color={Colors.primary}>Clear</SizableText>
           </Button>
         )}
       </XStack>
-      <ScrollView marginTop={8} height="100%" keyboardShouldPersistTaps="handled">
-        {!searchQuery.trim() ? history.map(item => (
-          <Button
-            key={item.timestamp}
-            onPress={() => handleSearch(item.query)}
-            unstyled
-            backgroundColor="transparent"
-            paddingVertical={4}
-            paddingHorizontal={12}
-            pressStyle={{
-              backgroundColor: 'grey',
-            }}
-          >
+      <KeyboardAvoidingView
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        keyboardVerticalOffset={Platform.OS === 'ios' ? 20 : 0} // adjust offset as needed
+      >
+        <ScrollView marginTop={8} height="100%" keyboardShouldPersistTaps="handled">
+          {!searchQuery ? history.map(item => (
             <XStack
+              key={item.timestamp}
+              onPress={() => handleHistoryItemOnPress(item)}
+              backgroundColor="transparent"
+              paddingVertical={4}
+              paddingHorizontal={8}
+              pressStyle={{
+                backgroundColor: 'grey',
+              }}
               justifyContent="space-between"
               alignItems="center"
             >
-              <SizableText fontSize="$6" ellipse={true} maxWidth="80%">
+              <SizableText fontSize="$6" ellipse={true} maxWidth="85%">
                 {item.query}
               </SizableText>
               <Button
@@ -89,34 +73,12 @@ const SearchFocusScreen = () => {
                 />
               </Button>
             </XStack>
-          </Button>
-        )) : (
-          <>
-            {autocompleteItems?.map(item => (
-              <XStack key={item._id} alignItems="center" justifyContent="space-between"
-                      onPress={() => handleSearchById(item)}
-                      pressStyle={{ backgroundColor: 'grey' }}>
-                <SizableText
-                  paddingVertical={8}
-                  paddingHorizontal={12}
-                  size="$6"
-                >
-                  {item.title}
-                </SizableText>
-                <Ionicons name="arrow-up-outline" color="white" size={20} style={styles.arrow} />
-              </XStack>
-            ))}
-          </>
-        )}
-      </ScrollView>
-    </View>
+          )) : <AutocompleteItemList />
+          }
+        </ScrollView>
+      </KeyboardAvoidingView>
+    </>
   );
 };
-
-const styles = StyleSheet.create({
-  arrow: {
-    transform: [{ rotate: '45deg' }],
-  },
-});
 
 export default SearchFocusScreen;

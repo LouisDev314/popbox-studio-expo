@@ -1,50 +1,55 @@
 import { Button, Input, Spinner, XStack } from 'tamagui';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import React, { useEffect, useRef } from 'react';
+import React from 'react';
 import { IAutocompleteItem } from '@/interfaces/search';
 import useCustomizeQuery from '@/hooks/use-customize-query';
 import QueryConfigs from '@/configs/api/query-config';
-import useDebounceInput from '@/hooks/use-debounce-input';
 import { useSearch } from '@/context/search-context';
 import { SearchStep } from '@/enums/search-step';
+import { Keyboard } from 'react-native';
+import useSearchHistory from '@/hooks/use-search-history';
+import Colors from '@/constants/colors';
 
-const SearchBar = () => {
+interface ISearchBarProps {
+}
+
+const SearchBar = (props: ISearchBarProps) => {
   const {
-    searchQuery,
-    setSearchQuery,
     isKuji,
     setAutocompleteItems,
     handleSearchBarFocus,
-    handleSearch,
     step,
+    setStep,
+    setIsSearchBarFocused,
+    debouncedQuery,
+    searchBarRef,
+    setSearchQuery,
+    searchQuery,
   } = useSearch();
-  const inputRef = useRef<Input>(null);
-
-  const debouncedQuery = useDebounceInput(searchQuery.trim(), 300);
+  const { addToHistory } = useSearchHistory();
 
   const { isFetching } = useCustomizeQuery({
     queryKey: [isKuji ? 'kuji' : 'product', 'autocomplete', debouncedQuery, 'fetch'],
     queryFn: () => QueryConfigs.fetchAutocomplete(debouncedQuery, isKuji),
-    enabled: !!debouncedQuery,
-    staleTime: 0,
     onSuccess: (data) => {
       const items = data?.data?.data as IAutocompleteItem[];
       setAutocompleteItems(items);
     },
+    enabled: step === SearchStep.OnFocus && !!debouncedQuery,
+    staleTime: 0,
   });
-
-  useEffect(() => {
-    if (!debouncedQuery) {
-      setAutocompleteItems([]);
-    }
-  }, [debouncedQuery]);
-
-  const handleFocus = () => {
-    handleSearchBarFocus();
-  };
 
   const handleClearSearchQuery = () => {
     setSearchQuery('');
+    handleSearchBarFocus();
+  };
+
+  const handleSearchOnInputSubmit = (query: string) => {
+    if (query.trim()) {
+      addToHistory(query);
+      Keyboard.dismiss();
+      setStep(SearchStep.Result);
+    }
   };
 
   return (
@@ -54,12 +59,14 @@ const SearchBar = () => {
       backgroundColor="white"
       borderRadius="$10"
       paddingHorizontal="$3"
-      onPress={handleFocus}
     >
-      {isFetching ? <Spinner size="small" color="black" /> : <Ionicons name="search-outline" color="black" size={24} />}
+      {(isFetching && step !== SearchStep.Result) ? <Spinner size="small" color="black" /> :
+        <Ionicons name="search-outline" color="black" size={24} />}
       <Input
-        ref={inputRef}
-        onPressIn={handleFocus}
+        ref={searchBarRef}
+        onPressIn={handleSearchBarFocus}
+        onFocus={() => setIsSearchBarFocused(true)}
+        onBlur={() => setIsSearchBarFocused(false)}
         flex={1}
         placeholder="Search"
         value={searchQuery}
@@ -74,15 +81,16 @@ const SearchBar = () => {
         autoCorrect={false}
         autoFocus={true}
         color="black"
-        onSubmitEditing={() => handleSearch(searchQuery)}
-        editable={step === SearchStep.OnFocus}
+        onSubmitEditing={() => handleSearchOnInputSubmit(debouncedQuery)}
+        editable={step !== SearchStep.Init}
       />
-      {searchQuery.length > 0 && (
+      {(searchQuery.length > 0) && (
         <Button
           size="$2"
           circular
           backgroundColor="transparent"
           onPress={handleClearSearchQuery}
+          pressStyle={{ backgroundColor: Colors.primary }}
           icon={<Ionicons name="close-circle-outline" color="black" size={24} />}
         />
       )}

@@ -1,4 +1,5 @@
 export interface ISearchHistoryItem {
+  _id?: string;
   query: string;
   timestamp: number;
 }
