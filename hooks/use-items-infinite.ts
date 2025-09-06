@@ -15,7 +15,7 @@ const useItemsInfinite = (itemParam: IItemParam, isKuji: boolean, enabled?: bool
   const queryFn = isKuji ? queryConfigs.fetchKujis : queryConfigs.fetchProducts;
 
   return useInfiniteQuery<AxiosResponse<IBaseApiResponse<IItemsResponse>>>({
-    queryKey: [isKuji ? 'kujis' : 'products', itemParam],
+    queryKey: [isKuji ? 'kujis' : 'items', itemParam],
     queryFn: ({ pageParam }) => queryFn({
       pageParam,
       ...itemParam,

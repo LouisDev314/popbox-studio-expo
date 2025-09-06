@@ -1,9 +1,11 @@
 import { Card, CardProps, Image, SizableText, YStack } from 'tamagui';
-import { ImageURISource } from 'react-native';
+import { router } from 'expo-router';
+import { AppScreen } from '@/enums/screens';
 
 interface IProductCardProps extends CardProps {
+  id: string;
   title: string;
-  images: ImageURISource[];
+  images: string[];
   price: number;
   inventory?: number;
   originalPrice?: number; // For showing discounts
@@ -11,10 +13,19 @@ interface IProductCardProps extends CardProps {
 }
 
 const ItemCard = (props: IProductCardProps) => {
-  const { title, images, price, currency = '$', ...cardProps } = props;
+  const { id, title, images, price, currency = '$', ...cardProps } = props;
 
   const formatPrice = (amount: number) => {
     return `${currency}${amount.toFixed(2)}`;
+  };
+
+  const handleOnPress = () => {
+    router.push({
+      pathname: AppScreen.ProductDetail,
+      params: {
+        id,
+      },
+    });
   };
 
   return (
@@ -27,6 +38,7 @@ const ItemCard = (props: IProductCardProps) => {
       overflow="hidden"
       width="49%"
       // height={320}
+      onPress={handleOnPress}
       pressStyle={{ scale: 0.95 }}
       {...cardProps}
     >
@@ -38,7 +50,7 @@ const ItemCard = (props: IProductCardProps) => {
           overflow="hidden"
         >
           <Image
-            source={images[0]}
+            source={{ uri: images[0] }}
             width="100%"
             height="100%"
             objectFit="cover"

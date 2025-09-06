@@ -5,8 +5,25 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="17ef7c58-bf7c-413e-b6ef-f4686d9e06c1" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/app/(screens)/products/[id].tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/components/ImageCarousel.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.expo/devices.json" beforeDir="false" afterPath="$PROJECT_DIR$/.expo/devices.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.expo/types/router.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/.expo/types/router.d.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/(screens)/search/SearchResultScreen/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(screens)/search/SearchResultScreen/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/(tabs)/kuji.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(tabs)/kuji.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/CustomizeHeaderBack.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/CustomizeHeaderBack.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/Item/ItemCard.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/Item/ItemCard.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/Item/ItemList.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/Item/ItemList.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/Item/TrendingItemList.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/Item/TrendingItemList.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/configs/api/query-config.ts" beforeDir="false" afterPath="$PROJECT_DIR$/configs/api/query-config.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/context/search-context.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/context/search-context.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/enums/screens.ts" beforeDir="false" afterPath="$PROJECT_DIR$/enums/screens.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hooks/use-items-infinite.ts" beforeDir="false" afterPath="$PROJECT_DIR$/hooks/use-items-infinite.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pnpm-lock.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pnpm-lock.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/products/[id].tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/mmkv.ts" beforeDir="false" afterPath="$PROJECT_DIR$/utils/mmkv.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -56,11 +73,11 @@
       <recent name="$PROJECT_DIR$" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/app/(screens)" />
       <recent name="$PROJECT_DIR$/interfaces" />
       <recent name="$PROJECT_DIR$/app/(screens)/search/OnFocus" />
       <recent name="$PROJECT_DIR$/components/BottomSheet" />
       <recent name="$PROJECT_DIR$/assets/images" />
-      <recent name="$PROJECT_DIR$" />
     </key>
   </component>
   <component name="SharedIndexes">
@@ -85,7 +102,7 @@
       <workItem from="1755445368152" duration="145000" />
       <workItem from="1755445519192" duration="54504000" />
       <workItem from="1755839937610" duration="688000" />
-      <workItem from="1755883369677" duration="108510000" />
+      <workItem from="1755883369677" duration="142344000" />
     </task>
     <servers />
   </component>

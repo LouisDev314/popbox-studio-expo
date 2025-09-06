@@ -1,13 +1,13 @@
 import { IAutocompleteItem } from '@/interfaces/search';
 import React, { createContext, Ref, useContext, useEffect, useRef, useState } from 'react';
 import { SearchStep } from '@/enums/search-step';
-import useCustomizeQuery from '@/hooks/use-customize-query';
-import QueryConfigs from '@/configs/api/query-config';
 import useSearchHistory from '@/hooks/use-search-history';
 import { useAuth } from '@/context/auth-context';
 import { IKujiCard, IProductCard } from '@/interfaces/items';
 import { Input } from 'tamagui';
 import useDebounceInput from '@/hooks/use-debounce-input';
+import { router } from 'expo-router';
+import { AppScreen } from '@/enums/screens';
 
 interface ISearchContext {
   isKuji: boolean;
@@ -36,7 +36,6 @@ export const SearchProvider = (props: { children: React.ReactNode }) => {
   const [step, setStep] = useState(SearchStep.Init);
   const [isKuji, setIsKuji] = useState(false);
   const [autocompleteItems, setAutocompleteItems] = useState<IAutocompleteItem[]>([]);
-  const [itemId, setItemId] = useState('');
   const [isSearchBarFocused, setIsSearchBarFocused] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [searchResults, setSearchResults] = useState<IProductCard[] | IKujiCard[] | []>([]);
@@ -48,23 +47,14 @@ export const SearchProvider = (props: { children: React.ReactNode }) => {
     if (isStorageReady) loadHistory();
   }, [isStorageReady]);
 
-  const { refetch: fetchProductById } = useCustomizeQuery({
-    queryKey: ['id', 'product', 'fetch'],
-    queryFn: () => QueryConfigs.fetchItemById(itemId, isKuji),
-    onSuccess: (data) => {
-      // TODO: push the detailed item screen
-    },
-    onError: (err) => {
-      console.error('Cannot fetch user:', err);
-    },
-    enabled: false,
-  });
-
   const handleSearchByItem = (item: IAutocompleteItem) => {
     addToHistory(item.title, item._id);
-    setItemId(item._id);
-    console.log('Search item by id');
-    // fetchProductById();
+    router.push({
+      pathname: AppScreen.ProductDetail,
+      params: {
+        id: item._id,
+      },
+    });
   };
 
   const handleSearchBarFocus = () => {

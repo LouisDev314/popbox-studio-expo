@@ -9,7 +9,7 @@ interface ICustomizeHeaderBackProps {
 const CustomizeHeaderBack = (props: ICustomizeHeaderBackProps) => <Stack.Screen
   options={{
     headerShown: true,
-    title: '',
+    title: props.title,
     headerStyle: { backgroundColor: 'black' },
     headerBackTitle: props.title,
     headerTintColor: Colors.primary,

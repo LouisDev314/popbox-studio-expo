@@ -5,7 +5,6 @@ import { IUser } from '@/interfaces/user';
 import { IItemsResponse, IKujiCard, IProductCard } from '@/interfaces/items';
 import { IAutocompleteItem } from '@/interfaces/search';
 import IProduct from '@/interfaces/product';
-import IKuji from '@/interfaces/kuji';
 
 const QueryConfigs = {
   fetchUser: (uid: string): Promise<AxiosResponse<IBaseApiResponse<IUser>>> => {
@@ -57,8 +56,8 @@ const QueryConfigs = {
       },
     });
   },
-  fetchItemById: (id: string, isKuji: boolean): Promise<AxiosResponse<IBaseApiResponse<IProduct | IKuji>>> => {
-    return appClient.get(`/${isKuji ? 'kujis' : 'products'}/${id}`);
+  fetchProductById: (id: string): Promise<AxiosResponse<IBaseApiResponse<IProduct>>> => {
+    return appClient.get(`/products/${id}`);
   },
   fetchKujis: async ({
                        pageParam = undefined,

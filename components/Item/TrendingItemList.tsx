@@ -60,8 +60,9 @@ const TrendingItemList = (props: ITrendingItemListProps) => {
         {trendingItemListData?.map((item: IProductCard) => (
           <ItemCard
             key={item._id}
+            id={item._id}
             title={item.title}
-            images={[require('@/assets/images/macaron.jpg')]}
+            images={item.images}
             price={item.price}
             marginBottom={8}
           />

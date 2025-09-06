@@ -46,8 +46,9 @@ const ItemList = (props: IProductListProps) => {
   const renderItem = ({ item }: { item: IProductCard | IKujiCard }) => {
     return (
       <ItemCard
+        id={item._id}
         title={item.title}
-        images={[require('@/assets/images/macaron.jpg')]}
+        images={item.images}
         price={item.price}
         marginBottom={8}
       />

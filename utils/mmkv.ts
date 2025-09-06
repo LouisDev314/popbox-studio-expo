@@ -2,7 +2,7 @@ import { MMKV } from 'react-native-mmkv';
 import getEnvConfig from '@/configs/env';
 import * as Keychain from 'react-native-keychain';
 
-const generateAndStoreKey = async () => {
+const retrieveKey = async () => {
   try {
     const credentials = await Keychain.getGenericPassword({ service: getEnvConfig().encryptionKey });
     if (credentials) {
@@ -30,7 +30,7 @@ export const initializeSecureStorage = async () => {
   if (_secureStorage) {
     return _secureStorage;
   }
-  const encryptionKey = await generateAndStoreKey();
+  const encryptionKey = await retrieveKey();
   _secureStorage = new MMKV({
     id: 'mmkv-secure-storage',
     encryptionKey: encryptionKey,
