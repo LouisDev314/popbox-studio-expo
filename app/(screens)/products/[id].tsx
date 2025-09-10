@@ -1,5 +1,5 @@
 import { router, useLocalSearchParams } from 'expo-router';
-import { Button, Image, ScrollView, SizableText, Spinner, Text, View, XStack } from 'tamagui';
+import { Button, Image, ScrollView, SizableText, Spinner, View, XStack } from 'tamagui';
 import useCustomizeQuery from '@/hooks/use-customize-query';
 import QueryConfigs from '@/configs/api/query-config';
 import AppStyleSheet from '@/constants/app-stylesheet';
@@ -14,6 +14,7 @@ import Colors from '@/constants/colors';
 const ProductDetailScreen = () => {
   const { id } = useLocalSearchParams();
   const [product, setProduct] = useState<IProduct | null>(null);
+  const [quantity, setQuantity] = useState(1);
 
   const { data, isLoading } = useCustomizeQuery({
     queryKey: [id, 'product', 'fetch'],
@@ -73,21 +74,61 @@ const ProductDetailScreen = () => {
           uri: require('@/assets/images/logo.png'),
         }} />
       </XStack>
-      <ScrollView height="100%" gridRowGap="5">
+      <ScrollView height="100%" marginTop={10}>
         <ImageCarousel imgUrls={product.images} />
         <View paddingHorizontal={10}>
-          <SizableText marginTop={15} size="$8">{product.title}</SizableText>
+          <SizableText size="$8">{product.title}</SizableText>
           <XStack alignItems="center" justifyContent="space-between">
-            <SizableText size="$8" marginTop={10}>
+            <SizableText size="$8" marginTop={10} color={Colors.primary} fontWeight="500">
               ${product.price}
             </SizableText>
             <Button circular onPress={handleAddToWishlist} size="$5">
               <Ionicons name="heart-outline" color={Colors.primary} size={32} />
             </Button>
           </XStack>
-          <Text>{product.size}</Text>
+          <SizableText size="$7" marginTop={15}>Size</SizableText>
+          <SizableText size="$5">{product.size}</SizableText>
+          <SizableText size="$7" marginTop={20}>Material</SizableText>
+          <SizableText size="$5">{product.material}</SizableText>
         </View>
       </ScrollView>
+      <XStack
+        bottom={0}
+        width="100%"
+        height={90}
+        justifyContent="space-between"
+        paddingHorizontal={10}
+      >
+        <XStack
+          width="36%"
+          justifyContent="space-between"
+          alignItems="center"
+          height={56}
+          borderRadius={20}
+          style={styles.counter}
+        >
+          <Button
+            onPress={() => setQuantity(prev => Math.max(1, prev - 1))}
+          >
+            <SizableText size="$8">-</SizableText>
+          </Button>
+          <SizableText size="$7">{quantity}</SizableText>
+          <Button
+            onPress={() => setQuantity(prev => prev + 1)}
+          >
+            <SizableText size="$8">+</SizableText>
+          </Button>
+        </XStack>
+        <Button
+          borderRadius={16}
+          width="60%"
+          height={55}
+          backgroundColor={Colors.primary}
+          pressStyle={{ backgroundColor: Colors.primary }}
+        >
+          <SizableText size="$7">Add to cart</SizableText>
+        </Button>
+      </XStack>
     </View>
   );
 };
@@ -98,6 +139,9 @@ const styles = StyleSheet.create({
     height: 50,
     marginTop: -15,
     marginLeft: 75,
+  },
+  counter: {
+    gap: 8,
   },
 });
 

@@ -4,12 +4,12 @@ import { Animated } from 'react-native';
 import SearchFocusScreen from '@/app/(screens)/search/SearchFocusScreen';
 import React, { useRef } from 'react';
 import { SearchStep } from '@/enums/search-step';
-import SearchInitScreen from '@/app/(screens)/search/SearchInitScreen';
 import AnimatedHeader from '@/components/AnimatedHeader';
 import { HEADER_HEIGHT } from '@/constants/app';
 import { useSearch } from '@/context/search-context';
 import SearchHeader from '@/components/SearchHeader';
 import SearchResultScreen from '@/app/(screens)/search/SearchResultScreen';
+import SearchInitScreen from '@/app/(screens)/search/SearchInitScreen';
 
 const Search = () => {
   const { step, setStep, isKuji, setSearchQuery } = useSearch();

@@ -1,10 +1,9 @@
 import { Image, View } from 'tamagui';
-import { useSharedValue } from 'react-native-reanimated';
-import { ICarouselInstance, Pagination } from 'react-native-reanimated-carousel';
-import { useCallback, useRef } from 'react';
+import { ICarouselInstance } from 'react-native-reanimated-carousel';
+import { useRef } from 'react';
 import { Dimensions } from 'react-native';
 import Carousel from 'react-native-reanimated-carousel/src/components/Carousel';
-import Colors from '@/constants/colors';
+import { useSharedValue } from 'react-native-reanimated';
 
 interface IImageCarouselProps {
   imgUrls: string[];
@@ -15,23 +14,19 @@ const ImageCarousel = (props: IImageCarouselProps) => {
   const progress = useSharedValue<number>(0);
   const width = Dimensions.get('window').width;
 
-  const onPressPagination = useCallback((index: number) => {
-    ref.current?.scrollTo({
-      /**
-       * Calculate the difference between the current index and the target index
-       * to ensure that the carousel scrolls to the nearest index
-       */
-      count: index - Math.round(progress.get()),
-      animated: true,
-    });
-  }, []);
+  // const onPressPagination = useCallback((index: number) => {
+  //   ref.current?.scrollTo({
+  //     index,
+  //     animated: true,
+  //   });
+  // }, []);
 
   return (
-    <View marginTop={-40}>
+    <View style={{ marginTop: -40 }}>
       <Carousel
         ref={ref}
         width={width}
-        height={450}
+        height={400}
         data={props.imgUrls}
         onProgressChange={progress}
         mode="parallax"
@@ -52,14 +47,15 @@ const ImageCarousel = (props: IImageCarouselProps) => {
         )}
       />
 
-      <Pagination.Basic
-        progress={progress}
-        data={props.imgUrls}
-        activeDotStyle={{ backgroundColor: Colors.primary }}
-        dotStyle={{ backgroundColor: Colors.grey, borderRadius: 50 }}
-        containerStyle={{ gap: 8, marginTop: -20 }}
-        onPress={onPressPagination}
-      />
+      {/* FIXME */}
+      {/*<Pagination.Basic*/}
+      {/*  progress={progress}*/}
+      {/*  data={props.imgUrls}*/}
+      {/*  activeDotStyle={{ backgroundColor: Colors.primary }}*/}
+      {/*  dotStyle={{ backgroundColor: Colors.grey, borderRadius: 50 }}*/}
+      {/*  containerStyle={{ gap: 8, marginTop: -20 }}*/}
+      {/*  onPress={onPressPagination}*/}
+      {/*/>*/}
     </View>
   );
 };

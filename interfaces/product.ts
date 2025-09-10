@@ -7,7 +7,7 @@ export default interface IProduct {
   price: number;
   inventory: number;
   material: string;
-  size: number;
+  size: string;
   isActive: boolean;
   createdAt: string;
 }
