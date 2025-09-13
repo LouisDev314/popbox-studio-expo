@@ -6,9 +6,8 @@ import { IProductCard } from '@/interfaces/items';
 import { Spinner, View } from 'tamagui';
 import ItemCard from '@/components/Item/ItemCard';
 import React from 'react';
-import { Animated, RefreshControl } from 'react-native';
+import { Animated, RefreshControl, StyleSheet } from 'react-native';
 import { SCREEN_HEIGHT } from '@gorhom/bottom-sheet';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { MAX_HEADER_HEIGHT } from '@/constants/app';
 
 interface ITrendingItemListProps {
@@ -41,38 +40,42 @@ const TrendingItemList = (props: ITrendingItemListProps) => {
   );
 
   return (
-    <SafeAreaView>
-      {/* Scrollable Product List */}
-      <Animated.FlatList
-        contentContainerStyle={{ paddingTop: MAX_HEADER_HEIGHT }}
-        scrollEventThrottle={16}
-        data={trendingItemListData}
-        onScroll={handleScroll}
-        keyExtractor={(item) => item._id}
-        renderItem={({ item }) => (
-          <ItemCard
-            id={item._id}
-            title={item.title}
-            images={item.images}
-            price={item.price}
-            marginBottom={8}
-          />
-        )}
-        numColumns={2}
-        // getItemLayout={getItemLayout}
-        columnWrapperStyle={{ gap: 8 }}
-        refreshControl={
-          <RefreshControl
-            refreshing={isFetching}
-            onRefresh={refetch}
-            tintColor="white"
-            progressViewOffset={MAX_HEADER_HEIGHT}
-          />
-        }
-        showsVerticalScrollIndicator={false}
-      />
-    </SafeAreaView>
+    <Animated.FlatList
+      style={styles.container}
+      contentContainerStyle={{ paddingTop: MAX_HEADER_HEIGHT }}
+      scrollEventThrottle={16}
+      data={trendingItemListData}
+      onScroll={handleScroll}
+      keyExtractor={(item) => item._id}
+      renderItem={({ item }) => (
+        <ItemCard
+          id={item._id}
+          title={item.title}
+          images={item.images}
+          price={item.price}
+          marginBottom={8}
+        />
+      )}
+      numColumns={2}
+      // getItemLayout={getItemLayout}
+      columnWrapperStyle={{ gap: 8 }}
+      refreshControl={
+        <RefreshControl
+          refreshing={isFetching}
+          onRefresh={refetch}
+          tintColor="white"
+          progressViewOffset={MAX_HEADER_HEIGHT}
+        />
+      }
+      showsVerticalScrollIndicator={false}
+    />
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    marginTop: 55,
+  },
+});
 
 export default TrendingItemList;

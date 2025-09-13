@@ -40,7 +40,7 @@ const SearchInitScreen = (props: ISearchInitScreenProps) => {
   );
 
   return (
-    <>
+    <View marginBottom={120}>
       <Animated.View style={{
         transform: [{
           translateY: props.scrollY.interpolate({
@@ -70,7 +70,7 @@ const SearchInitScreen = (props: ISearchInitScreenProps) => {
       />
       <FiltersBottomSheet ref={bottomSheetRef} isKuji={props.isKuji}
                           handleCloseBottomSheet={handleCloseBottomSheet} setQueryKeyItemParam={setQueryKeyItemParam} />
-    </>
+    </View>
   );
 };
 

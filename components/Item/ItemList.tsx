@@ -1,13 +1,12 @@
 import { Spinner, View, YStack } from 'tamagui';
 import React, { ReactElement, useMemo } from 'react';
-import { Animated, RefreshControl } from 'react-native';
+import { Animated, RefreshControl, StyleSheet } from 'react-native';
 import ItemCard from '@/components/Item/ItemCard';
 import { IItemsResponse } from '@/interfaces/items';
 import { InfiniteData, UseInfiniteQueryResult } from '@tanstack/react-query';
 import { AxiosResponse } from 'axios';
 import { IBaseApiResponse } from '@/interfaces/api-response';
 import { SCREEN_HEIGHT } from '@gorhom/bottom-sheet';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { MAX_HEADER_HEIGHT } from '@/constants/app';
 
 interface IProductListProps {
@@ -53,38 +52,45 @@ const ItemList = (props: IProductListProps) => {
   };
 
   return (
-    <SafeAreaView>
-      <Animated.FlatList
-        contentContainerStyle={{ paddingTop: MAX_HEADER_HEIGHT - 10 }}
-        scrollEventThrottle={16}
-        data={flattenedData}
-        onScroll={props.handleScroll}
-        keyExtractor={(item) => item._id}
-        renderItem={({ item }) => (
-          <ItemCard
-            id={item._id}
-            title={item.title}
-            images={item.images}
-            price={item.price}
-            marginBottom={8}
-          />
-        )}
-        onEndReachedThreshold={0.5}
-        onEndReached={handleLoadMore}
-        numColumns={2}
-        columnWrapperStyle={{ gap: 8 }}
-        ListFooterComponent={renderFooter}
-        refreshControl={
-          <RefreshControl
-            refreshing={isFetchingNextPage}
-            onRefresh={refetch}
-            tintColor="white"
-          />
-        }
-        showsVerticalScrollIndicator={false}
-      />
-    </SafeAreaView>
+    <Animated.FlatList
+      style={styles.container}
+      contentContainerStyle={{ paddingTop: MAX_HEADER_HEIGHT }}
+      scrollEventThrottle={16}
+      data={flattenedData}
+      onScroll={props.handleScroll}
+      keyExtractor={(item) => item._id}
+      renderItem={({ item }) => (
+        <ItemCard
+          id={item._id}
+          title={item.title}
+          images={item.images}
+          price={item.price}
+          marginBottom={8}
+        />
+      )}
+      onEndReachedThreshold={0.5}
+      onEndReached={handleLoadMore}
+      numColumns={2}
+      columnWrapperStyle={{ gap: 8 }}
+      ListFooterComponent={renderFooter}
+      refreshControl={
+        <RefreshControl
+          refreshing={isFetchingNextPage}
+          onRefresh={refetch}
+          tintColor="white"
+          progressViewOffset={MAX_HEADER_HEIGHT}
+        />
+      }
+      showsVerticalScrollIndicator={false}
+    />
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    marginBottom: -70,
+    marginTop: 50,
+  },
+});
 
 export default ItemList;
