@@ -1,12 +1,14 @@
 import { Spinner, View, YStack } from 'tamagui';
-import React, { ReactElement, useCallback, useMemo } from 'react';
+import React, { ReactElement, useMemo } from 'react';
 import { Animated, RefreshControl } from 'react-native';
 import ItemCard from '@/components/Item/ItemCard';
-import { IItemsResponse, IKujiCard, IProductCard } from '@/interfaces/items';
+import { IItemsResponse } from '@/interfaces/items';
 import { InfiniteData, UseInfiniteQueryResult } from '@tanstack/react-query';
 import { AxiosResponse } from 'axios';
 import { IBaseApiResponse } from '@/interfaces/api-response';
 import { SCREEN_HEIGHT } from '@gorhom/bottom-sheet';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { MAX_HEADER_HEIGHT } from '@/constants/app';
 
 interface IProductListProps {
   isKuji: boolean;
@@ -29,31 +31,13 @@ const ItemList = (props: IProductListProps) => {
     return data?.pages.flatMap(page => page.data.data.items) ?? [];
   }, [data]);
 
-  const getItemLayout = useCallback((data: (ArrayLike<IProductCard | IKujiCard> | null | undefined), index: number) => ({
-    length: 320,
-    offset: 320 * index,
-    index,
-  }), []);
-
   if (isLoading) {
     return (
-      <View marginTop={SCREEN_HEIGHT / 5}>
+      <View marginTop={SCREEN_HEIGHT / 3}>
         <Spinner size="small" color="white" />
       </View>
     );
   }
-
-  const renderItem = ({ item }: { item: IProductCard | IKujiCard }) => {
-    return (
-      <ItemCard
-        id={item._id}
-        title={item.title}
-        images={item.images}
-        price={item.price}
-        marginBottom={8}
-      />
-    );
-  };
 
   const renderFooter = () => {
     if (!isFetchingNextPage) return null;
@@ -69,17 +53,25 @@ const ItemList = (props: IProductListProps) => {
   };
 
   return (
-    <View marginBottom={270}>
+    <SafeAreaView>
       <Animated.FlatList
+        contentContainerStyle={{ paddingTop: MAX_HEADER_HEIGHT - 10 }}
         scrollEventThrottle={16}
         data={flattenedData}
         onScroll={props.handleScroll}
         keyExtractor={(item) => item._id}
-        renderItem={renderItem}
+        renderItem={({ item }) => (
+          <ItemCard
+            id={item._id}
+            title={item.title}
+            images={item.images}
+            price={item.price}
+            marginBottom={8}
+          />
+        )}
         onEndReachedThreshold={0.5}
         onEndReached={handleLoadMore}
         numColumns={2}
-        getItemLayout={getItemLayout}
         columnWrapperStyle={{ gap: 8 }}
         ListFooterComponent={renderFooter}
         refreshControl={
@@ -91,7 +83,7 @@ const ItemList = (props: IProductListProps) => {
         }
         showsVerticalScrollIndicator={false}
       />
-    </View>
+    </SafeAreaView>
   );
 };
 

@@ -1,7 +1,7 @@
 import ProfileOption from '@/components/profile/ProfileOption';
 import React from 'react';
 import { AntDesign, Feather, Fontisto, Ionicons, Octicons } from '@expo/vector-icons';
-import { Separator, SizableText } from 'tamagui';
+import { Separator, SizableText, View } from 'tamagui';
 
 const ProfileOptionList = () => {
   const handleEditProfile = () => {
@@ -9,7 +9,7 @@ const ProfileOptionList = () => {
   };
 
   return (
-    <>
+    <View width="100%" justifyContent="space-between">
       <ProfileOption
         onPress={handleEditProfile}
         icon={<Ionicons name="person-outline" color="white" size={26} />}
@@ -50,10 +50,10 @@ const ProfileOptionList = () => {
       />
 
       <Separator marginVertical={5} width="100%" borderWidth={3} />
-      <SizableText alignSelf="flex-start" size="$6" marginTop="$2">PopBox</SizableText>
+      <SizableText alignSelf="flex-start" size="$6" marginTop="$2">PopBox Studio</SizableText>
       <ProfileOption
         onPress={handleEditProfile}
-        icon={<Octicons name="question" color="white" size={26} />}
+        icon={<AntDesign name="questioncircleo" color="white" size={26} />}
         title="Inquiry"
       />
       <ProfileOption
@@ -61,7 +61,7 @@ const ProfileOptionList = () => {
         icon={<AntDesign name="infocirlceo" color="white" size={26} />}
         title="About Us"
       />
-    </>
+    </View>
   );
 };
 

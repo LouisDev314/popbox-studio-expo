@@ -79,10 +79,10 @@ const ProductDetailScreen = () => {
         <View paddingHorizontal={10}>
           <SizableText size="$8">{product.title}</SizableText>
           <XStack alignItems="center" justifyContent="space-between">
-            <SizableText size="$8" marginTop={10} color={Colors.primary} fontWeight="500">
+            <SizableText size="$9" marginTop={10} color={Colors.primary} fontWeight="500">
               ${product.price}
             </SizableText>
-            <Button circular onPress={handleAddToWishlist} size="$5">
+            <Button circular onPress={handleAddToWishlist} size="$5" marginTop={10}>
               <Ionicons name="heart-outline" color={Colors.primary} size={32} />
             </Button>
           </XStack>

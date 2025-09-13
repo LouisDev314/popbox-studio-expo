@@ -3,11 +3,13 @@ import QueryConfigs from '@/configs/api/query-config';
 import { AxiosError } from 'axios';
 import { IBaseApiResponse } from '@/interfaces/api-response';
 import { IProductCard } from '@/interfaces/items';
-import { SizableText, Spinner, View } from 'tamagui';
+import { Spinner, View } from 'tamagui';
 import ItemCard from '@/components/Item/ItemCard';
 import React from 'react';
-import { Animated, RefreshControl, StyleSheet } from 'react-native';
+import { Animated, RefreshControl } from 'react-native';
 import { SCREEN_HEIGHT } from '@gorhom/bottom-sheet';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { MAX_HEADER_HEIGHT } from '@/constants/app';
 
 interface ITrendingItemListProps {
   scrollY: Animated.Value;
@@ -27,7 +29,7 @@ const TrendingItemList = (props: ITrendingItemListProps) => {
 
   if (isLoading) {
     return (
-      <View marginTop={SCREEN_HEIGHT / 4}>
+      <View marginTop={SCREEN_HEIGHT / 2}>
         <Spinner size="small" color="white" />
       </View>
     );
@@ -39,45 +41,38 @@ const TrendingItemList = (props: ITrendingItemListProps) => {
   );
 
   return (
-    <View marginBottom={182}>
-      {/* Sticky Trending Header */}
-      <SizableText marginVertical={12} size="$9" fontWeight="bold">Trending</SizableText>
-
+    <SafeAreaView>
       {/* Scrollable Product List */}
-      <Animated.ScrollView
-        contentContainerStyle={styles.scrollContent}
-        showsVerticalScrollIndicator={false}
-        onScroll={handleScroll}
+      <Animated.FlatList
+        contentContainerStyle={{ paddingTop: MAX_HEADER_HEIGHT }}
         scrollEventThrottle={16}
-        refreshControl={
-          <RefreshControl
-            refreshing={isFetching}
-            onRefresh={refetch}
-            tintColor="white"
-          />
-        }
-      >
-        {trendingItemListData?.map((item: IProductCard) => (
+        data={trendingItemListData}
+        onScroll={handleScroll}
+        keyExtractor={(item) => item._id}
+        renderItem={({ item }) => (
           <ItemCard
-            key={item._id}
             id={item._id}
             title={item.title}
             images={item.images}
             price={item.price}
             marginBottom={8}
           />
-        ))}
-      </Animated.ScrollView>
-    </View>
+        )}
+        numColumns={2}
+        // getItemLayout={getItemLayout}
+        columnWrapperStyle={{ gap: 8 }}
+        refreshControl={
+          <RefreshControl
+            refreshing={isFetching}
+            onRefresh={refetch}
+            tintColor="white"
+            progressViewOffset={MAX_HEADER_HEIGHT}
+          />
+        }
+        showsVerticalScrollIndicator={false}
+      />
+    </SafeAreaView>
   );
 };
-
-const styles = StyleSheet.create({
-  scrollContent: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: 'space-between',
-  },
-});
 
 export default TrendingItemList;

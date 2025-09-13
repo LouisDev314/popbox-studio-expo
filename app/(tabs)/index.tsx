@@ -1,4 +1,4 @@
-import { Image, View } from 'tamagui';
+import { Image, SizableText, View } from 'tamagui';
 import React, { useRef, useState } from 'react';
 import AppStyleSheet from '@/constants/app-stylesheet';
 import { useAuth } from '@/context/auth-context';
@@ -7,8 +7,8 @@ import { Animated, StyleSheet } from 'react-native';
 import SegmentedControl from '@react-native-segmented-control/segmented-control';
 import Colors from '@/constants/colors';
 import TrendingItemList from '@/components/Item/TrendingItemList';
-import AnimatedHeader from '@/components/AnimatedHeader';
-import { HEADER_HEIGHT } from '@/constants/app';
+import DynamicHeader from '@/components/DynamicHeader';
+import { MAX_HEADER_HEIGHT } from '@/constants/app';
 
 const Home = () => {
   const { isAuthenticated, isAuthLoading } = useAuth();
@@ -24,10 +24,10 @@ const Home = () => {
   // TODO: Segmented Control -> ['Products', 'Ichiban Kuji']
   return (
     <View style={AppStyleSheet.bg}>
-      <AnimatedHeader
+      <DynamicHeader
         scrollY={scrollY}
         header={
-          <>
+          <View>
             <Image style={styles.logoContainer} source={{
               uri: require('@/assets/images/logo.png'),
             }} />
@@ -43,21 +43,22 @@ const Home = () => {
                 }}
               />
             </View>
-          </>
-        } />
-
-      {/* Content that moves up as header disappears */}
+          </View>
+        }
+      />
+      {/* Sticky title */}
       <Animated.View style={{
         transform: [{
           translateY: scrollY.interpolate({
-            inputRange: [0, HEADER_HEIGHT],
-            outputRange: [HEADER_HEIGHT, 50], // Start below header, move to top snap point
+            inputRange: [0, MAX_HEADER_HEIGHT],
+            outputRange: [MAX_HEADER_HEIGHT + 20, 50], // Start below header, move to top snap point
             extrapolate: 'clamp',
           }),
         }],
       }}>
-        <TrendingItemList scrollY={scrollY} isKuji={isKuji} />
+        <SizableText fontSize={35} fontWeight="bold" paddingTop={20}>Trending</SizableText>
       </Animated.View>
+      <TrendingItemList scrollY={scrollY} isKuji={isKuji} />
     </View>
   );
 };

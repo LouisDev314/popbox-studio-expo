@@ -18,10 +18,10 @@ const Profile = () => {
     <View style={AppStyleSheet.bg}>
       <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
         <Avatar circular size="$10">
-          <Avatar.Image
-            source={{ uri: 'https://images.unsplash.com/photo-1548142813-c348350df52b?&w=150&h=150&dpr=2&q=80' }}
-          />
-          <Avatar.Fallback backgroundColor="$blue10" />
+          {/*<Avatar.Image*/}
+          {/*  source={{ uri: '' }}*/}
+          {/*/>*/}
+          <Avatar.Fallback backgroundColor={Colors.primary} />
         </Avatar>
         <SizableText size="$7" marginTop={12}>{getUser()?.username}</SizableText>
         <SizableText size="$5" marginBottom={20}>{getUser()?.email}</SizableText>
@@ -57,7 +57,6 @@ const styles = StyleSheet.create({
   },
   contentContainer: {
     alignItems: 'center',
-    paddingHorizontal: 10,
   },
 });
 

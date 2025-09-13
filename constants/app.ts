@@ -1,1 +1,4 @@
-export const HEADER_HEIGHT = 150;
+// export const HEADER_HEIGHT = 150;
+export const MAX_HEADER_HEIGHT = 150;
+export const MIN_HEADER_HEIGHT = 0;
+export const SCROLL_DISTANCE = MAX_HEADER_HEIGHT - MIN_HEADER_HEIGHT;

@@ -10,7 +10,7 @@ interface IProfileOptionProps {
 
 const ProfileOption = (props: IProfileOptionProps) => {
   return (
-    <Button unstyled width="100%" onPress={props.onPress}>
+    <Button unstyled width="100%" onPress={props.onPress} paddingHorizontal="$2">
       <XStack
         alignItems="center"
         justifyContent="space-between"
