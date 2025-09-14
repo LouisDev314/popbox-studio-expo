@@ -10,10 +10,7 @@ import { Keyboard } from 'react-native';
 import useSearchHistory from '@/hooks/use-search-history';
 import Colors from '@/constants/colors';
 
-interface ISearchBarProps {
-}
-
-const SearchBar = (props: ISearchBarProps) => {
+const SearchBar = () => {
   const {
     isKuji,
     setAutocompleteItems,

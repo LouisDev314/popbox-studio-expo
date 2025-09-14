@@ -5,16 +5,18 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="17ef7c58-bf7c-413e-b6ef-f4686d9e06c1" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/assets/images/default-avatar.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.expo/devices.json" beforeDir="false" afterPath="$PROJECT_DIR$/.expo/devices.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/(screens)/search/SearchInitScreen/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(screens)/search/SearchInitScreen/index.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/(tabs)/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(tabs)/index.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/BottomSheet/Filters/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/BottomSheet/Filters/index.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/DynamicHeader.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/DynamicHeader.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/Item/ItemList.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/Item/ItemList.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/Item/TrendingItemList.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/Item/TrendingItemList.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/(screens)/search/SearchFocusScreen/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(screens)/search/SearchFocusScreen/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/(screens)/search/SearchResultScreen/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(screens)/search/SearchResultScreen/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/(tabs)/profile.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(tabs)/profile.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/images/macaron.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/images/partial-react-logo.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/images/react-logo.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/images/react-logo@2x.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/images/react-logo@3x.png" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/components/SearchBar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/SearchBar.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/context/search-context.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/context/search-context.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -64,11 +66,11 @@
       <recent name="$PROJECT_DIR$" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/assets/images" />
       <recent name="$PROJECT_DIR$/app/(screens)" />
       <recent name="$PROJECT_DIR$/interfaces" />
       <recent name="$PROJECT_DIR$/app/(screens)/search/OnFocus" />
       <recent name="$PROJECT_DIR$/components/BottomSheet" />
-      <recent name="$PROJECT_DIR$/assets/images" />
     </key>
   </component>
   <component name="SharedIndexes">

@@ -17,10 +17,10 @@ const Profile = () => {
   return (
     <View style={AppStyleSheet.bg}>
       <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
-        <Avatar circular size="$10">
-          {/*<Avatar.Image*/}
-          {/*  source={{ uri: '' }}*/}
-          {/*/>*/}
+        <Avatar circular size="$11">
+          <Avatar.Image
+            source={{ uri: require('@/assets/images/default-avatar.png') }}
+          />
           <Avatar.Fallback backgroundColor={Colors.primary} />
         </Avatar>
         <SizableText size="$7" marginTop={12}>{getUser()?.username}</SizableText>

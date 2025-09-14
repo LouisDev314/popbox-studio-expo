@@ -9,10 +9,7 @@ import { useHistoryStore } from '@/hooks/use-search-history-store';
 import { SearchStep } from '@/enums/search-step';
 import { Keyboard, KeyboardAvoidingView, Platform } from 'react-native';
 
-interface ISearchFocusScreenProps {
-}
-
-const SearchFocusScreen = (props: ISearchFocusScreenProps) => {
+const SearchFocusScreen = () => {
   const { handleSearchByItem, setStep, searchQuery, setSearchQuery } = useSearch();
   const { removeFromHistory, clearHistory, addToHistory } = useSearchHistory();
   // Reactive

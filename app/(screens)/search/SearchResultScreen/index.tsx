@@ -8,10 +8,7 @@ import QueryConfigs from '@/configs/api/query-config';
 import useCustomizeQuery from '@/hooks/use-customize-query';
 import { IKujiCard, IProductCard } from '@/interfaces/items';
 
-interface ISearchResultScreenProps {
-}
-
-const SearchResultScreen = (props: ISearchResultScreenProps) => {
+const SearchResultScreen = () => {
   const { searchQuery, isKuji } = useSearch();
   const [searchResult, setSearchResult] = useState<IProductCard[] | IKujiCard[] | []>([]);
 
