@@ -1,9 +1,10 @@
-import { Image, View } from 'tamagui';
+import { View } from 'tamagui';
 import { ICarouselInstance } from 'react-native-reanimated-carousel';
 import { useRef } from 'react';
 import { Dimensions } from 'react-native';
 import Carousel from 'react-native-reanimated-carousel/src/components/Carousel';
 import { useSharedValue } from 'react-native-reanimated';
+import CustomizeImage from '@/components/CustomizeImage';
 
 interface IImageCarouselProps {
   imgUrls: string[];
@@ -35,8 +36,8 @@ const ImageCarousel = (props: IImageCarouselProps) => {
             flex: 1,
             borderRadius: 15,
           }}>
-            <Image
-              source={{ uri: item }}
+            <CustomizeImage
+              uri={item}
               style={{
                 width: '100%',
                 height: '100%',

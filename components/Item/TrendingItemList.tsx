@@ -8,7 +8,6 @@ import ItemCard from '@/components/Item/ItemCard';
 import React from 'react';
 import { Animated, RefreshControl, StyleSheet } from 'react-native';
 import { SCREEN_HEIGHT } from '@gorhom/bottom-sheet';
-import { MAX_HEADER_HEIGHT } from '@/constants/app';
 
 interface ITrendingItemListProps {
   scrollY: Animated.Value;
@@ -42,7 +41,7 @@ const TrendingItemList = (props: ITrendingItemListProps) => {
   return (
     <Animated.FlatList
       style={styles.container}
-      contentContainerStyle={{ paddingTop: 120 }}
+      contentContainerStyle={styles.contentContainer}
       scrollEventThrottle={16}
       data={trendingItemListData}
       onScroll={handleScroll}
@@ -64,7 +63,7 @@ const TrendingItemList = (props: ITrendingItemListProps) => {
           refreshing={isFetching}
           onRefresh={refetch}
           tintColor="white"
-          progressViewOffset={MAX_HEADER_HEIGHT}
+          progressViewOffset={120}
         />
       }
       showsVerticalScrollIndicator={false}
@@ -75,6 +74,9 @@ const TrendingItemList = (props: ITrendingItemListProps) => {
 const styles = StyleSheet.create({
   container: {
     marginTop: 55,
+  },
+  contentContainer: {
+    paddingTop: 120,
   },
 });
 

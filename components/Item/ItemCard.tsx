@@ -1,6 +1,7 @@
-import { Card, CardProps, Image, SizableText, YStack } from 'tamagui';
+import { Card, CardProps, SizableText, YStack } from 'tamagui';
 import { router } from 'expo-router';
 import { AppScreen } from '@/enums/screens';
+import CustomizeImage from '@/components/CustomizeImage';
 
 interface IProductCardProps extends CardProps {
   id: string;
@@ -49,12 +50,9 @@ const ItemCard = (props: IProductCardProps) => {
           height={200}
           overflow="hidden"
         >
-          <Image
-            source={{ uri: images[0] }}
-            width="100%"
-            height="100%"
-            objectFit="cover"
-            borderRadius={0}
+          <CustomizeImage
+            style={{ width: '100%', height: '100%' }}
+            uri={images[0]}
           />
         </YStack>
       </Card.Header>
