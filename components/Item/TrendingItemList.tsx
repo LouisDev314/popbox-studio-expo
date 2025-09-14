@@ -42,7 +42,7 @@ const TrendingItemList = (props: ITrendingItemListProps) => {
   return (
     <Animated.FlatList
       style={styles.container}
-      contentContainerStyle={{ paddingTop: MAX_HEADER_HEIGHT }}
+      contentContainerStyle={{ paddingTop: 120 }}
       scrollEventThrottle={16}
       data={trendingItemListData}
       onScroll={handleScroll}

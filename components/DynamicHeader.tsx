@@ -17,7 +17,7 @@ const DynamicHeader = (props: IDynamicHeaderProps) => {
 
   // Interpolate opacity from scrollY (from 1 to 0)
   const opacity = props.scrollY.interpolate({
-    inputRange: [0, MAX_HEADER_HEIGHT / 2, MAX_HEADER_HEIGHT],
+    inputRange: [0, 50, 100],
     outputRange: [1, 0.5, 0],
     extrapolate: 'clamp',
   });

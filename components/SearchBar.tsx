@@ -1,6 +1,6 @@
 import { Button, Input, Spinner, XStack } from 'tamagui';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import React from 'react';
+import React, { useCallback } from 'react';
 import { IAutocompleteItem } from '@/interfaces/search';
 import useCustomizeQuery from '@/hooks/use-customize-query';
 import QueryConfigs from '@/configs/api/query-config';
@@ -25,6 +25,7 @@ const SearchBar = (props: ISearchBarProps) => {
     searchBarRef,
     setSearchQuery,
     searchQuery,
+    bottomSheetRef,
   } = useSearch();
   const { addToHistory } = useSearchHistory();
 
@@ -51,6 +52,10 @@ const SearchBar = (props: ISearchBarProps) => {
       setStep(SearchStep.Result);
     }
   };
+
+  const handleOpenBottomSheet = useCallback(() => {
+    bottomSheetRef.current?.expand();
+  }, []);
 
   return (
     <XStack
@@ -84,6 +89,16 @@ const SearchBar = (props: ISearchBarProps) => {
         onSubmitEditing={() => handleSearchOnInputSubmit(debouncedQuery)}
         editable={step !== SearchStep.Init}
       />
+      {step === SearchStep.Init && (
+        <Button
+          circular
+          size="$2"
+          backgroundColor="transparent"
+          pressStyle={{ backgroundColor: 'white', borderColor: 'white' }}
+          icon={<Ionicons name="filter-outline" color="black" size={22} />}
+          onPress={handleOpenBottomSheet}
+        />
+      )}
       {(searchQuery.length > 0) && (
         <Button
           size="$2"

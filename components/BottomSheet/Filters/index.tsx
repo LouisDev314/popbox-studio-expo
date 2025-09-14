@@ -17,6 +17,7 @@ import { ProductCategory, ProductsOrder, ProductSortBy } from '@/enums/sort-by-f
 interface IFiltersBottomSheetProps {
   handleCloseBottomSheet: () => void;
   setQueryKeyItemParam: React.Dispatch<React.SetStateAction<IItemParam>>;
+  scrollToTop: () => void;
   isKuji?: boolean;
 }
 
@@ -27,6 +28,7 @@ const FiltersBottomSheet = forwardRef<BottomSheetMethods, IFiltersBottomSheetPro
     const [selectedOrder, setSelectedOrder] = useState(ProductsOrder.Desc);
 
     const handleApply = async () => {
+      props.scrollToTop();
       props.handleCloseBottomSheet();
       props.setQueryKeyItemParam({
         category: selectedCategory,

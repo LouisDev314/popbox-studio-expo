@@ -50,13 +50,13 @@ const Home = () => {
       <Animated.View style={{
         transform: [{
           translateY: scrollY.interpolate({
-            inputRange: [0, MAX_HEADER_HEIGHT],
+            inputRange: [0, 120],
             outputRange: [MAX_HEADER_HEIGHT + 20, 50], // Start below header, move to top snap point
             extrapolate: 'clamp',
           }),
         }],
       }}>
-        <SizableText fontSize={35} fontWeight="bold" paddingTop={20}>Trending</SizableText>
+        <SizableText fontSize={38} fontWeight="bold" paddingTop={15}>Trending</SizableText>
       </Animated.View>
       <TrendingItemList scrollY={scrollY} isKuji={isKuji} />
     </View>
