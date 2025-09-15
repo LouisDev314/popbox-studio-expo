@@ -28,6 +28,7 @@
     "@react-navigation/bottom-tabs": "^7.2.0",
     "@react-navigation/elements": "^2.4.6",
     "@react-navigation/native": "^7.0.14",
+    "@stripe/stripe-react-native": "^0.52.0",
     "@tamagui/config": "^1.126.14",
     "@tamagui/theme-builder": "^1.126.14",
     "@tanstack-query-firebase/react": "^2.0.1",
