@@ -9,7 +9,6 @@ import { IBaseApiResponse } from '@/interfaces/api-response';
 import { SCREEN_HEIGHT } from '@gorhom/bottom-sheet';
 
 interface IProductListProps {
-  isKuji: boolean;
   queryResult: UseInfiniteQueryResult<InfiniteData<AxiosResponse<IBaseApiResponse<IItemsResponse>, unknown>, unknown>, Error>;
   // listTitle: ReactElement;
   handleScroll: () => void;

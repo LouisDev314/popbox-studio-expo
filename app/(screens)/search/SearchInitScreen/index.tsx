@@ -3,26 +3,26 @@ import ItemList from '@/components/Item/ItemList';
 import FiltersBottomSheet from '@/components/BottomSheet/Filters';
 import React, { useCallback, useRef, useState } from 'react';
 import { Animated, FlatList } from 'react-native';
-import useItemsInfinite, { IItemParam } from '@/hooks/use-items-infinite';
+import useItemsInfinite from '@/hooks/use-items-infinite';
 import { useAuth } from '@/context/auth-context';
 import { ProductCategory, ProductsOrder, ProductSortBy } from '@/enums/sort-by-filters';
 import { MAX_HEADER_HEIGHT } from '@/constants/app';
 import { useSearch } from '@/context/search-context';
+import { IItemSearchOptions } from '@/interfaces/search';
 
 interface ISearchInitScreenProps {
-  isKuji: boolean;
   scrollY: Animated.Value;
 }
 
 const SearchInitScreen = (props: ISearchInitScreenProps) => {
   const { isAuthenticated } = useAuth();
-  const { bottomSheetRef } = useSearch();
-  const [queryKeyItemParam, setQueryKeyItemParam] = useState<IItemParam>({
+  const { bottomSheetRef, isKuji } = useSearch();
+  const [queryKeyItemParam, setQueryKeyItemParam] = useState<IItemSearchOptions>({
     category: ProductCategory.All,
     sortBy: ProductSortBy.SalesVolume,
     order: ProductsOrder.Desc,
   });
-  const queryResult = useItemsInfinite(queryKeyItemParam, props.isKuji, isAuthenticated);
+  const queryResult = useItemsInfinite(queryKeyItemParam, isKuji, isAuthenticated);
 
   const flatListRef = useRef<FlatList>(null);
 
@@ -59,12 +59,11 @@ const SearchInitScreen = (props: ISearchInitScreenProps) => {
       </Animated.View>
       <ItemList
         ref={flatListRef}
-        isKuji={props.isKuji}
         queryResult={queryResult}
         // listTitle={<></>}
         handleScroll={handleScroll}
       />
-      <FiltersBottomSheet ref={bottomSheetRef} scrollToTop={scrollToTop} isKuji={props.isKuji}
+      <FiltersBottomSheet ref={bottomSheetRef} scrollToTop={scrollToTop} isKuji={isKuji}
                           handleCloseBottomSheet={handleCloseBottomSheet} setQueryKeyItemParam={setQueryKeyItemParam} />
     </View>
   );

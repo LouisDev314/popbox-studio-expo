@@ -1,14 +1,14 @@
-import IKuji from '@/interfaces/kuji';
 import { IOrder } from '@/interfaces/order';
 import { User } from 'firebase/auth';
+import { IWishlistItem } from '@/interfaces/wishlist';
 
 export interface IUser extends User {
   uid: string;
   username: string;
   email: string;
   avatar: string;
-  wishlist: IKuji[];
-  cart: IKuji[];
+  wishlist: IWishlistItem[];
+  // cart: IKuji[];
   address: string;
   order: IOrder[];
   role: 'user' | 'admin';

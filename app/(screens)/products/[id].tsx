@@ -10,11 +10,16 @@ import ImageCarousel from '@/components/ImageCarousel';
 import { SCREEN_HEIGHT } from '@gorhom/bottom-sheet';
 import { StyleSheet } from 'react-native';
 import Colors from '@/constants/colors';
+import { getUser } from '@/hooks/use-user-store';
+import { IWishlistItem } from '@/interfaces/wishlist';
 
 const ProductDetailScreen = () => {
   const { id } = useLocalSearchParams();
   const [product, setProduct] = useState<IProduct | null>(null);
   const [quantity, setQuantity] = useState(1);
+  const [overBoughtMsg, setOverBoughtMsg] = useState('');
+
+  const isProductInWishlist = getUser()?.wishlist?.some((item: IWishlistItem) => item.itemId === id);
 
   const { data, isLoading } = useCustomizeQuery({
     queryKey: [id, 'product', 'fetch'],
@@ -36,6 +41,16 @@ const ProductDetailScreen = () => {
   const handleAddToWishlist = () => {
     // TODO: wishlist
     console.log('addToWishlist');
+  };
+
+  const handleAddToCart = () => {
+    console.log('addToCart');
+    // Over purchase
+    if (product && quantity > product.inventory) {
+      setOverBoughtMsg(`Only added ${product.inventory} to your cart due to availability.`);
+    } else {
+
+    }
   };
 
   // Don't render carousel until we have product data with images
@@ -83,7 +98,8 @@ const ProductDetailScreen = () => {
               ${product.price}
             </SizableText>
             <Button circular onPress={handleAddToWishlist} size="$5" marginTop={10}>
-              <Ionicons name="heart-outline" color={Colors.primary} size={32} />
+              {isProductInWishlist ? <Ionicons name="heart" color={Colors.primary} size={32} /> :
+                <Ionicons name="heart-outline" color={Colors.primary} size={32} />}
             </Button>
           </XStack>
           <SizableText size="$7" marginTop={15}>Size</SizableText>
@@ -92,6 +108,9 @@ const ProductDetailScreen = () => {
           <SizableText size="$5">{product.material}</SizableText>
         </View>
       </ScrollView>
+      <SizableText size="$6" color="red" marginBottom={5}>
+        {overBoughtMsg}
+      </SizableText>
       <XStack
         bottom={0}
         width="100%"
@@ -125,6 +144,7 @@ const ProductDetailScreen = () => {
           height={55}
           backgroundColor={Colors.primary}
           pressStyle={{ backgroundColor: Colors.primary }}
+          onPress={handleAddToCart}
         >
           <SizableText size="$7">Add to cart</SizableText>
         </Button>

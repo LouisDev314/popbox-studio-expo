@@ -8,16 +8,18 @@ import ItemCard from '@/components/Item/ItemCard';
 import React from 'react';
 import { Animated, RefreshControl, StyleSheet } from 'react-native';
 import { SCREEN_HEIGHT } from '@gorhom/bottom-sheet';
+import { useSearch } from '@/context/search-context';
 
 interface ITrendingItemListProps {
   scrollY: Animated.Value;
-  isKuji: boolean;
 }
 
 const TrendingItemList = (props: ITrendingItemListProps) => {
+  const { isKuji } = useSearch();
+
   const { data, refetch, isFetching, isLoading } = useCustomizeQuery({
-    queryKey: [props.isKuji ? 'kuji' : 'product', 'trending', 'fetch'],
-    queryFn: props.isKuji ? QueryConfigs.fetchTrendingKujis : QueryConfigs.fetchTrendingProducts,
+    queryKey: [isKuji ? 'kuji' : 'product', 'trending', 'fetch'],
+    queryFn: isKuji ? QueryConfigs.fetchTrendingKujis : QueryConfigs.fetchTrendingProducts,
     onError: (err: AxiosError<IBaseApiResponse>) => {
       console.error('Cannot fetch products:', err);
     },

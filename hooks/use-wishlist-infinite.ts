@@ -3,7 +3,13 @@ import { AxiosResponse } from 'axios';
 import queryConfigs from '@/configs/api/query-config';
 import { IBaseApiResponse } from '@/interfaces/api-response';
 import { IItemsResponse } from '@/interfaces/items';
-import { IItemSearchOptions } from '@/interfaces/search';
+
+export interface IItemSearchOptions {
+  search?: string;
+  category?: string;
+  sortBy?: string;
+  order?: string;
+}
 
 const useItemsInfinite = (options: IItemSearchOptions, isKuji: boolean, enabled?: boolean) => {
   const queryFn = isKuji ? queryConfigs.fetchKujis : queryConfigs.fetchProducts;

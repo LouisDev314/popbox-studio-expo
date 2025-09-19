@@ -11,12 +11,12 @@ import { StyleSheet } from 'react-native';
 import { filterOptions, IFilterOption } from '@/constants/item-filters';
 import { Button, SizableText, View } from 'tamagui';
 import Colors from '@/constants/colors';
-import { IItemParam } from '@/hooks/use-items-infinite';
+import { IItemSearchOptions } from '@/hooks/use-items-infinite';
 import { ProductCategory, ProductsOrder, ProductSortBy } from '@/enums/sort-by-filters';
 
 interface IFiltersBottomSheetProps {
   handleCloseBottomSheet: () => void;
-  setQueryKeyItemParam: React.Dispatch<React.SetStateAction<IItemParam>>;
+  setQueryKeyItemParam: React.Dispatch<React.SetStateAction<IItemSearchOptions>>;
   scrollToTop: () => void;
   isKuji?: boolean;
 }

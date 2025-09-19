@@ -1,0 +1,17 @@
+@startuml Wishlist Async Flow
+
+actor User
+participant "Zustand Store + MMKV" as LocalStore
+participant "TanStack useMutation" as Mutation
+participant "Express API" as API
+database "MongoDB\nWishlist Collection" as DB
+
+User -> LocalStore : Add item to Wishlist (update Zustand + MMKV)
+LocalStore --> User : Immediate UI Update
+User -> Mutation : Trigger mutation to update backend (w/ debounce)
+Mutation -> API : Send updated wishlist data
+API -> DB : Update wishlist document
+DB --> API : Return success
+API -> Mutation : Send mutation success
+
+@enduml

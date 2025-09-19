@@ -8,3 +8,10 @@ export interface IAutocompleteItem {
   _id: string;
   title: string;
 }
+
+export interface IItemSearchOptions {
+  search?: string;
+  category?: string;
+  sortBy?: string;
+  order?: string;
+}
