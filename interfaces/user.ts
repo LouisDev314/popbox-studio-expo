@@ -8,7 +8,7 @@ export interface IUser extends User {
   email: string;
   avatar: string;
   wishlist: IWishlistItem[];
-  // cart: IKuji[];
+  // cart: ICartItem[];
   address: string;
   order: IOrder[];
   role: 'user' | 'admin';

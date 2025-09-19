@@ -17,12 +17,12 @@ interface ISearchInitScreenProps {
 const SearchInitScreen = (props: ISearchInitScreenProps) => {
   const { isAuthenticated } = useAuth();
   const { bottomSheetRef, isKuji } = useSearch();
-  const [queryKeyItemParam, setQueryKeyItemParam] = useState<IItemSearchOptions>({
+  const [searchOptions, setSearchOptions] = useState<IItemSearchOptions>({
     category: ProductCategory.All,
     sortBy: ProductSortBy.SalesVolume,
     order: ProductsOrder.Desc,
   });
-  const queryResult = useItemsInfinite(queryKeyItemParam, isKuji, isAuthenticated);
+  const queryResult = useItemsInfinite(searchOptions, isKuji, isAuthenticated);
 
   const flatListRef = useRef<FlatList>(null);
 
@@ -64,7 +64,7 @@ const SearchInitScreen = (props: ISearchInitScreenProps) => {
         handleScroll={handleScroll}
       />
       <FiltersBottomSheet ref={bottomSheetRef} scrollToTop={scrollToTop} isKuji={isKuji}
-                          handleCloseBottomSheet={handleCloseBottomSheet} setQueryKeyItemParam={setQueryKeyItemParam} />
+                          handleCloseBottomSheet={handleCloseBottomSheet} setSearchOptions={setSearchOptions} />
     </View>
   );
 };

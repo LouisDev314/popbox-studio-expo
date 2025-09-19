@@ -5,6 +5,7 @@ import { IUser } from '@/interfaces/user';
 import { IItemsResponse, IKujiCard, IProductCard } from '@/interfaces/items';
 import { IAutocompleteItem } from '@/interfaces/search';
 import IProduct from '@/interfaces/product';
+import { IWishlistItem } from '@/interfaces/wishlist';
 
 const QueryConfigs = {
   fetchUser: (uid: string): Promise<AxiosResponse<IBaseApiResponse<IUser>>> => {
@@ -77,6 +78,25 @@ const QueryConfigs = {
         // limit: 10,
         cursor: pageParam ?? '',
         search,
+        category,
+        sortBy,
+        order: order.toLowerCase(),
+      },
+    });
+  },
+  fetchUserWishlist: async ({
+                              uid,
+                              category,
+                              sortBy,
+                              order = 'desc',
+                            }: {
+    uid?: string;
+    category?: string;
+    sortBy?: string;
+    order?: string;
+  }): Promise<AxiosResponse<IBaseApiResponse<IWishlistItem[]>>> => {
+    return await appClient.get(`/wishlist-items/${uid}`, {
+      params: {
         category,
         sortBy,
         order: order.toLowerCase(),

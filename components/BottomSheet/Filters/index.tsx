@@ -11,12 +11,12 @@ import { StyleSheet } from 'react-native';
 import { filterOptions, IFilterOption } from '@/constants/item-filters';
 import { Button, SizableText, View } from 'tamagui';
 import Colors from '@/constants/colors';
-import { IItemSearchOptions } from '@/hooks/use-items-infinite';
 import { ProductCategory, ProductsOrder, ProductSortBy } from '@/enums/sort-by-filters';
+import { IItemSearchOptions } from '@/interfaces/search';
 
 interface IFiltersBottomSheetProps {
   handleCloseBottomSheet: () => void;
-  setQueryKeyItemParam: React.Dispatch<React.SetStateAction<IItemSearchOptions>>;
+  setSearchOptions: React.Dispatch<React.SetStateAction<IItemSearchOptions>>;
   scrollToTop: () => void;
   isKuji?: boolean;
 }
@@ -30,7 +30,7 @@ const FiltersBottomSheet = forwardRef<BottomSheetMethods, IFiltersBottomSheetPro
     const handleApply = async () => {
       props.scrollToTop();
       props.handleCloseBottomSheet();
-      props.setQueryKeyItemParam({
+      props.setSearchOptions({
         category: selectedCategory,
         sortBy: selectedSortBy,
         order: selectedOrder,
