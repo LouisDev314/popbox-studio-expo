@@ -1,7 +1,7 @@
 import { Avatar, Button, ScrollView, SizableText, View } from 'tamagui';
 import { useAuth } from '@/context/auth-context';
 import AppStyleSheet from '@/constants/app-stylesheet';
-import { getUser } from '@/hooks/use-user-store';
+import { useUser } from '@/hooks/use-user-store';
 import { Alert, StyleSheet } from 'react-native';
 import React from 'react';
 import ProfileOptionList from '@/components/profile/ProfileOptionList';
@@ -14,6 +14,8 @@ const Profile = () => {
     await logout();
   };
 
+  const user = useUser();
+
   return (
     <View style={AppStyleSheet.bg}>
       <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
@@ -23,8 +25,8 @@ const Profile = () => {
           />
           <Avatar.Fallback backgroundColor={Colors.primary} />
         </Avatar>
-        <SizableText size="$7" marginTop={12}>{getUser()?.username}</SizableText>
-        <SizableText size="$5" marginBottom={20}>{getUser()?.email}</SizableText>
+        <SizableText size="$7" marginTop={12}>{user?.username}</SizableText>
+        <SizableText size="$5" marginBottom={20}>{user?.email}</SizableText>
 
         <ProfileOptionList />
 

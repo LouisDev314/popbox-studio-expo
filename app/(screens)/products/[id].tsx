@@ -10,22 +10,27 @@ import ImageCarousel from '@/components/ImageCarousel';
 import { SCREEN_HEIGHT } from '@gorhom/bottom-sheet';
 import { StyleSheet } from 'react-native';
 import Colors from '@/constants/colors';
-import { getUser } from '@/hooks/use-user-store';
+import { useSetUser, useUser } from '@/hooks/use-user-store';
 import { IWishlistItem } from '@/interfaces/wishlist';
+import useCustomizeMutation from '@/hooks/use-customize-mutation';
+import MutationConfigs from '@/configs/api/mutation-config';
+import { useWishlist } from '@/context/wishlist-context';
 
 const ProductDetailScreen = () => {
   const { id } = useLocalSearchParams();
   const [product, setProduct] = useState<IProduct | null>(null);
   const [quantity, setQuantity] = useState(1);
   const [overBoughtMsg, setOverBoughtMsg] = useState('');
-
-  const isProductInWishlist = getUser()?.wishlist?.some((item: IWishlistItem) => item.itemId === id);
+  const [isProductInWishlist, setIsProductInWishlist] = useState(false);
+  const { handleRemoveWishlistItem } = useWishlist();
+  const user = useUser();
+  const setUser = useSetUser();
 
   const { data, isLoading } = useCustomizeQuery({
     queryKey: [id, 'product', 'fetch'],
     queryFn: () => QueryConfigs.fetchProductById(id as string),
     onError: (err) => {
-      console.error('Cannot fetch user:', err);
+      console.error('Cannot fetch product by id:', err.response?.data);
     },
     enabled: !!id,
   });
@@ -34,23 +39,27 @@ const ProductDetailScreen = () => {
     setProduct(data?.data.data ?? null);
   }, [data]);
 
+  useEffect(() => {
+    setIsProductInWishlist(!!user?.wishlist?.some((item: IWishlistItem) => item.itemId === id));
+  }, []);
+
+  const { mutation: addToWishlist } = useCustomizeMutation({
+    mutationFn: MutationConfigs.addItemToWishlist,
+    onSuccess: () => {
+      const updatedWishlist = [
+        ...(user?.wishlist ?? []),
+        currItem,
+      ];
+      const updatedUser = { ...user!, wishlist: updatedWishlist };
+      setUser(updatedUser);
+    },
+    onError: (err) => {
+      console.error('Cannot add item', err);
+    },
+  });
+
   const handleReturn = () => {
     router.back();
-  };
-
-  const handleAddToWishlist = () => {
-    // TODO: wishlist
-    console.log('addToWishlist');
-  };
-
-  const handleAddToCart = () => {
-    console.log('addToCart');
-    // Over purchase
-    if (product && quantity > product.inventory) {
-      setOverBoughtMsg(`Only added ${product.inventory} to your cart due to availability.`);
-    } else {
-
-    }
   };
 
   // Don't render carousel until we have product data with images
@@ -73,6 +82,36 @@ const ProductDetailScreen = () => {
       </View>
     );
   }
+
+  const currItem = {
+    itemId: product!._id,
+    title: product!.title,
+    images: product!.images,
+    price: product!.price,
+    itemType: product!.itemType,
+  };
+
+  const toggleAddToWishlist = () => {
+    setIsProductInWishlist(prevState => !prevState);
+    if (isProductInWishlist) {
+      handleRemoveWishlistItem(currItem);
+    } else {
+      addToWishlist({
+        uid: user!.uid,
+        item: { itemId: (id as string), itemType: product!.itemType },
+      });
+    }
+  };
+
+  const handleAddToCart = () => {
+    console.log('addToCart');
+    // Over purchase
+    if (product && quantity > product.inventory) {
+      setOverBoughtMsg(`Only added ${product.inventory} to your cart due to availability.`);
+    } else {
+
+    }
+  };
 
   return (
     <View style={AppStyleSheet.bg} alignItems="center" justifyContent="center">
@@ -97,7 +136,7 @@ const ProductDetailScreen = () => {
             <SizableText size="$9" marginTop={10} color={Colors.primary} fontWeight="500">
               ${product.price}
             </SizableText>
-            <Button circular onPress={handleAddToWishlist} size="$5" marginTop={10}>
+            <Button circular onPress={toggleAddToWishlist} size="$5" marginTop={10}>
               {isProductInWishlist ? <Ionicons name="heart" color={Colors.primary} size={32} /> :
                 <Ionicons name="heart-outline" color={Colors.primary} size={32} />}
             </Button>
@@ -146,7 +185,7 @@ const ProductDetailScreen = () => {
           pressStyle={{ backgroundColor: Colors.primary }}
           onPress={handleAddToCart}
         >
-          <SizableText size="$7">Add to cart</SizableText>
+          <SizableText size="$7" color="floralwhite">Add to cart</SizableText>
         </Button>
       </XStack>
     </View>

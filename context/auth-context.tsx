@@ -1,6 +1,5 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { IUser } from '@/interfaces/user';
-import { setUser } from '@/hooks/use-user-store';
 import { AuthError, onAuthStateChanged, UserCredential } from 'firebase/auth';
 import { auth } from '@/configs/firebase';
 import retrieveDeviceId from '@/utils/device-id';
@@ -20,6 +19,7 @@ import {
   useSignInWithEmailAndPasswordMutation,
 } from '@tanstack-query-firebase/react/auth';
 import { handleLogout } from '@/api/app-client';
+import { useSetUser } from '@/hooks/use-user-store';
 
 interface IAuthContext {
   isAuthenticated: boolean;
@@ -43,6 +43,8 @@ export const AuthProvider = (props: { children: React.ReactNode }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isAuthLoading, setIsAuthLoading] = useState(true);
   const [isStorageReady, setIsStorageReady] = useState(false);
+
+  const setUser = useSetUser();
 
   useEffect(() => {
     const initStorage = async () => {
@@ -71,11 +73,9 @@ export const AuthProvider = (props: { children: React.ReactNode }) => {
     return onAuthStateChanged(auth, async (user) => {
       if (user) {
         setIsAuthenticated(true);
-        const storedUser = secureStorage().getString(StorageKey.User);
-        setUser(storedUser ? JSON.parse(storedUser) : null);
+        fetchUser();
       } else {
         setIsAuthenticated(false);
-        setUser(null);
       }
       setIsAuthLoading(false);
     });
@@ -128,14 +128,14 @@ export const AuthProvider = (props: { children: React.ReactNode }) => {
     queryFn: () => QueryConfigs.fetchUser(auth.currentUser?.uid!),
     onSuccess: (data: AxiosResponse<IBaseApiResponse<IUser>>) => {
       const user = data.data.data as IUser;
+      // FIXME
       setUser(user);
-      secureStorage().set(StorageKey.User, JSON.stringify(user));
       router.replace(AppScreen.Tabs);
     },
     onError: (err: AxiosError<IBaseApiResponse>) => {
       console.error('Cannot fetch user:', err);
     },
-    enabled: false, // Only run when manually triggered
+    enabled: isAuthenticated,
   });
 
   const isError = isRegisterError || isLoginError || isFetchingError || isCreateUserError;

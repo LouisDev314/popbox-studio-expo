@@ -1,19 +1,16 @@
 import { Image, SizableText, View } from 'tamagui';
-import React, { useRef, useState } from 'react';
+import React, { useRef } from 'react';
 import AppStyleSheet from '@/constants/app-stylesheet';
 import { useAuth } from '@/context/auth-context';
 import { Redirect } from 'expo-router';
 import { Animated, StyleSheet } from 'react-native';
-import SegmentedControl from '@react-native-segmented-control/segmented-control';
-import Colors from '@/constants/colors';
 import TrendingItemList from '@/components/Item/TrendingItemList';
 import DynamicHeader from '@/components/DynamicHeader';
 import { MAX_HEADER_HEIGHT } from '@/constants/app';
+import ItemTypeSelector from '@/components/ItemTypeSelector';
 
 const Home = () => {
   const { isAuthenticated, isAuthLoading } = useAuth();
-  const [selectedIndex, setSelectedIndex] = useState(0);
-  const isKuji = selectedIndex === 1;
 
   const scrollY = useRef(new Animated.Value(0)).current;
 
@@ -32,16 +29,7 @@ const Home = () => {
               uri: require('@/assets/images/logo.png'),
             }} />
             <View style={styles.segmentContainer}>
-              <SegmentedControl
-                style={styles.segmentedControl}
-                tintColor={Colors.primary}
-                backgroundColor="white"
-                values={['Products']}
-                selectedIndex={selectedIndex}
-                onChange={(event) => {
-                  setSelectedIndex(event.nativeEvent.selectedSegmentIndex);
-                }}
-              />
+              <ItemTypeSelector />
             </View>
           </View>
         }
@@ -58,7 +46,7 @@ const Home = () => {
       }}>
         <SizableText fontSize={38} fontWeight="bold" paddingTop={15}>Trending</SizableText>
       </Animated.View>
-      <TrendingItemList scrollY={scrollY} isKuji={isKuji} />
+      <TrendingItemList scrollY={scrollY} />
     </View>
   );
 };
@@ -72,16 +60,8 @@ const styles = StyleSheet.create({
   },
   segmentContainer: {
     alignItems: 'center',
-    marginTop: 10,
+    marginTop: 5,
     marginBottom: 20,
-  },
-  segmentedControl: {
-    width: 240,
-    borderRadius: 16,
-    borderWidth: 2,
-    borderColor: Colors.primary,
-    overflow: 'hidden',
-    fontWeight: 'bold',
   },
 });
 

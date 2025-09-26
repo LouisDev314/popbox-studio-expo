@@ -2,10 +2,18 @@ import ProfileOption from '@/components/profile/ProfileOption';
 import React from 'react';
 import { AntDesign, Feather, Fontisto, Ionicons, Octicons } from '@expo/vector-icons';
 import { Separator, SizableText, View } from 'tamagui';
+import { router } from 'expo-router';
+import { AppScreen } from '@/enums/screens';
 
 const ProfileOptionList = () => {
   const handleEditProfile = () => {
     console.log('handleEditProfile');
+  };
+
+  const handleOpenWishlist = () => {
+    router.push({
+      pathname: AppScreen.Wishlist,
+    });
   };
 
   return (
@@ -21,7 +29,7 @@ const ProfileOptionList = () => {
         title="Shipping Address"
       />
       <ProfileOption
-        onPress={handleEditProfile}
+        onPress={handleOpenWishlist}
         icon={<Octicons name="heart" color="white" size={26} />}
         title="Wishlist"
       />

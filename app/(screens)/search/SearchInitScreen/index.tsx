@@ -45,7 +45,7 @@ const SearchInitScreen = (props: ISearchInitScreenProps) => {
   );
 
   return (
-    <View marginBottom={120}>
+    <View marginBottom={120} marginTop={10}>
       <Animated.View style={{
         transform: [{
           translateY: props.scrollY.interpolate({

@@ -95,7 +95,7 @@ const QueryConfigs = {
     sortBy?: string;
     order?: string;
   }): Promise<AxiosResponse<IBaseApiResponse<IWishlistItem[]>>> => {
-    return await appClient.get(`/wishlist-items/${uid}`, {
+    return await appClient.get(`/wishlists/${uid}`, {
       params: {
         category,
         sortBy,

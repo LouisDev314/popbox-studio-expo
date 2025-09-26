@@ -1,49 +1,84 @@
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useEffect, useState } from 'react';
 import useCustomizeQuery from '@/hooks/use-customize-query';
 import QueryConfigs from '@/configs/api/query-config';
 import { IItemSearchOptions } from '@/interfaces/search';
 import { ProductCategory, ProductsOrder, ProductSortBy } from '@/enums/sort-by-filters';
 import { AxiosError } from 'axios';
 import { IBaseApiResponse } from '@/interfaces/api-response';
-import { getUser, setUser } from '@/hooks/use-user-store';
-import { secureStorage } from '@/utils/mmkv';
-import { StorageKey } from '@/enums/mmkv';
+import { useSetUser, useUser } from '@/hooks/use-user-store';
 import { IWishlistItem } from '@/interfaces/wishlist';
-import { IUser } from '@/interfaces/user';
+import useCustomizeMutation from '@/hooks/use-customize-mutation';
+import MutationConfigs from '@/configs/api/mutation-config';
+import { useAuth } from '@/context/auth-context';
 
 interface IWishlistContext {
   setSearchOptions: React.Dispatch<React.SetStateAction<IItemSearchOptions>>;
+  fetchWishlist: () => void;
+  isFetchingWishlist: boolean;
+  handleRemoveWishlistItem: (item: IWishlistItem) => void;
 }
 
 const WishlistContext = createContext<IWishlistContext | undefined>(undefined);
 
 export const WishlistProvider = (props: { children: React.ReactNode }) => {
+  // const user = useUserStore(state => state.user);
+  const user = useUser();
+  const setUser = useSetUser();
+  const { isStorageReady } = useAuth();
+  const [wishlist, setWishlist] = useState<IWishlistItem[]>([]);
+
   const [searchOptions, setSearchOptions] = useState<IItemSearchOptions>({
     category: ProductCategory.All,
     sortBy: ProductSortBy.Date,
     order: ProductsOrder.Desc,
   });
 
+  // Due to reactivity of Zustand, have to separate it here
+  useEffect(() => {
+    if (isStorageReady) {
+      const updatedUser = { ...user!, wishlist };
+      setUser(updatedUser);
+    }
+  }, [wishlist, isStorageReady]);
+
   // Fetch user wishlist and store to local on init
-  const { isLoading } = useCustomizeQuery({
+  const { refetch: fetchWishlist, isFetching: isFetchingWishlist } = useCustomizeQuery({
     queryKey: ['wishlist', 'user', 'fetch', searchOptions],
     queryFn: () => QueryConfigs.fetchUserWishlist({
-      uid: getUser()?.uid,
+      uid: user?.uid,
       ...searchOptions,
     }),
     onSuccess: (data) => {
-      const wishlist = data.data.data as IWishlistItem[];
-      const updatedUser = { ...getUser(), wishlist };
-      setUser(updatedUser as IUser);
-      secureStorage().set(StorageKey.User, JSON.stringify(updatedUser));
+      const currWishlist = data.data.data as IWishlistItem[];
+      setWishlist(currWishlist);
     },
     onError: (err: AxiosError<IBaseApiResponse>) => {
       console.error('Cannot fetch user wishlist:', err);
     },
   });
 
+  const { mutation: deleteWishlistItem } = useCustomizeMutation({
+    mutationFn: MutationConfigs.deleteWishlistItem,
+    onSuccess: (data) => {
+      const item = data.data.data;
+      const updatedWishlist = user?.wishlist.filter(wishlistItem => wishlistItem.itemId !== item.itemId) as IWishlistItem[];
+      const updatedUser = { ...user!, wishlist: updatedWishlist };
+      setUser(updatedUser);
+    },
+    onError: (err: AxiosError<IBaseApiResponse>) => {
+      console.error('Cannot delete wishlist:', err);
+    },
+  });
+
+  const handleRemoveWishlistItem = (item: IWishlistItem) => {
+    deleteWishlistItem({ uid: user!.uid, itemId: item.itemId });
+  };
+
   const contextValue: IWishlistContext = {
     setSearchOptions,
+    fetchWishlist,
+    isFetchingWishlist,
+    handleRemoveWishlistItem,
   };
 
   return (

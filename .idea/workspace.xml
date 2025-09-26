@@ -5,14 +5,30 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="17ef7c58-bf7c-413e-b6ef-f4686d9e06c1" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/app/(screens)/profile/WishlistScreen/index.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/components/ItemTypeSelector.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/components/WishlistItem.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/interfaces/base-component-props.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.expo/devices.json" beforeDir="false" afterPath="$PROJECT_DIR$/.expo/devices.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.expo/types/router.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/.expo/types/router.d.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/app-client.ts" beforeDir="false" afterPath="$PROJECT_DIR$/api/app-client.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/(screens)/products/[id].tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(screens)/products/[id].tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/(screens)/search/SearchInitScreen/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(screens)/search/SearchInitScreen/index.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/BottomSheet/Filters/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/BottomSheet/Filters/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/(tabs)/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(tabs)/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/(tabs)/profile.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(tabs)/profile.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/(tabs)/search.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(tabs)/search.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/SearchHeader.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/SearchHeader.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/profile/ProfileOptionList.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/profile/ProfileOptionList.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/configs/api/mutation-config.ts" beforeDir="false" afterPath="$PROJECT_DIR$/configs/api/mutation-config.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/configs/api/query-config.ts" beforeDir="false" afterPath="$PROJECT_DIR$/configs/api/query-config.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/context/auth-context.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/context/auth-context.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/context/wishlist-context.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/context/wishlist-context.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hooks/use-wishlist-infinite.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/interfaces/user.ts" beforeDir="false" afterPath="$PROJECT_DIR$/interfaces/user.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/enums/screens.ts" beforeDir="false" afterPath="$PROJECT_DIR$/enums/screens.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hooks/use-search-history-store.ts" beforeDir="false" afterPath="$PROJECT_DIR$/hooks/use-search-history-store.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hooks/use-user-store.ts" beforeDir="false" afterPath="$PROJECT_DIR$/hooks/use-user-store.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/interfaces/product.ts" beforeDir="false" afterPath="$PROJECT_DIR$/interfaces/product.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/interfaces/wishlist/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/interfaces/wishlist/index.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -36,25 +52,25 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "code.cleanup.on.save": "true",
-    "git-widget-placeholder": "main",
-    "last_opened_file_path": "/Users/louischan/upo-expo/hooks",
-    "node.js.detected.package.eslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "pnpm",
-    "rearrange.code.on.save": "true",
-    "settings.editor.selected.configurable": "reference.settingsdialog.IDE.editor.colors.General",
-    "ts.external.directory.path": "/Users/louischan/upo-expo/node_modules/typescript/lib",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;code.cleanup.on.save&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/louischan/upo-expo/hooks&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;pnpm&quot;,
+    &quot;rearrange.code.on.save&quot;: &quot;true&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settingsdialog.IDE.editor.colors.General&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;/Users/louischan/upo-expo/node_modules/typescript/lib&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/hooks" />
@@ -62,11 +78,11 @@
       <recent name="$PROJECT_DIR$" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/app/(screens)/profile/Wishlist" />
       <recent name="$PROJECT_DIR$/assets/images" />
       <recent name="$PROJECT_DIR$/app/(screens)" />
       <recent name="$PROJECT_DIR$/interfaces" />
       <recent name="$PROJECT_DIR$/app/(screens)/search/OnFocus" />
-      <recent name="$PROJECT_DIR$/components/BottomSheet" />
     </key>
   </component>
   <component name="SharedIndexes">

@@ -2,10 +2,9 @@ import { Button, View, XStack } from 'tamagui';
 import { SearchStep } from '@/enums/search-step';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import SearchBar from '@/components/SearchBar';
-import SegmentedControl from '@react-native-segmented-control/segmented-control';
-import Colors from '@/constants/colors';
 import React, { useEffect } from 'react';
 import { useSearch } from '@/context/search-context';
+import ItemTypeSelector from '@/components/ItemTypeSelector';
 import { StyleSheet } from 'react-native';
 
 interface ISearchHeaderProps {
@@ -13,7 +12,7 @@ interface ISearchHeaderProps {
 }
 
 const searchHeader = (props: ISearchHeaderProps) => {
-  const { step, isKuji, setIsKuji, searchQuery, setAutocompleteItems } = useSearch();
+  const { step, searchQuery, setAutocompleteItems } = useSearch();
 
   useEffect(() => {
     if (searchQuery) {
@@ -40,38 +39,15 @@ const searchHeader = (props: ISearchHeaderProps) => {
         </View>
       </XStack>
       <View style={styles.segmentContainer}>
-        <SegmentedControl
-          style={styles.segmentedControl}
-          tintColor={Colors.primary}
-          backgroundColor="white"
-          // TODO: Segmented Control -> ['Products', 'Ichiban Kuji']
-          values={['Products']}
-          selectedIndex={+isKuji}
-          onChange={(event) => {
-            setIsKuji(Boolean(event.nativeEvent.selectedSegmentIndex));
-          }}
-        />
+        <ItemTypeSelector />
       </View>
     </>
   );
 };
 
 const styles = StyleSheet.create({
-  searchBar: {
-    width: '100%',
-    borderRadius: 24,
-  },
   segmentContainer: {
     alignItems: 'center',
-  },
-  segmentedControl: {
-    width: 240,
-    borderRadius: 16,
-    borderWidth: 2,
-    borderColor: Colors.primary,
-    // Ensure border radius is visible
-    overflow: 'hidden',
-    fontWeight: 'bold',
   },
 });
 

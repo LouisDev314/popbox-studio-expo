@@ -1,6 +1,7 @@
 import { create } from 'zustand/index';
 import { ISearchHistoryItem } from '@/interfaces/search';
 
+// FIXME: make it persist
 interface ISearchHistoryState {
   history: ISearchHistoryItem[];
   setHistory: (history: ISearchHistoryItem[]) => void;

@@ -10,4 +10,5 @@ export default interface IProduct {
   size: string;
   isActive: boolean;
   createdAt: string;
+  itemType: string;
 }

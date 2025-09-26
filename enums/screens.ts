@@ -5,6 +5,7 @@ export const enum AppScreen {
   Login = `${baseScreenPath}/auth/LoginScreen`,
   VerifyEmail = `${baseScreenPath}/auth/RegisterInitScreen`,
   ProductDetail = `${baseScreenPath}/products/[id]`,
+  Wishlist = `${baseScreenPath}/profile/WishlistScreen`,
 }
 
 // const errorScreenPath = `${baseScreenPath}/errors`;

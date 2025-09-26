@@ -11,7 +11,7 @@ import SearchResultScreen from '@/app/(screens)/search/SearchResultScreen';
 import SearchInitScreen from '@/app/(screens)/search/SearchInitScreen';
 
 const Search = () => {
-  const { step, setStep, isKuji, setSearchQuery } = useSearch();
+  const { step, setStep, setSearchQuery } = useSearch();
   const scrollY = useRef(new Animated.Value(0)).current;
 
   const handleReturn = () => {
@@ -24,7 +24,7 @@ const Search = () => {
   let currentScreen;
   switch (step) {
     case SearchStep.Init:
-      currentScreen = <SearchInitScreen isKuji={isKuji} scrollY={scrollY} />;
+      currentScreen = <SearchInitScreen scrollY={scrollY} />;
       break;
     case SearchStep.OnFocus:
       currentScreen = <SearchFocusScreen />;

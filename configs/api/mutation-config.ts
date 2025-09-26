@@ -1,4 +1,7 @@
 import appClient from '@/api/app-client';
+import { IWishlistItem } from '@/interfaces/wishlist';
+import { AxiosResponse } from 'axios';
+import { IBaseApiResponse } from '@/interfaces/api-response';
 
 const MutationConfigs = {
   verifyEmail: (user: { email: string, isResetPassword?: boolean }) => {
@@ -12,6 +15,15 @@ const MutationConfigs = {
   },
   sendOtp: (email: string) => {
     return appClient.post('/auth/send-otp', { email });
+  },
+  addItemToWishlist: (params: { uid: string, item: Pick<IWishlistItem, 'itemId' | 'itemType'> }) => {
+    return appClient.post(`/wishlists/${params.uid}`, params.item);
+  },
+  deleteWishlistItem: (params: {
+    uid: string,
+    itemId: string
+  }): Promise<AxiosResponse<IBaseApiResponse<Pick<IWishlistItem, 'itemId'>>>> => {
+    return appClient.delete(`/wishlists/${params.uid}/${params.itemId}`);
   },
 };
 
