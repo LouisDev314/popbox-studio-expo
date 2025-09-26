@@ -59,18 +59,12 @@ export const WishlistProvider = (props: { children: React.ReactNode }) => {
 
   const { mutation: deleteWishlistItem } = useCustomizeMutation({
     mutationFn: MutationConfigs.deleteWishlistItem,
-    onSuccess: (data) => {
-      const item = data.data.data;
-      const updatedWishlist = user?.wishlist.filter(wishlistItem => wishlistItem.itemId !== item.itemId) as IWishlistItem[];
-      const updatedUser = { ...user!, wishlist: updatedWishlist };
-      setUser(updatedUser);
-    },
-    onError: (err: AxiosError<IBaseApiResponse>) => {
-      console.error('Cannot delete wishlist:', err);
-    },
   });
 
   const handleRemoveWishlistItem = (item: IWishlistItem) => {
+    const updatedWishlist = user?.wishlist.filter(wishlistItem => wishlistItem.itemId !== item.itemId) as IWishlistItem[];
+    const updatedUser = { ...user!, wishlist: updatedWishlist };
+    setUser(updatedUser);
     deleteWishlistItem({ uid: user!.uid, itemId: item.itemId });
   };
 

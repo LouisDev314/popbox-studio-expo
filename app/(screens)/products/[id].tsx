@@ -15,6 +15,7 @@ import { IWishlistItem } from '@/interfaces/wishlist';
 import useCustomizeMutation from '@/hooks/use-customize-mutation';
 import MutationConfigs from '@/configs/api/mutation-config';
 import { useWishlist } from '@/context/wishlist-context';
+import useDebounce from '@/hooks/use-debounce';
 
 const ProductDetailScreen = () => {
   const { id } = useLocalSearchParams();
@@ -25,6 +26,26 @@ const ProductDetailScreen = () => {
   const { handleRemoveWishlistItem } = useWishlist();
   const user = useUser();
   const setUser = useSetUser();
+
+  useEffect(() => {
+    setIsProductInWishlist(!!user?.wishlist?.some((item: IWishlistItem) => item.itemId === id));
+  }, []);
+
+  const debouncedToggleAddToWishlist = useDebounce(() => {
+    if (isProductInWishlist) {
+      handleRemoveWishlistItem(currItem);
+    } else {
+      addToWishlist({
+        uid: user!.uid,
+        item: { itemId: id as string, itemType: product!.itemType },
+      });
+    }
+  }, 300);
+
+  const handleToggleAddToWishlist = () => {
+    setIsProductInWishlist(prev => !prev);
+    debouncedToggleAddToWishlist();
+  };
 
   const { data, isLoading } = useCustomizeQuery({
     queryKey: [id, 'product', 'fetch'],
@@ -38,10 +59,6 @@ const ProductDetailScreen = () => {
   useEffect(() => {
     setProduct(data?.data.data ?? null);
   }, [data]);
-
-  useEffect(() => {
-    setIsProductInWishlist(!!user?.wishlist?.some((item: IWishlistItem) => item.itemId === id));
-  }, []);
 
   const { mutation: addToWishlist } = useCustomizeMutation({
     mutationFn: MutationConfigs.addItemToWishlist,
@@ -91,18 +108,6 @@ const ProductDetailScreen = () => {
     itemType: product!.itemType,
   };
 
-  const toggleAddToWishlist = () => {
-    setIsProductInWishlist(prevState => !prevState);
-    if (isProductInWishlist) {
-      handleRemoveWishlistItem(currItem);
-    } else {
-      addToWishlist({
-        uid: user!.uid,
-        item: { itemId: (id as string), itemType: product!.itemType },
-      });
-    }
-  };
-
   const handleAddToCart = () => {
     console.log('addToCart');
     // Over purchase
@@ -136,7 +141,7 @@ const ProductDetailScreen = () => {
             <SizableText size="$9" marginTop={10} color={Colors.primary} fontWeight="500">
               ${product.price}
             </SizableText>
-            <Button circular onPress={toggleAddToWishlist} size="$5" marginTop={10}>
+            <Button circular onPress={handleToggleAddToWishlist} size="$5" marginTop={10}>
               {isProductInWishlist ? <Ionicons name="heart" color={Colors.primary} size={32} /> :
                 <Ionicons name="heart-outline" color={Colors.primary} size={32} />}
             </Button>
