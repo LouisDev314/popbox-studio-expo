@@ -1,12 +1,12 @@
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { AxiosResponse } from 'axios';
-import queryConfigs from '@/configs/api/query-config';
+import QueryConfigs from '@/configs/api/query-config';
 import { IBaseApiResponse } from '@/interfaces/api-response';
 import { IItemsResponse } from '@/interfaces/items';
 import { IItemSearchOptions } from '@/interfaces/search';
 
 const useItemsInfinite = (options: IItemSearchOptions, isKuji: boolean, enabled?: boolean) => {
-  const queryFn = isKuji ? queryConfigs.fetchKujis : queryConfigs.fetchProducts;
+  const queryFn = isKuji ? QueryConfigs.fetchKujis : QueryConfigs.fetchProducts;
 
   return useInfiniteQuery<AxiosResponse<IBaseApiResponse<IItemsResponse>>>({
     queryKey: [isKuji ? 'kujis' : 'items', options],

@@ -2,9 +2,8 @@ import appClient from '@/api/app-client';
 import { AxiosResponse } from 'axios';
 import { IBaseApiResponse } from '@/interfaces/api-response';
 import { IUser } from '@/interfaces/user';
-import { IItemsResponse, IKujiCard, IProductCard } from '@/interfaces/items';
+import { IItem, IItemsResponse, IKujiCard, IProductCard } from '@/interfaces/items';
 import { IAutocompleteItem } from '@/interfaces/search';
-import IProduct from '@/interfaces/product';
 import { IWishlistItem } from '@/interfaces/wishlist';
 
 const QueryConfigs = {
@@ -57,8 +56,11 @@ const QueryConfigs = {
       },
     });
   },
-  fetchProductById: (id: string): Promise<AxiosResponse<IBaseApiResponse<IProduct>>> => {
+  fetchProductById: (id: string): Promise<AxiosResponse<IBaseApiResponse<IItem>>> => {
     return appClient.get(`/products/${id}`);
+  },
+  fetchKujiById: (id: string): Promise<AxiosResponse<IBaseApiResponse<IItem>>> => {
+    return appClient.get(`/kujis/${id}`);
   },
   fetchKujis: async ({
                        pageParam = undefined,

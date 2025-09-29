@@ -5,6 +5,8 @@ import Colors from '@/constants/colors';
 import React from 'react';
 import { Ionicons } from '@expo/vector-icons';
 import { useWishlist } from '@/context/wishlist-context';
+import { router } from 'expo-router';
+import { AppScreen } from '@/enums/screens';
 
 interface IWishlistItemProps extends CardProps {
   item: IWishlistItem;
@@ -12,6 +14,16 @@ interface IWishlistItemProps extends CardProps {
 
 const WishlistItem = (props: IWishlistItemProps) => {
   const { handleRemoveWishlistItem } = useWishlist();
+
+  const handleOnPress = () => {
+    router.push({
+      pathname: AppScreen.ProductDetail,
+      params: {
+        id: props.item.itemId,
+        itemType: props.item.itemType,
+      },
+    });
+  };
 
   return (
     <Card
@@ -22,8 +34,7 @@ const WishlistItem = (props: IWishlistItemProps) => {
       borderRadius="$6"
       overflow="hidden"
       height={200}
-      onPress={() => {
-      }}
+      onPress={handleOnPress}
       pressStyle={{ scale: 0.95 }}
       {...props}
     >

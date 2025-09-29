@@ -5,12 +5,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="17ef7c58-bf7c-413e-b6ef-f4686d9e06c1" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/assets/images/empty-wishlist.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/enums/items.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.expo/devices.json" beforeDir="false" afterPath="$PROJECT_DIR$/.expo/devices.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/(screens)/profile/WishlistScreen/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(screens)/profile/WishlistScreen/index.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/CustomizeImage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/CustomizeImage.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/(screens)/products/[id].tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(screens)/products/[id].tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/components/WishlistItem.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/WishlistItem.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/configs/api/query-config.ts" beforeDir="false" afterPath="$PROJECT_DIR$/configs/api/query-config.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hooks/use-items-infinite.ts" beforeDir="false" afterPath="$PROJECT_DIR$/hooks/use-items-infinite.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/interfaces/items/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/interfaces/items/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/interfaces/kuji.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/interfaces/product.ts" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

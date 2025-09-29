@@ -4,7 +4,6 @@ import useCustomizeQuery from '@/hooks/use-customize-query';
 import QueryConfigs from '@/configs/api/query-config';
 import AppStyleSheet from '@/constants/app-stylesheet';
 import React, { useEffect, useState } from 'react';
-import IProduct from '@/interfaces/product';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import ImageCarousel from '@/components/ImageCarousel';
 import { SCREEN_HEIGHT } from '@gorhom/bottom-sheet';
@@ -16,48 +15,53 @@ import useCustomizeMutation from '@/hooks/use-customize-mutation';
 import MutationConfigs from '@/configs/api/mutation-config';
 import { useWishlist } from '@/context/wishlist-context';
 import useDebounce from '@/hooks/use-debounce';
+import { ItemType } from '@/enums/items';
+import { IItem } from '@/interfaces/items';
 
 const ProductDetailScreen = () => {
-  const { id } = useLocalSearchParams();
-  const [product, setProduct] = useState<IProduct | null>(null);
+  const { id, itemType } = useLocalSearchParams();
+  const isItemTypeKuji = itemType === ItemType.Kuji;
+  const [item, setItem] = useState<IItem | null>(null);
   const [quantity, setQuantity] = useState(1);
   const [overBoughtMsg, setOverBoughtMsg] = useState('');
-  const [isProductInWishlist, setIsProductInWishlist] = useState(false);
+  const [isItemInWishlist, setIsItemInWishlist] = useState(false);
   const { handleRemoveWishlistItem } = useWishlist();
   const user = useGetUser();
   const setUser = useSetUser();
 
+
   useEffect(() => {
-    setIsProductInWishlist(!!user?.wishlist?.some((item: IWishlistItem) => item.itemId === id));
+    setIsItemInWishlist(!!user?.wishlist?.some((item: IWishlistItem) => item.itemId === id));
   }, []);
 
-  const debouncedToggleAddToWishlist = useDebounce(() => {
-    if (isProductInWishlist) {
+  const useDebouncedToggleAddToWishlist = useDebounce(() => {
+    if (isItemInWishlist) {
       handleRemoveWishlistItem(currItem);
     } else {
       addToWishlist({
         uid: user!.uid,
-        item: { itemId: id as string, itemType: product!.itemType },
+        item: { itemId: id as string, itemType: item!.itemType },
       });
     }
   }, 300);
 
   const handleToggleAddToWishlist = () => {
-    setIsProductInWishlist(prev => !prev);
-    debouncedToggleAddToWishlist();
+    setIsItemInWishlist(prev => !prev);
+    useDebouncedToggleAddToWishlist();
   };
 
+  const queryFn = isItemTypeKuji ? () => QueryConfigs.fetchKujiById(id as string) : () => QueryConfigs.fetchProductById(id as string);
   const { refetch, data, isLoading } = useCustomizeQuery({
-    queryKey: [id, 'product', 'fetch'],
-    queryFn: () => QueryConfigs.fetchProductById(id as string),
+    queryKey: [id, isItemTypeKuji ? 'product' : 'kuji', 'fetch'],
+    queryFn,
     onError: (err) => {
-      console.error('Cannot fetch product by id:', err.response?.data);
+      console.error('Cannot fetch item by id:', err.response?.data);
     },
     enabled: !!id,
   });
 
   useEffect(() => {
-    setProduct(data?.data.data ?? null);
+    setItem((data?.data.data as IItem) ?? null);
   }, [data]);
 
   const { mutation: addToWishlist } = useCustomizeMutation({
@@ -80,7 +84,7 @@ const ProductDetailScreen = () => {
   };
 
   // Don't render carousel until we have product data with images
-  if (isLoading || !product || !product.images || product.images.length === 0) {
+  if (isLoading || !item || !item.images || item.images.length === 0) {
     return (
       <View style={AppStyleSheet.bg} alignItems="center">
         <XStack width="100%" alignItems="center" marginTop={60} justifyContent="space-between">
@@ -101,18 +105,18 @@ const ProductDetailScreen = () => {
   }
 
   const currItem = {
-    itemId: product!._id,
-    title: product!.title,
-    images: product!.images,
-    price: product!.price,
-    itemType: product!.itemType,
+    itemId: item!._id,
+    title: item!.title,
+    images: item!.images,
+    price: item!.price,
+    itemType: item!.itemType,
   };
 
   const handleAddToCart = () => {
     console.log('addToCart');
     // Over purchase
-    if (product && quantity > product.inventory) {
-      setOverBoughtMsg(`Only added ${product.inventory} to your cart due to availability.`);
+    if (item && quantity > item.inventory) {
+      setOverBoughtMsg(`Only added ${item.inventory} to your cart due to availability.`);
     } else {
 
     }
@@ -144,22 +148,22 @@ const ProductDetailScreen = () => {
           />
         }
       >
-        <ImageCarousel imgUrls={product.images} />
+        <ImageCarousel imgUrls={item.images} />
         <View paddingHorizontal={10}>
-          <SizableText size="$8">{product.title}</SizableText>
+          <SizableText size="$8">{item.title}</SizableText>
           <XStack alignItems="center" justifyContent="space-between">
             <SizableText size="$9" marginTop={10} color={Colors.primary} fontWeight="500">
-              ${product.price}
+              ${item.price}
             </SizableText>
             <Button circular onPress={handleToggleAddToWishlist} size="$5" marginTop={10}>
-              {isProductInWishlist ? <Ionicons name="heart" color={Colors.primary} size={32} /> :
+              {isItemInWishlist ? <Ionicons name="heart" color={Colors.primary} size={32} /> :
                 <Ionicons name="heart-outline" color={Colors.primary} size={32} />}
             </Button>
           </XStack>
           <SizableText size="$7" marginTop={15}>Size</SizableText>
-          <SizableText size="$5">{product.size}</SizableText>
+          <SizableText size="$5">{item.size}</SizableText>
           <SizableText size="$7" marginTop={20}>Material</SizableText>
-          <SizableText size="$5">{product.material}</SizableText>
+          <SizableText size="$5">{item.material}</SizableText>
         </View>
       </ScrollView>
       <SizableText size="$6" color="red" marginBottom={5}>
