@@ -77,7 +77,7 @@ const WishlistItem = (props: IWishlistItemProps) => {
           {/* Bottom Action */}
           <XStack justifyContent="space-between" alignItems="center">
             <SizableText
-              size="$8"
+              size="$7"
               fontWeight="700"
               color={Colors.primary}
             >
@@ -90,12 +90,11 @@ const WishlistItem = (props: IWishlistItemProps) => {
               backgroundColor={Colors.primary}
               pressStyle={{ backgroundColor: Colors.primary }}
               color="white"
-              fontWeight="600"
               onPress={() => {
                 console.log('add to cart');
               }}
             >
-              Add to Cart
+              <SizableText size="$5" fontWeight="500">Add to Cart</SizableText>
             </Button>
           </XStack>
         </YStack>

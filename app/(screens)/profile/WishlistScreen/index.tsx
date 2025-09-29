@@ -9,10 +9,13 @@ import WishlistItem from '@/components/WishlistItem';
 import ItemTypeSelector from '@/components/ItemTypeSelector';
 import { RefreshControl, StyleSheet } from 'react-native';
 import { useWishlist } from '@/context/wishlist-context';
+import CustomizeImage from '@/components/CustomizeImage';
+import { SCREEN_HEIGHT } from '@gorhom/bottom-sheet';
 
 const WishlistScreen = () => {
   const { fetchWishlist, isFetchingWishlist } = useWishlist();
   const user = useGetUser();
+  const hasWishlistItem = !!user?.wishlist?.length;
 
   const handleReturn = () => {
     router.back();
@@ -21,6 +24,8 @@ const WishlistScreen = () => {
   const handleRefresh = () => {
     fetchWishlist();
   };
+
+  const x = require('@/assets/images/empty-wishlist.jpg');
 
   return (
     <View style={AppStyleSheet.bg}>
@@ -48,44 +53,37 @@ const WishlistScreen = () => {
       <View style={[styles.segmentContainer]}>
         <ItemTypeSelector />
       </View>
-      {!user?.wishlist?.length ?
-        <View height="100%" alignItems="center" justifyContent="center">
-          <ScrollView
-            refreshControl={
-              <RefreshControl
-                refreshing={isFetchingWishlist}
-                onRefresh={handleRefresh}
-                tintColor="white"
-                // progressViewOffset={120}
-              />
-            }
-          >
-            {/*<CustomizeImage*/}
-            {/*  uri={}*/}
-            {/*  style={{*/}
-            {/*    width: '100%',*/}
-            {/*    height: '100%',*/}
-            {/*    borderRadius: 15,*/}
-            {/*  }}*/}
-            {/*/>*/}
-            <SizableText>Nothing in the wishlist yet</SizableText>
-          </ScrollView>
-        </View> :
+      <View height="100%">
         <ScrollView
           refreshControl={
             <RefreshControl
               refreshing={isFetchingWishlist}
               onRefresh={handleRefresh}
               tintColor="white"
-              // progressViewOffset={120}
             />
           }
         >
-          {user?.wishlist?.map((item) => (
-            <WishlistItem key={item.itemId} item={item} />
-          ))}
+          {!hasWishlistItem ? (
+            <View marginTop={SCREEN_HEIGHT / 8} alignItems="center">
+              <CustomizeImage
+                source={require('@/assets/images/empty-wishlist.jpg')}
+                style={{
+                  width: 200,
+                  height: 200,
+                  borderRadius: 100,
+                }}
+              />
+              <SizableText size="$7" marginTop="$4" fontWeight="500">Nothing in your wishlist yet!</SizableText>
+            </View>
+          ) : (
+            <>
+              {user?.wishlist?.map((item) => (
+                <WishlistItem key={item.itemId} item={item} />
+              ))}
+            </>
+          )}
         </ScrollView>
-      }
+      </View>
     </View>
   );
 };
@@ -95,6 +93,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginTop: 15,
     marginBottom: 25,
+  },
+  container: {
+    height: '100%',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });
 
