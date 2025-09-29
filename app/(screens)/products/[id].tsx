@@ -8,7 +8,7 @@ import IProduct from '@/interfaces/product';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import ImageCarousel from '@/components/ImageCarousel';
 import { SCREEN_HEIGHT } from '@gorhom/bottom-sheet';
-import { StyleSheet } from 'react-native';
+import { RefreshControl, StyleSheet } from 'react-native';
 import Colors from '@/constants/colors';
 import { useGetUser, useSetUser } from '@/hooks/use-user-store';
 import { IWishlistItem } from '@/interfaces/wishlist';
@@ -47,7 +47,7 @@ const ProductDetailScreen = () => {
     debouncedToggleAddToWishlist();
   };
 
-  const { data, isLoading } = useCustomizeQuery({
+  const { refetch, data, isLoading } = useCustomizeQuery({
     queryKey: [id, 'product', 'fetch'],
     queryFn: () => QueryConfigs.fetchProductById(id as string),
     onError: (err) => {
@@ -133,7 +133,17 @@ const ProductDetailScreen = () => {
           uri: require('@/assets/images/logo.png'),
         }} />
       </XStack>
-      <ScrollView height="100%" marginTop={10}>
+      <ScrollView
+        height="100%"
+        marginTop={10}
+        refreshControl={
+          <RefreshControl
+            refreshing={isLoading}
+            onRefresh={refetch}
+            tintColor="white"
+          />
+        }
+      >
         <ImageCarousel imgUrls={product.images} />
         <View paddingHorizontal={10}>
           <SizableText size="$8">{product.title}</SizableText>
@@ -190,7 +200,7 @@ const ProductDetailScreen = () => {
           pressStyle={{ backgroundColor: Colors.primary }}
           onPress={handleAddToCart}
         >
-          <SizableText size="$7" color="floralwhite">Add to cart</SizableText>
+          <SizableText size="$7" color="white" fontWeight="500">Add to cart</SizableText>
         </Button>
       </XStack>
     </View>
