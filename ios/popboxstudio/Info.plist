@@ -48,6 +48,15 @@
     <string>1</string>
     <key>ITSAppUsesNonExemptEncryption</key>
     <false/>
+    <key>LSApplicationQueriesSchemes</key>
+    <array>
+      <string>instagram</string>
+      <string>fb</string>
+      <string>facebook</string>
+      <string>tiktok</string>
+      <string>tiktokshare</string>
+      <string>tiktoksharesdk</string>
+    </array>
     <key>LSMinimumSystemVersion</key>
     <string>12.0</string>
     <key>LSRequiresIPhoneOS</key>

@@ -46,7 +46,7 @@ const Profile = () => {
               },
             ]);
           }}>
-          <SizableText size="$5" color={Colors.primary}>Logout</SizableText>
+          <SizableText size="$5" color={Colors.primary} marginTop="$4">Logout</SizableText>
         </Button>
       </ScrollView>
     </View>

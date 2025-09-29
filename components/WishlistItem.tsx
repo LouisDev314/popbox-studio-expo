@@ -30,11 +30,11 @@ const WishlistItem = (props: IWishlistItemProps) => {
       <XStack>
         {/* Image section */}
         <View
-          width="32%"
+          width={150}
           height={200}
           overflow="hidden"
           paddingVertical="$4"
-          paddingLeft="$2"
+          paddingLeft="$3"
         >
           <CustomizeImage
             uri={props.item.images[0]}

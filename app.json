@@ -12,8 +12,16 @@
       "supportsTablet": true,
       "bundleIdentifier": "com.louischan.popboxstudio",
       "infoPlist": {
-        "ITSAppUsesNonExemptEncryption": false
-      },
+        "ITSAppUsesNonExemptEncryption": false,
+        "LSApplicationQueriesSchemes": [
+          "instagram",
+          "fb",
+          "facebook",
+          "tiktok",
+          "tiktokshare",
+          "tiktoksharesdk"
+        ]
+      }
     },
     "android": {
       "adaptiveIcon": {
