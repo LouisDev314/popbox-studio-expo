@@ -5,7 +5,7 @@ import { IItemSearchOptions } from '@/interfaces/search';
 import { ProductCategory, ProductsOrder, ProductSortBy } from '@/enums/sort-by-filters';
 import { AxiosError } from 'axios';
 import { IBaseApiResponse } from '@/interfaces/api-response';
-import { useSetUser, useUser } from '@/hooks/use-user-store';
+import { useGetUser, useSetUser } from '@/hooks/use-user-store';
 import { IWishlistItem } from '@/interfaces/wishlist';
 import useCustomizeMutation from '@/hooks/use-customize-mutation';
 import MutationConfigs from '@/configs/api/mutation-config';
@@ -22,7 +22,7 @@ const WishlistContext = createContext<IWishlistContext | undefined>(undefined);
 
 export const WishlistProvider = (props: { children: React.ReactNode }) => {
   // const user = useUserStore(state => state.user);
-  const user = useUser();
+  const user = useGetUser();
   const setUser = useSetUser();
   const { isStorageReady } = useAuth();
   const [wishlist, setWishlist] = useState<IWishlistItem[]>([]);
@@ -35,10 +35,9 @@ export const WishlistProvider = (props: { children: React.ReactNode }) => {
 
   // Due to reactivity of Zustand, have to separate it here
   useEffect(() => {
-    if (isStorageReady) {
-      const updatedUser = { ...user!, wishlist };
-      setUser(updatedUser);
-    }
+    if (!isStorageReady) return;
+    const updatedUser = { ...user!, wishlist };
+    setUser(updatedUser);
   }, [wishlist, isStorageReady]);
 
   // Fetch user wishlist and store to local on init

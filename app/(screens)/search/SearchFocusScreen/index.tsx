@@ -5,15 +5,16 @@ import Colors from '@/constants/colors';
 import { useSearch } from '@/context/search-context';
 import AutocompleteItemList from '@/components/AutocompleteItemList';
 import { ISearchHistoryItem } from '@/interfaces/search';
-import { useHistoryStore } from '@/hooks/use-search-history-store';
 import { SearchStep } from '@/enums/search-step';
 import { Keyboard, KeyboardAvoidingView, Platform } from 'react-native';
+import React from 'react';
+import { useClearHistory, useGetHistory } from '@/hooks/use-search-history-store';
 
 const SearchFocusScreen = () => {
   const { handleSearchByItem, setStep, searchQuery, setSearchQuery } = useSearch();
-  const { removeFromHistory, clearHistory, addToHistory } = useSearchHistory();
-  // Reactive
-  const history = useHistoryStore(state => state.history);
+  const { removeFromHistory, addToHistory } = useSearchHistory();
+  const history = useGetHistory();
+  const clearHistory = useClearHistory();
 
   const handleHistoryItemOnPress = (item: ISearchHistoryItem) => {
     if (item._id) {
@@ -26,10 +27,18 @@ const SearchFocusScreen = () => {
     }
   };
 
+  // if (!hasHydrated) {
+  //   return (
+  //     <View marginTop={SCREEN_HEIGHT / 3}>
+  //       <Spinner size="small" color="white" />
+  //     </View>
+  //   );
+  // }
+
   return (
     <>
       <XStack alignItems="center" justifyContent="space-between">
-        {!searchQuery && <SizableText size="$9" fontWeight="bold">History</SizableText>}
+        {!searchQuery && <SizableText size="$9" fontWeight="bold" marginTop="$2">History</SizableText>}
         {!searchQuery && history.length > 0 && (
           <Button size="$2" unstyled marginRight={-4} onPress={clearHistory}>
             <SizableText size="$6" color={Colors.primary}>Clear</SizableText>

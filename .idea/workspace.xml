@@ -5,12 +5,20 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="17ef7c58-bf7c-413e-b6ef-f4686d9e06c1" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/hooks/use-debounce.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.expo/devices.json" beforeDir="false" afterPath="$PROJECT_DIR$/.expo/devices.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/(screens)/products/[id].tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(screens)/products/[id].tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/(screens)/profile/WishlistScreen/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(screens)/profile/WishlistScreen/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/(screens)/search/SearchFocusScreen/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(screens)/search/SearchFocusScreen/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/(tabs)/profile.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(tabs)/profile.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/SearchBar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/SearchBar.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/context/auth-context.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/context/auth-context.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/context/search-context.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/context/search-context.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/context/wishlist-context.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/context/wishlist-context.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/helper.ts" beforeDir="false" afterPath="$PROJECT_DIR$/utils/helper.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hooks/use-search-history-store.ts" beforeDir="false" afterPath="$PROJECT_DIR$/hooks/use-search-history-store.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hooks/use-search-history.ts" beforeDir="false" afterPath="$PROJECT_DIR$/hooks/use-search-history.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hooks/use-user-store.ts" beforeDir="false" afterPath="$PROJECT_DIR$/hooks/use-user-store.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/mmkv.ts" beforeDir="false" afterPath="$PROJECT_DIR$/utils/mmkv.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

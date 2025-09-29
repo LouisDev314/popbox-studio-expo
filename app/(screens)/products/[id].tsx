@@ -10,7 +10,7 @@ import ImageCarousel from '@/components/ImageCarousel';
 import { SCREEN_HEIGHT } from '@gorhom/bottom-sheet';
 import { StyleSheet } from 'react-native';
 import Colors from '@/constants/colors';
-import { useSetUser, useUser } from '@/hooks/use-user-store';
+import { useGetUser, useSetUser } from '@/hooks/use-user-store';
 import { IWishlistItem } from '@/interfaces/wishlist';
 import useCustomizeMutation from '@/hooks/use-customize-mutation';
 import MutationConfigs from '@/configs/api/mutation-config';
@@ -24,7 +24,7 @@ const ProductDetailScreen = () => {
   const [overBoughtMsg, setOverBoughtMsg] = useState('');
   const [isProductInWishlist, setIsProductInWishlist] = useState(false);
   const { handleRemoveWishlistItem } = useWishlist();
-  const user = useUser();
+  const user = useGetUser();
   const setUser = useSetUser();
 
   useEffect(() => {

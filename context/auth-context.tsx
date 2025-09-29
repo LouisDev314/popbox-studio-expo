@@ -19,7 +19,7 @@ import {
   useSignInWithEmailAndPasswordMutation,
 } from '@tanstack-query-firebase/react/auth';
 import { handleLogout } from '@/api/app-client';
-import { useSetUser } from '@/hooks/use-user-store';
+import { useSetUser, useUserStore } from '@/hooks/use-user-store';
 
 interface IAuthContext {
   isAuthenticated: boolean;
@@ -55,8 +55,7 @@ export const AuthProvider = (props: { children: React.ReactNode }) => {
   }, []);
 
   useEffect(() => {
-    if (!isStorageReady) return; // Wait for storage to be ready
-
+    if (!isStorageReady) return;
     const initializeDeviceId = async () => {
       try {
         const deviceId = await retrieveDeviceId();
@@ -66,7 +65,9 @@ export const AuthProvider = (props: { children: React.ReactNode }) => {
       }
     };
     initializeDeviceId();
-  }, []);
+    // Init with mmkv stored user
+    useUserStore.persist.rehydrate();
+  }, [isStorageReady]);
 
   // Auth state listener
   useEffect(() => {
@@ -128,7 +129,6 @@ export const AuthProvider = (props: { children: React.ReactNode }) => {
     queryFn: () => QueryConfigs.fetchUser(auth.currentUser?.uid!),
     onSuccess: (data: AxiosResponse<IBaseApiResponse<IUser>>) => {
       const user = data.data.data as IUser;
-      // FIXME
       setUser(user);
       router.replace(AppScreen.Tabs);
     },

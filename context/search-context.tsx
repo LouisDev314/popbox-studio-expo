@@ -2,7 +2,6 @@ import { IAutocompleteItem } from '@/interfaces/search';
 import React, { createContext, Ref, RefObject, useContext, useEffect, useRef, useState } from 'react';
 import { SearchStep } from '@/enums/search-step';
 import useSearchHistory from '@/hooks/use-search-history';
-import { useAuth } from '@/context/auth-context';
 import { IKujiCard, IProductCard } from '@/interfaces/items';
 import { Input } from 'tamagui';
 import useDebounceInput from '@/hooks/use-debounce-input';
@@ -10,6 +9,8 @@ import { router } from 'expo-router';
 import { AppScreen } from '@/enums/screens';
 import BottomSheet from '@gorhom/bottom-sheet';
 import { BottomSheetMethods } from '@gorhom/bottom-sheet/lib/typescript/types';
+import { useAuth } from '@/context/auth-context';
+import { useHistoryStore } from '@/hooks/use-search-history-store';
 
 interface ISearchContext {
   isKuji: boolean;
@@ -34,8 +35,7 @@ interface ISearchContext {
 const SearchContext = createContext<ISearchContext | undefined>(undefined);
 
 export const SearchProvider = (props: { children: React.ReactNode }) => {
-  const { addToHistory, loadHistory } = useSearchHistory();
-  const { isStorageReady } = useAuth();
+  const { addToHistory } = useSearchHistory();
   const [step, setStep] = useState(SearchStep.Init);
   const [isKuji, setIsKuji] = useState(false);
   const [autocompleteItems, setAutocompleteItems] = useState<IAutocompleteItem[]>([]);
@@ -45,11 +45,14 @@ export const SearchProvider = (props: { children: React.ReactNode }) => {
   const searchBarRef = useRef<Input>(null);
   const bottomSheetRef = useRef<BottomSheet>(null);
 
-  const debouncedQuery = useDebounceInput(searchQuery.trim(), 300);
+  const { isStorageReady } = useAuth();
 
   useEffect(() => {
-    if (isStorageReady) loadHistory();
+    if (!isStorageReady) return;
+    useHistoryStore.persist.rehydrate();
   }, [isStorageReady]);
+
+  const debouncedQuery = useDebounceInput(searchQuery.trim(), 300);
 
   const handleSearchByItem = (item: IAutocompleteItem) => {
     addToHistory(item.title, item._id);

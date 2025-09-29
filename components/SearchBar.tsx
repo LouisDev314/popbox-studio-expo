@@ -83,7 +83,7 @@ const SearchBar = () => {
         autoCorrect={false}
         autoFocus={true}
         color="black"
-        onSubmitEditing={() => handleSearchOnInputSubmit(debouncedQuery)}
+        onSubmitEditing={() => handleSearchOnInputSubmit(searchQuery)}
         editable={step !== SearchStep.Init}
       />
       {step === SearchStep.Init && (

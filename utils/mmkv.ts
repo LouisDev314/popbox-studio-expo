@@ -19,7 +19,7 @@ const retrieveKey = async () => {
 
 const generateRandomKey = (length: number) => {
   const array = new Uint8Array(length);
-  // You might need a polyfill for crypto.getRandomValues in React Native
+  // Polyfill for crypto.getRandomValues in React Native
   crypto.getRandomValues(array);
   return Array.from(array, b => b.toString(16).padStart(2, '0')).join('');
 };

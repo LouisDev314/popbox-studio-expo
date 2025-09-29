@@ -4,7 +4,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import React from 'react';
 import { router } from 'expo-router';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { useUser } from '@/hooks/use-user-store';
+import { useGetUser } from '@/hooks/use-user-store';
 import WishlistItem from '@/components/WishlistItem';
 import ItemTypeSelector from '@/components/ItemTypeSelector';
 import { RefreshControl, StyleSheet } from 'react-native';
@@ -12,7 +12,7 @@ import { useWishlist } from '@/context/wishlist-context';
 
 const WishlistScreen = () => {
   const { fetchWishlist, isFetchingWishlist } = useWishlist();
-  const user = useUser();
+  const user = useGetUser();
 
   const handleReturn = () => {
     router.back();

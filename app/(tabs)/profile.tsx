@@ -1,7 +1,7 @@
 import { Avatar, Button, ScrollView, SizableText, View } from 'tamagui';
 import { useAuth } from '@/context/auth-context';
 import AppStyleSheet from '@/constants/app-stylesheet';
-import { useUser } from '@/hooks/use-user-store';
+import { useGetUser } from '@/hooks/use-user-store';
 import { Alert, StyleSheet } from 'react-native';
 import React from 'react';
 import ProfileOptionList from '@/components/profile/ProfileOptionList';
@@ -14,7 +14,7 @@ const Profile = () => {
     await logout();
   };
 
-  const user = useUser();
+  const user = useGetUser();
 
   return (
     <View style={AppStyleSheet.bg}>

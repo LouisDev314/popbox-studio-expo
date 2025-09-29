@@ -2,6 +2,7 @@ import { create } from 'zustand';
 import { createJSONStorage, persist } from 'zustand/middleware';
 import { IUser } from '@/interfaces/user';
 import { secureStorage } from '@/utils/mmkv';
+import { StorageKey } from '@/enums/mmkv';
 
 interface IUserState {
   user: IUser | null;
@@ -17,16 +18,17 @@ export const useUserStore = create<IUserState>()(
       clearUser: () => set({ user: null }),
     }),
     {
-      name: 'user-storage', // unique key for storage in MMKV
+      name: StorageKey.User,
       storage: createJSONStorage(() => ({
         getItem: (key) => secureStorage().getString(key) || null,
         setItem: (key, value) => secureStorage().set(key, value),
         removeItem: (key) => secureStorage().delete(key),
       })),
+      skipHydration: true,
     },
   ),
 );
 
-export const useUser = () => useUserStore(state => state.user);
+export const useGetUser = () => useUserStore(state => state.user);
 export const useSetUser = () => useUserStore(state => state.setUser);
 export const useClearUser = () => useUserStore(state => state.clearUser);
