@@ -25,8 +25,6 @@ const WishlistScreen = () => {
     fetchWishlist();
   };
 
-  const x = require('@/assets/images/empty-wishlist.jpg');
-
   return (
     <View style={AppStyleSheet.bg}>
       {/* Header */}
@@ -53,37 +51,36 @@ const WishlistScreen = () => {
       <View style={[styles.segmentContainer]}>
         <ItemTypeSelector />
       </View>
-      <View height="100%">
-        <ScrollView
-          refreshControl={
-            <RefreshControl
-              refreshing={isFetchingWishlist}
-              onRefresh={handleRefresh}
-              tintColor="white"
+      <ScrollView
+        height="100%"
+        refreshControl={
+          <RefreshControl
+            refreshing={isFetchingWishlist}
+            onRefresh={handleRefresh}
+            tintColor="white"
+          />
+        }
+      >
+        {!hasWishlistItem ? (
+          <View marginTop={SCREEN_HEIGHT / 8} alignItems="center">
+            <CustomizeImage
+              source={require('@/assets/images/empty-wishlist.jpg')}
+              style={{
+                width: 200,
+                height: 200,
+                borderRadius: 100,
+              }}
             />
-          }
-        >
-          {!hasWishlistItem ? (
-            <View marginTop={SCREEN_HEIGHT / 8} alignItems="center">
-              <CustomizeImage
-                source={require('@/assets/images/empty-wishlist.jpg')}
-                style={{
-                  width: 200,
-                  height: 200,
-                  borderRadius: 100,
-                }}
-              />
-              <SizableText size="$7" marginTop="$4" fontWeight="500">Nothing in your wishlist yet!</SizableText>
-            </View>
-          ) : (
-            <>
-              {user?.wishlist?.map((item) => (
-                <WishlistItem key={item.itemId} item={item} />
-              ))}
-            </>
-          )}
-        </ScrollView>
-      </View>
+            <SizableText size="$7" marginTop="$4" fontWeight="500">Nothing in your wishlist yet!</SizableText>
+          </View>
+        ) : (
+          <>
+            {user?.wishlist?.map((item) => (
+              <WishlistItem key={item.itemId} item={item} />
+            ))}
+          </>
+        )}
+      </ScrollView>
     </View>
   );
 };

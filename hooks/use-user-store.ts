@@ -31,4 +31,4 @@ export const useUserStore = create<IUserState>()(
 
 export const useGetUser = () => useUserStore(state => state.user);
 export const useSetUser = () => useUserStore(state => state.setUser);
-export const useClearUser = () => useUserStore(state => state.clearUser);
+export const clearUser = useUserStore.getState().clearUser;

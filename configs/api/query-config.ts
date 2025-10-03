@@ -5,6 +5,7 @@ import { IUser } from '@/interfaces/user';
 import { IItem, IItemsResponse, IKujiCard, IProductCard } from '@/interfaces/items';
 import { IAutocompleteItem } from '@/interfaces/search';
 import { IWishlistItem } from '@/interfaces/wishlist';
+import { ICartItem } from '@/interfaces/cart';
 
 const QueryConfigs = {
   fetchUser: (uid: string): Promise<AxiosResponse<IBaseApiResponse<IUser>>> => {
@@ -104,6 +105,9 @@ const QueryConfigs = {
         order: order.toLowerCase(),
       },
     });
+  },
+  fetchUserCart: async (uid?: string): Promise<AxiosResponse<IBaseApiResponse<ICartItem[]>>> => {
+    return await appClient.get(`/carts/${uid}`);
   },
 };
 

@@ -54,7 +54,7 @@ const ProfileOptionList = () => {
       <ProfileOption
         onPress={handleEditProfile}
         icon={<Ionicons name="person-outline" color="white" size={26} />}
-        title="Edit Profile"
+        title="Manage Profile"
       />
       <ProfileOption
         onPress={handleEditProfile}

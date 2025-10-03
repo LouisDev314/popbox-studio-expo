@@ -1,5 +1,7 @@
 import { Tabs } from 'expo-router';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+import React from 'react';
 
 const TabLayout = () => {
   return (
@@ -59,11 +61,12 @@ const TabLayout = () => {
         options={{
           title: 'Cart',
           headerShown: false,
-          tabBarIcon: ({ focused, color, size }) => <Ionicons
-            name={focused ? 'cart' : 'cart-outline'}
-            size={size}
-            color={color}
-          />,
+          tabBarIcon: ({ focused, color, size }) =>
+            <MaterialCommunityIcons
+              name={focused ? 'shopping' : 'shopping-outline'}
+              color={color}
+              size={size}
+            />,
         }}
       />
       <Tabs.Screen

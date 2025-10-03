@@ -22,6 +22,7 @@ const WishlistContext = createContext<IWishlistContext | undefined>(undefined);
 
 export const WishlistProvider = (props: { children: React.ReactNode }) => {
   // const user = useUserStore(state => state.user);
+  const { isAuthenticated } = useAuth();
   const user = useGetUser();
   const setUser = useSetUser();
   const { isStorageReady } = useAuth();
@@ -54,6 +55,7 @@ export const WishlistProvider = (props: { children: React.ReactNode }) => {
     onError: (err: AxiosError<IBaseApiResponse>) => {
       console.error('Cannot fetch user wishlist:', err);
     },
+    enabled: isAuthenticated,
   });
 
   const { mutation: deleteWishlistItem } = useCustomizeMutation({

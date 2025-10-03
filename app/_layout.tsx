@@ -12,6 +12,7 @@ import { PortalProvider } from '@gorhom/portal';
 import 'react-native-get-random-values';
 import { SearchProvider } from '@/context/search-context';
 import { WishlistProvider } from '@/context/wishlist-context';
+import { CartProvider } from '@/context/cart-context';
 
 const config = createTamagui(defaultConfig);
 
@@ -53,7 +54,9 @@ export default function RootLayout() {
               <AuthProvider>
                 <SearchProvider>
                   <WishlistProvider>
-                    <RootLayoutNav />
+                    <CartProvider>
+                      <RootLayoutNav />
+                    </CartProvider>
                   </WishlistProvider>
                 </SearchProvider>
               </AuthProvider>

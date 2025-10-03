@@ -10,14 +10,16 @@ import { SCREEN_HEIGHT } from '@gorhom/bottom-sheet';
 import { RefreshControl, StyleSheet } from 'react-native';
 import Colors from '@/constants/colors';
 import { useGetUser, useSetUser } from '@/hooks/use-user-store';
-import { IWishlistItem } from '@/interfaces/wishlist';
 import useCustomizeMutation from '@/hooks/use-customize-mutation';
 import MutationConfigs from '@/configs/api/mutation-config';
 import { useWishlist } from '@/context/wishlist-context';
 import useDebounce from '@/hooks/use-debounce';
 import { ItemType } from '@/enums/items';
 import { IItem } from '@/interfaces/items';
+import QuantitySelector from '@/components/QuantitySelector';
+import { IWishlistItem } from '@/interfaces/wishlist';
 
+// eslint-disable-next-line complexity
 const ProductDetailScreen = () => {
   const { id, itemType } = useLocalSearchParams();
   const isItemTypeKuji = itemType === ItemType.Kuji;
@@ -29,6 +31,7 @@ const ProductDetailScreen = () => {
   const user = useGetUser();
   const setUser = useSetUser();
 
+  // TODO: setOverBoughtMsg to toast instead
 
   useEffect(() => {
     setIsItemInWishlist(!!user?.wishlist?.some((item: IWishlistItem) => item.itemId === id));
@@ -36,9 +39,9 @@ const ProductDetailScreen = () => {
 
   const useDebouncedToggleAddToWishlist = useDebounce(() => {
     if (isItemInWishlist) {
-      handleRemoveWishlistItem(currItem);
+      handleRemoveWishlistItem(currWishlistItem);
     } else {
-      addToWishlist({
+      addItemToWishlist({
         uid: user!.uid,
         item: { itemId: id as string, itemType: item!.itemType },
       });
@@ -51,8 +54,8 @@ const ProductDetailScreen = () => {
   };
 
   const queryFn = isItemTypeKuji ? () => QueryConfigs.fetchKujiById(id as string) : () => QueryConfigs.fetchProductById(id as string);
-  const { refetch, data, isLoading } = useCustomizeQuery({
-    queryKey: [id, isItemTypeKuji ? 'product' : 'kuji', 'fetch'],
+  const { refetch, data, isLoading: isFetchingItem } = useCustomizeQuery({
+    queryKey: [id, isItemTypeKuji ? 'kuji' : 'product', 'fetch'],
     queryFn,
     onError: (err) => {
       console.error('Cannot fetch item by id:', err.response?.data);
@@ -61,17 +64,35 @@ const ProductDetailScreen = () => {
   });
 
   useEffect(() => {
-    setItem((data?.data.data as IItem) ?? null);
+    setItem(data?.data.data as IItem);
+    if (item && item.inventory <= 0) {
+      setOverBoughtMsg('This item is currently out of stock.');
+    }
   }, [data]);
 
-  const { mutation: addToWishlist } = useCustomizeMutation({
+  const { mutation: addItemToWishlist } = useCustomizeMutation({
     mutationFn: MutationConfigs.addItemToWishlist,
     onSuccess: () => {
       const updatedWishlist = [
         ...(user?.wishlist ?? []),
-        currItem,
+        currWishlistItem,
       ];
       const updatedUser = { ...user!, wishlist: updatedWishlist };
+      setUser(updatedUser);
+    },
+    onError: (err) => {
+      console.error('Cannot add item', err);
+    },
+  });
+
+  const { mutation: addItemToCart, isPending: isAddingItemToCart } = useCustomizeMutation({
+    mutationFn: MutationConfigs.addItemToCart,
+    onSuccess: () => {
+      const updatedCart = [
+        ...(user?.cart ?? []),
+        currCartItem,
+      ];
+      const updatedUser = { ...user!, cart: updatedCart };
       setUser(updatedUser);
     },
     onError: (err) => {
@@ -84,7 +105,7 @@ const ProductDetailScreen = () => {
   };
 
   // Don't render carousel until we have product data with images
-  if (isLoading || !item || !item.images || item.images.length === 0) {
+  if (!user || isFetchingItem || !item || !item.images || item.images.length === 0) {
     return (
       <View style={AppStyleSheet.bg} alignItems="center">
         <XStack width="100%" alignItems="center" marginTop={60} justifyContent="space-between">
@@ -104,22 +125,48 @@ const ProductDetailScreen = () => {
     );
   }
 
-  const currItem = {
-    itemId: item!._id,
-    title: item!.title,
-    images: item!.images,
-    price: item!.price,
-    itemType: item!.itemType,
+  const currWishlistItem = {
+    itemId: item._id,
+    title: item.title,
+    images: item.images,
+    price: item.price,
+    itemType: item.itemType,
+  };
+
+  const currCartItem = {
+    itemId: item._id,
+    title: item.title,
+    images: item.images,
+    price: item.price,
+    itemType: item.itemType,
+    quantity,
   };
 
   const handleAddToCart = () => {
-    console.log('addToCart');
-    // Over purchase
-    if (item && quantity > item.inventory) {
-      setOverBoughtMsg(`Only added ${item.inventory} to your cart due to availability.`);
-    } else {
-
+    const currCartItem = user.cart.find(item => item.itemId === id);
+    if (currCartItem && currCartItem.quantity >= item.inventory) {
+      setOverBoughtMsg(`You’ve added the last ${item.inventory} available items to your cart.`);
+      return;
     }
+    const quantityToAdd = Math.min(quantity, item.inventory);
+    // Over purchase
+    if (quantity > item.inventory) {
+      setOverBoughtMsg(`Only ${quantityToAdd} ${quantityToAdd === 1 ? 'item' : 'items'} added due to limited availability.`);
+    } else {
+      // Clear any previous messages
+      setOverBoughtMsg('');
+    }
+    // TODO: move this to onSuccess callback
+    setItem({ ...item, inventory: item.inventory - quantityToAdd });
+    // addItemToCart({
+    //   uid: user.uid,
+    //   item: {
+    //     itemId: id as string,
+    //     itemType: item.itemType,
+    //     quantity: quantityToAdd,
+    //     price: item.price,
+    //   },
+    // });
   };
 
   return (
@@ -142,12 +189,13 @@ const ProductDetailScreen = () => {
         marginTop={10}
         refreshControl={
           <RefreshControl
-            refreshing={isLoading}
+            refreshing={isFetchingItem}
             onRefresh={refetch}
             tintColor="white"
           />
         }
       >
+        {/* TODO: Optimization - use skeleton */}
         <ImageCarousel imgUrls={item.images} />
         <View paddingHorizontal={10}>
           <SizableText size="$8">{item.title}</SizableText>
@@ -166,7 +214,7 @@ const ProductDetailScreen = () => {
           <SizableText size="$5">{item.material}</SizableText>
         </View>
       </ScrollView>
-      <SizableText size="$6" color="red" marginBottom={5}>
+      <SizableText size="$6" color={Colors.primary} marginBottom={5}>
         {overBoughtMsg}
       </SizableText>
       <XStack
@@ -176,26 +224,12 @@ const ProductDetailScreen = () => {
         justifyContent="space-between"
         paddingHorizontal={10}
       >
-        <XStack
-          width="36%"
-          justifyContent="space-between"
-          alignItems="center"
-          height={56}
-          borderRadius={20}
-          style={styles.counter}
-        >
-          <Button
-            onPress={() => setQuantity(prev => Math.max(1, prev - 1))}
-          >
-            <SizableText size="$8">-</SizableText>
-          </Button>
-          <SizableText size="$7">{quantity}</SizableText>
-          <Button
-            onPress={() => setQuantity(prev => prev + 1)}
-          >
-            <SizableText size="$8">+</SizableText>
-          </Button>
-        </XStack>
+        <QuantitySelector quantity={quantity} setQuantity={setQuantity} style={{
+          height: 56,
+          borderRadius: 20,
+          width: '36%',
+          gap: 8,
+        }} />
         <Button
           borderRadius={16}
           width="60%"
@@ -203,8 +237,13 @@ const ProductDetailScreen = () => {
           backgroundColor={Colors.primary}
           pressStyle={{ backgroundColor: Colors.primary }}
           onPress={handleAddToCart}
+          disabledStyle={{ backgroundColor: item.inventory <= 0 ? Colors.grey : Colors.primary }}
+          disabled={item.inventory <= 0 || isAddingItemToCart}
         >
-          <SizableText size="$7" color="white" fontWeight="500">Add to cart</SizableText>
+          {isAddingItemToCart ? <Spinner size="small" color="white" /> :
+            <SizableText size="$7" color="white"
+                         fontWeight="500">{item.inventory <= 0 ? 'Sold Out' : 'Add to Cart'}</SizableText>
+          }
         </Button>
       </XStack>
     </View>
@@ -217,9 +256,6 @@ const styles = StyleSheet.create({
     height: 50,
     marginTop: -15,
     marginLeft: 75,
-  },
-  counter: {
-    gap: 8,
   },
 });
 

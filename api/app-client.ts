@@ -8,7 +8,7 @@ import { signOut } from 'firebase/auth';
 import { router } from 'expo-router';
 import { AppScreen } from '@/enums/screens';
 import { Alert } from 'react-native';
-import { useClearUser } from '@/hooks/use-user-store';
+import { clearUser } from '@/hooks/use-user-store';
 
 const appClient: AxiosInstance = axios.create({
   baseURL: getEnvConfig().apiBaseUrl,
@@ -23,7 +23,7 @@ export const handleLogout = async () => {
     // Sign out from Firebase
     await signOut(auth);
     // Clear stored user data
-    useClearUser()();
+    clearUser();
     router.replace(AppScreen.Login);
   } catch (err) {
     console.error('Logout error:', err);
