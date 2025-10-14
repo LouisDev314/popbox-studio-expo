@@ -66,12 +66,12 @@ const WishlistScreen = () => {
             <CustomizeImage
               source={require('@/assets/images/empty-wishlist.jpg')}
               style={{
-                width: 200,
-                height: 200,
-                borderRadius: 100,
+                width: 250,
+                height: 250,
+                borderRadius: 900,
               }}
             />
-            <SizableText size="$7" marginTop="$4" fontWeight="500">Nothing in your wishlist yet!</SizableText>
+            <SizableText size="$7" marginTop="$6" fontWeight="500">Nothing in your wishlist yet!</SizableText>
           </View>
         ) : (
           <>

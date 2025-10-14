@@ -143,7 +143,7 @@ const ProductDetailScreen = () => {
   };
 
   const handleAddToCart = () => {
-    const currCartItem = user.cart.find(item => item.itemId === id);
+    const currCartItem = user.cart?.find(item => item.itemId === id);
     if (currCartItem && currCartItem.quantity >= item.inventory) {
       setOverBoughtMsg(`You’ve added the last ${item.inventory} available items to your cart.`);
       return;
@@ -156,8 +156,6 @@ const ProductDetailScreen = () => {
       // Clear any previous messages
       setOverBoughtMsg('');
     }
-    // TODO: move this to onSuccess callback
-    setItem({ ...item, inventory: item.inventory - quantityToAdd });
     // addItemToCart({
     //   uid: user.uid,
     //   item: {

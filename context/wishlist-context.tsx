@@ -43,7 +43,7 @@ export const WishlistProvider = (props: { children: React.ReactNode }) => {
 
   // Fetch user wishlist and store to local on init
   const { refetch: fetchWishlist, isFetching: isFetchingWishlist } = useCustomizeQuery({
-    queryKey: ['wishlist', 'user', 'fetch', searchOptions],
+    queryKey: ['wishlist', 'user', 'fetch', searchOptions, user],
     queryFn: () => QueryConfigs.fetchUserWishlist({
       uid: user?.uid,
       ...searchOptions,
@@ -53,9 +53,9 @@ export const WishlistProvider = (props: { children: React.ReactNode }) => {
       setWishlist(currWishlist);
     },
     onError: (err: AxiosError<IBaseApiResponse>) => {
-      console.error('Cannot fetch user wishlist:', err);
+      console.error('Cannot fetch user wishlist:', err.message);
     },
-    enabled: isAuthenticated,
+    enabled: isAuthenticated && !!user,
   });
 
   const { mutation: deleteWishlistItem } = useCustomizeMutation({
