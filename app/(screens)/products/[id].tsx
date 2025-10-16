@@ -88,14 +88,16 @@ const ProductDetailScreen = () => {
   const { mutation: addItemToCart, isPending: isAddingItemToCart } = useCustomizeMutation({
     mutationFn: MutationConfigs.addItemToCart,
     onSuccess: () => {
+      const updatedCurrCartItem = { ...currCartItem, quantity: currCartItem.quantity + quantity };
       const updatedCart = [
         ...(user?.cart ?? []),
-        currCartItem,
+        updatedCurrCartItem,
       ];
       const updatedUser = { ...user!, cart: updatedCart };
       setUser(updatedUser);
     },
     onError: (err) => {
+      // TODO: use Toast to indicate cannot add item
       console.error('Cannot add item', err);
     },
   });
@@ -143,7 +145,8 @@ const ProductDetailScreen = () => {
   };
 
   const handleAddToCart = () => {
-    const currCartItem = user.cart?.find(item => item.itemId === id);
+    console.log(user.cart);
+    const currCartItem = user.cart.find(item => item.itemId === id);
     if (currCartItem && currCartItem.quantity >= item.inventory) {
       setOverBoughtMsg(`You’ve added the last ${item.inventory} available items to your cart.`);
       return;
@@ -156,15 +159,15 @@ const ProductDetailScreen = () => {
       // Clear any previous messages
       setOverBoughtMsg('');
     }
-    // addItemToCart({
-    //   uid: user.uid,
-    //   item: {
-    //     itemId: id as string,
-    //     itemType: item.itemType,
-    //     quantity: quantityToAdd,
-    //     price: item.price,
-    //   },
-    // });
+    addItemToCart({
+      uid: user.uid,
+      item: {
+        itemId: id as string,
+        itemType: item.itemType,
+        quantity: quantityToAdd,
+        price: item.price,
+      },
+    });
   };
 
   return (
@@ -222,12 +225,15 @@ const ProductDetailScreen = () => {
         justifyContent="space-between"
         paddingHorizontal={10}
       >
-        <QuantitySelector quantity={quantity} setQuantity={setQuantity} style={{
-          height: 56,
-          borderRadius: 20,
-          width: '36%',
-          gap: 8,
-        }} />
+        <QuantitySelector
+          quantity={quantity}
+          setQuantity={setQuantity}
+          style={{
+            height: 56,
+            borderRadius: 20,
+            width: '36%',
+            gap: 8,
+          }} />
         <Button
           borderRadius={16}
           width="60%"

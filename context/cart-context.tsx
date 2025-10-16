@@ -20,7 +20,7 @@ const CartContext = createContext<ICartContext | undefined>(undefined);
 export const CartProvider = (props: { children: React.ReactNode }) => {
   const user = useGetUser();
   const setUser = useSetUser();
-  const { isStorageReady } = useAuth();
+  const { isStorageReady, isAuthenticated } = useAuth();
   const [cart, setCart] = useState<ICartItem[]>([]);
 
   // Due to reactivity of Zustand, have to separate it here
@@ -32,15 +32,16 @@ export const CartProvider = (props: { children: React.ReactNode }) => {
 
   // Fetch user cart and store to local on init
   const { refetch: fetchCart, isFetching: isFetchingCart } = useCustomizeQuery({
-    queryKey: ['cart', 'user', 'fetch'],
+    queryKey: ['cart', 'user', 'fetch', user],
     queryFn: () => QueryConfigs.fetchUserCart(user?.uid),
     onSuccess: (data) => {
-      const currCart = data.data.data as ICartItem[];
-      setCart(currCart);
+      const cart = data.data.data;
+      setCart(cart);
     },
     onError: (err: AxiosError<IBaseApiResponse>) => {
       console.error('Cannot fetch user cart:', err);
     },
+    enabled: isAuthenticated && !!user,
   });
 
   const { mutation: deleteCartItem } = useCustomizeMutation({

@@ -13,6 +13,7 @@ const Cart = () => {
   const setUser = useSetUser();
   const { fetchCart, isFetchingCart } = useCart();
   const cart = user?.cart ?? [];
+  console.log(cart);
 
   // Calculate totals
   const subtotal = cart?.reduce((sum, item) => sum + (item.price * item.quantity), 0);
@@ -72,6 +73,7 @@ const Cart = () => {
       {/* Cart Items */}
       <ScrollView
         height="100%"
+        marginTop="$4"
         refreshControl={
           <RefreshControl
             refreshing={isFetchingCart}
@@ -94,7 +96,7 @@ const Cart = () => {
         ) : (
           <>
             {cart?.map((item) => (
-              <CartItem key={item.itemId} item={item} />
+              <CartItem key={item.itemId} item={item} updateQuantity={updateQuantity} />
             ))}
           </>
         )}

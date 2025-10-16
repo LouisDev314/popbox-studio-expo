@@ -1,19 +1,22 @@
 import { Button, Card, CardProps, SizableText, View, XStack, YStack } from 'tamagui';
 import CustomizeImage from '@/components/CustomizeImage';
 import Colors from '@/constants/colors';
-import React from 'react';
+import React, { useState } from 'react';
 import { Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';
 import { AppScreen } from '@/enums/screens';
 import { ICartItem } from '@/interfaces/cart';
 import { useCart } from '@/context/cart-context';
+import QuantitySelector from '@/components/QuantitySelector';
 
 interface ICartItemProps extends CardProps {
   item: ICartItem;
+  updateQuantity: (id: string, quantity: number) => void;
 }
 
 const CartItem = (props: ICartItemProps) => {
   const { handleRemoveCartItem } = useCart();
+  const [quantity, setQuantity] = useState(props.item.quantity);
 
   const handleOnPress = () => {
     router.push({
@@ -86,7 +89,7 @@ const CartItem = (props: ICartItemProps) => {
           </View>
 
           {/* Bottom Action */}
-          <View justifyContent="center" alignItems="center">
+          <XStack justifyContent="space-between" alignItems="center">
             <SizableText
               size="$7"
               fontWeight="700"
@@ -94,7 +97,16 @@ const CartItem = (props: ICartItemProps) => {
             >
               ${props.item.price}
             </SizableText>
-          </View>
+            <QuantitySelector
+              quantity={quantity}
+              setQuantity={setQuantity}
+              style={{
+                gap: 3,
+              }}
+              btnSize={3}
+              textSize={6}
+            />
+          </XStack>
         </YStack>
 
       </XStack>
