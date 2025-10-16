@@ -144,6 +144,8 @@ const ProductDetailScreen = () => {
     quantity,
   };
 
+  // FIXME: will only allow the correct amount add to cart (to fetch api)
+  // TODO: Use toast to handle add to cart error elegantly
   const handleAddToCart = () => {
     console.log(user.cart);
     const currCartItem = user.cart.find(item => item.itemId === id);

@@ -1,7 +1,7 @@
 import { Button, Card, CardProps, SizableText, View, XStack, YStack } from 'tamagui';
 import CustomizeImage from '@/components/CustomizeImage';
 import Colors from '@/constants/colors';
-import React, { useState } from 'react';
+import React from 'react';
 import { Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';
 import { AppScreen } from '@/enums/screens';
@@ -16,7 +16,6 @@ interface ICartItemProps extends CardProps {
 
 const CartItem = (props: ICartItemProps) => {
   const { handleRemoveCartItem } = useCart();
-  const [quantity, setQuantity] = useState(props.item.quantity);
 
   const handleOnPress = () => {
     router.push({
@@ -27,6 +26,8 @@ const CartItem = (props: ICartItemProps) => {
       },
     });
   };
+
+  // TODO: leverage the update quantity to reflect total in real-time
 
   return (
     <Card
@@ -98,8 +99,9 @@ const CartItem = (props: ICartItemProps) => {
               ${props.item.price}
             </SizableText>
             <QuantitySelector
-              quantity={quantity}
-              setQuantity={setQuantity}
+              quantity={props.item.quantity}
+              // TODO: check if it works
+              setQuantity={(newQty) => props.updateQuantity(props.item.itemId, newQty)}
               style={{
                 gap: 3,
               }}

@@ -13,7 +13,6 @@ const Cart = () => {
   const setUser = useSetUser();
   const { fetchCart, isFetchingCart } = useCart();
   const cart = user?.cart ?? [];
-  console.log(cart);
 
   // Calculate totals
   const subtotal = cart?.reduce((sum, item) => sum + (item.price * item.quantity), 0);

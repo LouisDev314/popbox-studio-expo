@@ -1,12 +1,13 @@
 import { Button, SizableText, XStack, XStackProps } from 'tamagui';
-import React, { Dispatch, SetStateAction } from 'react';
+import React from 'react';
 
 interface ICartProps {
-  setQuantity: Dispatch<SetStateAction<number>>;
+  setQuantity: (value: number) => void;
   quantity: number;
   style?: XStackProps['style'];
   btnSize?: number;
   textSize?: number;
+  customOnPlusPress?: () => void;
 }
 
 const QuantitySelector = (props: ICartProps) => {
@@ -18,14 +19,14 @@ const QuantitySelector = (props: ICartProps) => {
     >
       <Button
         size={`$${props.btnSize ?? 4}`}
-        onPress={() => props.setQuantity(prev => Math.max(1, prev - 1))}
+        onPress={() => props.setQuantity(Math.max(1, props.quantity - 1))}
       >
         <SizableText size="$8">-</SizableText>
       </Button>
       <SizableText size={`$${props.textSize ?? 7}`} textAlign="center" minWidth="$1">{props.quantity}</SizableText>
       <Button
         size={`$${props.btnSize ?? 4}`}
-        onPress={() => props.setQuantity(prev => prev + 1)}
+        onPress={props.customOnPlusPress ?? (() => props.setQuantity(props.quantity + 1))}
       >
         <SizableText size="$8">+</SizableText>
       </Button>
