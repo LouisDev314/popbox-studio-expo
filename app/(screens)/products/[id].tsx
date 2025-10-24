@@ -81,13 +81,13 @@ const ProductDetailScreen = () => {
       setUser(updatedUser);
     },
     onError: (err) => {
-      console.error('Cannot add item', err);
+      console.error('Cannot add item to wishlist', err);
     },
   });
 
   const { mutation: addItemToCart, isPending: isAddingItemToCart } = useCustomizeMutation({
     mutationFn: MutationConfigs.addItemToCart,
-    onSuccess: () => {
+    onSuccess: (data) => {
       const updatedCurrCartItem = { ...currCartItem, quantity: currCartItem.quantity + quantity };
       const updatedCart = [
         ...(user?.cart ?? []),
@@ -98,7 +98,7 @@ const ProductDetailScreen = () => {
     },
     onError: (err) => {
       // TODO: use Toast to indicate cannot add item
-      console.error('Cannot add item', err);
+      console.error('Cannot add item to cart', err);
     },
   });
 
@@ -144,23 +144,32 @@ const ProductDetailScreen = () => {
     quantity,
   };
 
-  // FIXME: will only allow the correct amount add to cart (to fetch api)
-  // TODO: Use toast to handle add to cart error elegantly
   const handleAddToCart = () => {
-    console.log(user.cart);
     const currCartItem = user.cart.find(item => item.itemId === id);
-    if (currCartItem && currCartItem.quantity >= item.inventory) {
-      setOverBoughtMsg(`You’ve added the last ${item.inventory} available items to your cart.`);
-      return;
+
+    let quantityToAdd = quantity;
+    // If item already in cart
+    if (currCartItem) {
+      // If user already has max inventory in cart, notify and exit
+      if (currCartItem.quantity >= item.inventory) {
+        setOverBoughtMsg(`You’ve added the last ${item.inventory} available items to your cart.`);
+        return;
+      }
+
+      // Calculate prospective quantity after adding more
+      const prospectiveQuantity = quantity + currCartItem.quantity;
+
+      // If prospective quantity exceeds inventory but user currently has less than max
+      if (prospectiveQuantity > item.inventory && currCartItem.quantity < item.inventory) {
+        // Limit quantityToAdd to available stock remainder
+        quantityToAdd = item.inventory - currCartItem.quantity;
+        setOverBoughtMsg(`Only ${quantityToAdd} ${quantityToAdd === 1 ? 'item' : 'items'} added due to limited availability.`);
+      } else {
+        // Valid quantity
+        setOverBoughtMsg('');
+      }
     }
-    const quantityToAdd = Math.min(quantity, item.inventory);
-    // Over purchase
-    if (quantity > item.inventory) {
-      setOverBoughtMsg(`Only ${quantityToAdd} ${quantityToAdd === 1 ? 'item' : 'items'} added due to limited availability.`);
-    } else {
-      // Clear any previous messages
-      setOverBoughtMsg('');
-    }
+
     addItemToCart({
       uid: user.uid,
       item: {
@@ -244,7 +253,7 @@ const ProductDetailScreen = () => {
           pressStyle={{ backgroundColor: Colors.primary }}
           onPress={handleAddToCart}
           disabledStyle={{ backgroundColor: item.inventory <= 0 ? Colors.grey : Colors.primary }}
-          disabled={item.inventory <= 0 || isAddingItemToCart}
+          disabled={isAddingItemToCart || item.inventory <= 0}
         >
           {isAddingItemToCart ? <Spinner size="small" color="white" /> :
             <SizableText size="$7" color="white"

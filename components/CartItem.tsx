@@ -100,7 +100,7 @@ const CartItem = (props: ICartItemProps) => {
             </SizableText>
             <QuantitySelector
               quantity={props.item.quantity}
-              // TODO: check if it works
+              // FIXME
               setQuantity={(newQty) => props.updateQuantity(props.item.itemId, newQty)}
               style={{
                 gap: 3,
@@ -110,7 +110,6 @@ const CartItem = (props: ICartItemProps) => {
             />
           </XStack>
         </YStack>
-
       </XStack>
     </Card>
   );
