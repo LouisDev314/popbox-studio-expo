@@ -18,6 +18,7 @@ import { ItemType } from '@/enums/items';
 import { IItem } from '@/interfaces/items';
 import QuantitySelector from '@/components/QuantitySelector';
 import { IWishlistItem } from '@/interfaces/wishlist';
+import { useCart } from '@/context/cart-context';
 
 // eslint-disable-next-line complexity
 const ProductDetailScreen = () => {
@@ -28,10 +29,9 @@ const ProductDetailScreen = () => {
   const [overBoughtMsg, setOverBoughtMsg] = useState('');
   const [isItemInWishlist, setIsItemInWishlist] = useState(false);
   const { handleRemoveWishlistItem } = useWishlist();
+  const { addItemToCart, isAddingItemToCart } = useCart();
   const user = useGetUser();
   const setUser = useSetUser();
-
-  // TODO: setOverBoughtMsg to toast instead
 
   useEffect(() => {
     setIsItemInWishlist(!!user?.wishlist?.some((item: IWishlistItem) => item.itemId === id));
@@ -82,20 +82,6 @@ const ProductDetailScreen = () => {
     },
     onError: (err) => {
       console.error('Cannot add item to wishlist', err);
-    },
-  });
-
-  const { mutation: addItemToCart, isPending: isAddingItemToCart } = useCustomizeMutation({
-    mutationFn: MutationConfigs.addItemToCart,
-    onSuccess: (data) => {
-      setOverBoughtMsg('Add to cart successfully!');
-      const updatedCart = data.data.data.items;
-      const updatedUser = { ...user!, cart: updatedCart };
-      setUser(updatedUser);
-    },
-    onError: (err) => {
-      // TODO: use Toast to indicate cannot add item
-      console.error('Cannot add item to cart', err.response);
     },
   });
 

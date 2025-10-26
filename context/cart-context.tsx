@@ -9,10 +9,22 @@ import MutationConfigs from '@/configs/api/mutation-config';
 import { useAuth } from '@/context/auth-context';
 import { ICartItem } from '@/interfaces/cart';
 
+interface IAddCartItemParams {
+  uid: string;
+  item: {
+    itemId: string;
+    itemType: string;
+    quantity: number;
+    price: number;
+  };
+}
+
 interface ICartContext {
   fetchCart: () => void;
   isFetchingCart: boolean;
   handleRemoveCartItem: (item: ICartItem) => void;
+  addItemToCart: (params: IAddCartItemParams) => void;
+  isAddingItemToCart: boolean;
 }
 
 const CartContext = createContext<ICartContext | undefined>(undefined);
@@ -48,6 +60,20 @@ export const CartProvider = (props: { children: React.ReactNode }) => {
     mutationFn: MutationConfigs.deleteCartItem,
   });
 
+  const { mutation: addItemToCart, isPending: isAddingItemToCart } = useCustomizeMutation({
+    mutationFn: MutationConfigs.addItemToCart,
+    onSuccess: (data) => {
+      // TODO: setOverBoughtMsg to toast instead
+      const updatedCart = data.data.data.items;
+      const updatedUser = { ...user!, cart: updatedCart };
+      setUser(updatedUser);
+    },
+    onError: (err) => {
+      // TODO: use Toast to indicate cannot add item
+      console.error('Cannot add item to cart', err.response);
+    },
+  });
+
   const handleRemoveCartItem = (item: ICartItem) => {
     const updatedCart = user?.cart?.filter(cartItem => cartItem.itemId !== item.itemId) as ICartItem[];
     const updatedUser = { ...user!, cart: updatedCart };
@@ -59,6 +85,8 @@ export const CartProvider = (props: { children: React.ReactNode }) => {
     fetchCart,
     isFetchingCart,
     handleRemoveCartItem,
+    addItemToCart,
+    isAddingItemToCart,
   };
 
   return (
