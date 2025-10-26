@@ -102,6 +102,7 @@ const WishlistItem = (props: IWishlistItemProps) => {
               pressStyle={{ backgroundColor: Colors.primary }}
               color="white"
               onPress={() => {
+                // TODO
                 console.log('add to cart');
               }}
             >

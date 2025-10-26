@@ -52,7 +52,7 @@ const CartItem = (props: ICartItemProps) => {
           paddingLeft="$3"
         >
           <CustomizeImage
-            uri={props.item.images[0]}
+            uri={props.item.images?.[0]}
             style={{
               width: '100%',
               height: '100%',

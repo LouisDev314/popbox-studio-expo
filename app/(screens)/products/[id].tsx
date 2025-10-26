@@ -88,17 +88,14 @@ const ProductDetailScreen = () => {
   const { mutation: addItemToCart, isPending: isAddingItemToCart } = useCustomizeMutation({
     mutationFn: MutationConfigs.addItemToCart,
     onSuccess: (data) => {
-      const updatedCurrCartItem = { ...currCartItem, quantity: currCartItem.quantity + quantity };
-      const updatedCart = [
-        ...(user?.cart ?? []),
-        updatedCurrCartItem,
-      ];
+      setOverBoughtMsg('Add to cart successfully!');
+      const updatedCart = data.data.data.items;
       const updatedUser = { ...user!, cart: updatedCart };
       setUser(updatedUser);
     },
     onError: (err) => {
       // TODO: use Toast to indicate cannot add item
-      console.error('Cannot add item to cart', err);
+      console.error('Cannot add item to cart', err.response);
     },
   });
 
@@ -135,39 +132,29 @@ const ProductDetailScreen = () => {
     itemType: item.itemType,
   };
 
-  const currCartItem = {
-    itemId: item._id,
-    title: item.title,
-    images: item.images,
-    price: item.price,
-    itemType: item.itemType,
-    quantity,
-  };
-
   const handleAddToCart = () => {
-    const currCartItem = user.cart.find(item => item.itemId === id);
-
     let quantityToAdd = quantity;
-    // If item already in cart
-    if (currCartItem) {
-      // If user already has max inventory in cart, notify and exit
-      if (currCartItem.quantity >= item.inventory) {
-        setOverBoughtMsg(`You’ve added the last ${item.inventory} available items to your cart.`);
-        return;
-      }
 
-      // Calculate prospective quantity after adding more
-      const prospectiveQuantity = quantity + currCartItem.quantity;
+    // Find item in cart if it exists
+    const currCartItem = user.cart?.find(item => item.itemId === id);
+    const currQuantity = currCartItem?.quantity ?? 0;
+    const prospectiveQuantity = currQuantity + quantity;
 
-      // If prospective quantity exceeds inventory but user currently has less than max
-      if (prospectiveQuantity > item.inventory && currCartItem.quantity < item.inventory) {
-        // Limit quantityToAdd to available stock remainder
-        quantityToAdd = item.inventory - currCartItem.quantity;
-        setOverBoughtMsg(`Only ${quantityToAdd} ${quantityToAdd === 1 ? 'item' : 'items'} added due to limited availability.`);
-      } else {
-        // Valid quantity
-        setOverBoughtMsg('');
+    // Edge case: Already has max allowed
+    if (currCartItem && currQuantity >= item.inventory) {
+      setOverBoughtMsg(`You’ve added the last ${item.inventory} available items to your cart.`);
+      return;
+    }
+
+    // Request quantity exceeds inventory
+    if (prospectiveQuantity > item.inventory) {
+      // Only add up to maximum available stock not yet in cart
+      quantityToAdd = item.inventory - currQuantity;
+      // If not in cart, limit to inventory
+      if (!currCartItem) {
+        quantityToAdd = item.inventory;
       }
+      setOverBoughtMsg(`Only ${quantityToAdd} ${quantityToAdd === 1 ? 'item' : 'items'} added due to limited availability.`);
     }
 
     addItemToCart({

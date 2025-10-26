@@ -9,7 +9,7 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/(screens)/products/[id].tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(screens)/products/[id].tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/components/CartItem.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/CartItem.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/configs/api/mutation-config.ts" beforeDir="false" afterPath="$PROJECT_DIR$/configs/api/mutation-config.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/WishlistItem.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/WishlistItem.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -89,7 +89,7 @@
       <workItem from="1755445519192" duration="54504000" />
       <workItem from="1755839937610" duration="688000" />
       <workItem from="1755883369677" duration="142344000" />
-      <workItem from="1761264263886" duration="7678000" />
+      <workItem from="1761264263886" duration="18765000" />
     </task>
     <servers />
   </component>
