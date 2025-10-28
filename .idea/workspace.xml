@@ -7,16 +7,9 @@
     <list default="true" id="17ef7c58-bf7c-413e-b6ef-f4686d9e06c1" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.expo/devices.json" beforeDir="false" afterPath="$PROJECT_DIR$/.expo/devices.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/(screens)/products/[id].tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(screens)/products/[id].tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/(tabs)/cart.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(tabs)/cart.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/CartItem.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/CartItem.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/WishlistItem.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/WishlistItem.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/configs/api/mutation-config.ts" beforeDir="false" afterPath="$PROJECT_DIR$/configs/api/mutation-config.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/context/cart-context.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/context/cart-context.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/enums/screens.ts" beforeDir="false" afterPath="$PROJECT_DIR$/enums/screens.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/interfaces/cart/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/interfaces/cart/index.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/interfaces/user.ts" beforeDir="false" afterPath="$PROJECT_DIR$/interfaces/user.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/helper.ts" beforeDir="false" afterPath="$PROJECT_DIR$/utils/helper.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/(screens)/auth/EmailScreen/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(screens)/auth/EmailScreen/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/(screens)/auth/OtpScreen/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(screens)/auth/OtpScreen/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/context/auth-context.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/context/auth-context.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -96,7 +89,7 @@
       <workItem from="1755445519192" duration="54504000" />
       <workItem from="1755839937610" duration="688000" />
       <workItem from="1755883369677" duration="142344000" />
-      <workItem from="1761264263886" duration="40944000" />
+      <workItem from="1761264263886" duration="43465000" />
     </task>
     <servers />
   </component>

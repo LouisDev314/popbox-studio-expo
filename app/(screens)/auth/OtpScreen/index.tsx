@@ -127,7 +127,7 @@ const OtpScreen = (props: IOtpScreenProps) => {
         <View flexDirection="row" alignItems="center">
           <Text>Didn't receive otp?</Text>
           <Text color={Colors.primary}>
-            {isTimerActive ? `${remainingTime}(s)` : 'Resend OTP'}
+            &nbsp;{isTimerActive ? `${remainingTime}(s)` : 'Resend otp'}
           </Text>
         </View>
       </Button>

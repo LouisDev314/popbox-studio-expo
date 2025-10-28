@@ -125,7 +125,7 @@ export const AuthProvider = (props: { children: React.ReactNode }) => {
 
   // Login query - fetch user data from backend after Firebase auth
   const { refetch: fetchUser, isFetching: isFetchingUser, isError: isFetchingError } = useCustomizeQuery({
-    queryKey: ['user', 'fetch', isAuthenticated],
+    queryKey: ['user', 'fetch', isAuthenticated, auth.currentUser],
     queryFn: () => QueryConfigs.fetchUser(auth.currentUser?.uid!),
     onSuccess: (data: AxiosResponse<IBaseApiResponse<IUser>>) => {
       const user = data.data.data as IUser;
@@ -135,7 +135,7 @@ export const AuthProvider = (props: { children: React.ReactNode }) => {
     onError: (err: AxiosError<IBaseApiResponse>) => {
       console.error('Cannot fetch user:', err);
     },
-    enabled: isAuthenticated,
+    enabled: isAuthenticated && !!auth.currentUser,
   });
 
   const isError = isRegisterError || isLoginError || isFetchingError || isCreateUserError;

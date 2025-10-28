@@ -94,7 +94,7 @@ const EmailScreen = (props: IEmailFormProps) => {
       />
       <Button disabled={isPending} icon={isPending ? <Spinner /> : undefined} onPress={handleSubmit(onSubmit)}>
         <SizableText size="$5">
-          {isPending ? '' : 'Verify EmailScreen'}
+          {isPending ? '' : 'Verify Email'}
         </SizableText>
       </Button>
     </>
