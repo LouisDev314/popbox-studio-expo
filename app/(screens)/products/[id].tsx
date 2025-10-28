@@ -122,7 +122,7 @@ const ProductDetailScreen = () => {
     let quantityToAdd = quantity;
 
     // Find item in cart if it exists
-    const currCartItem = user.cart?.find(item => item.itemId === id);
+    const currCartItem = user.cart?.get(item._id);
     const currQuantity = currCartItem?.quantity ?? 0;
     const prospectiveQuantity = currQuantity + quantity;
 
@@ -147,6 +147,8 @@ const ProductDetailScreen = () => {
       uid: user.uid,
       item: {
         itemId: id as string,
+        title: item.title,
+        images: [item.images[0]],
         itemType: item.itemType,
         quantity: quantityToAdd,
         price: item.price,

@@ -7,6 +7,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { useWishlist } from '@/context/wishlist-context';
 import { router } from 'expo-router';
 import { AppScreen } from '@/enums/screens';
+import { useGetUser } from '@/hooks/use-user-store';
 
 interface IWishlistItemProps extends CardProps {
   item: IWishlistItem;
@@ -14,14 +15,23 @@ interface IWishlistItemProps extends CardProps {
 
 const WishlistItem = (props: IWishlistItemProps) => {
   const { handleRemoveWishlistItem } = useWishlist();
+  const user = useGetUser();
 
-  const handleOnPress = () => {
+  const isCurrItemInCart = user?.cart?.has(props.item.itemId);
+
+  const handleGoToItemDetailsScreen = () => {
     router.push({
       pathname: AppScreen.ProductDetail,
       params: {
         id: props.item.itemId,
         itemType: props.item.itemType,
       },
+    });
+  };
+
+  const handleGoToCartScreen = () => {
+    router.push({
+      pathname: AppScreen.Cart,
     });
   };
 
@@ -34,7 +44,7 @@ const WishlistItem = (props: IWishlistItemProps) => {
       borderRadius="$6"
       overflow="hidden"
       height={200}
-      onPress={handleOnPress}
+      onPress={handleGoToItemDetailsScreen}
       pressStyle={{ scale: 0.95 }}
       {...props}
     >
@@ -101,12 +111,11 @@ const WishlistItem = (props: IWishlistItemProps) => {
               backgroundColor={Colors.primary}
               pressStyle={{ backgroundColor: Colors.primary }}
               color="white"
-              onPress={() => {
-                // TODO
-                console.log('add to cart');
-              }}
+              onPress={isCurrItemInCart ? handleGoToCartScreen : handleGoToItemDetailsScreen}
             >
-              <SizableText size="$5" fontWeight="500">Add to Cart</SizableText>
+              {isCurrItemInCart ?
+                <SizableText size="$5" fontWeight="500">In Cart</SizableText> :
+                <SizableText size="$5" fontWeight="500">Add to Cart</SizableText>}
             </Button>
           </XStack>
         </YStack>

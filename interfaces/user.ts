@@ -9,7 +9,7 @@ export interface IUser extends User {
   email: string;
   avatar: string;
   wishlist: IWishlistItem[];
-  cart: ICartItem[];
+  cart: Map<string, ICartItem>;
   address: string;
   order: IOrder[];
   role: 'user' | 'admin';

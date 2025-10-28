@@ -37,7 +37,7 @@ const CartItem = (props: ICartItemProps) => {
       animation="quick"
       borderRadius="$6"
       overflow="hidden"
-      height={200}
+      height={160}
       onPress={handleOnPress}
       pressStyle={{ scale: 0.95 }}
       {...props}
@@ -45,8 +45,8 @@ const CartItem = (props: ICartItemProps) => {
       <XStack>
         {/* Image section */}
         <View
-          width={150}
-          height={200}
+          width={140}
+          height={160}
           overflow="hidden"
           paddingVertical="$4"
           paddingLeft="$3"

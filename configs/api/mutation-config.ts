@@ -2,7 +2,7 @@ import appClient from '@/api/app-client';
 import { IWishlistItem } from '@/interfaces/wishlist';
 import { AxiosResponse } from 'axios';
 import { IBaseApiResponse } from '@/interfaces/api-response';
-import { ICartItem, ICartResponse } from '@/interfaces/cart';
+import { ICartItem } from '@/interfaces/cart';
 
 const MutationConfigs = {
   verifyEmail: (user: { email: string, isResetPassword?: boolean }) => {
@@ -28,8 +28,8 @@ const MutationConfigs = {
   },
   addItemToCart: (params: {
     uid: string,
-    item: Pick<ICartItem, 'itemId' | 'itemType' | 'quantity' | 'price'>
-  }): Promise<AxiosResponse<IBaseApiResponse<ICartResponse>>> => {
+    item: ICartItem
+  }): Promise<AxiosResponse<IBaseApiResponse<ICartItem[]>>> => {
     return appClient.post(`/carts/${params.uid}`, params.item);
   },
   deleteCartItem: (params: {

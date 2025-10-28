@@ -6,7 +6,3 @@ export interface ICartItem {
   itemType: string;
   quantity: number;
 }
-
-export interface ICartResponse {
-  items: ICartItem[];
-}

@@ -8,22 +8,13 @@ import useCustomizeMutation from '@/hooks/use-customize-mutation';
 import MutationConfigs from '@/configs/api/mutation-config';
 import { useAuth } from '@/context/auth-context';
 import { ICartItem } from '@/interfaces/cart';
-
-interface IAddCartItemParams {
-  uid: string;
-  item: {
-    itemId: string;
-    itemType: string;
-    quantity: number;
-    price: number;
-  };
-}
+import { arrayToMap, deleteFromMap } from '@/utils/helper';
 
 interface ICartContext {
   fetchCart: () => void;
   isFetchingCart: boolean;
   handleRemoveCartItem: (item: ICartItem) => void;
-  addItemToCart: (params: IAddCartItemParams) => void;
+  addItemToCart: (params: { uid: string, item: ICartItem }) => void;
   isAddingItemToCart: boolean;
 }
 
@@ -37,15 +28,16 @@ export const CartProvider = (props: { children: React.ReactNode }) => {
 
   // Due to reactivity of Zustand, have to separate it here
   useEffect(() => {
-    if (!isStorageReady) return;
-    const updatedUser = { ...user!, cart };
+    if (!isStorageReady || !user || !cart) return;
+    const cartMap = arrayToMap(cart, cart => cart.itemId);
+    const updatedUser = { ...user, cart: cartMap };
     setUser(updatedUser);
   }, [cart, isStorageReady]);
 
   // Fetch user cart and store to local on init
   const { refetch: fetchCart, isFetching: isFetchingCart } = useCustomizeQuery({
     queryKey: ['cart', 'user', 'fetch', user],
-    queryFn: () => QueryConfigs.fetchUserCart(user?.uid),
+    queryFn: () => QueryConfigs.fetchUserCart(user!.uid),
     onSuccess: (data) => {
       const cart = data.data.data;
       setCart(cart);
@@ -64,8 +56,9 @@ export const CartProvider = (props: { children: React.ReactNode }) => {
     mutationFn: MutationConfigs.addItemToCart,
     onSuccess: (data) => {
       // TODO: setOverBoughtMsg to toast instead
-      const updatedCart = data.data.data.items;
-      const updatedUser = { ...user!, cart: updatedCart };
+      const updatedCart = data.data.data;
+      const cartMap = arrayToMap(updatedCart, updatedCart => updatedCart.itemId);
+      const updatedUser = { ...user!, cart: cartMap };
       setUser(updatedUser);
     },
     onError: (err) => {
@@ -74,8 +67,9 @@ export const CartProvider = (props: { children: React.ReactNode }) => {
     },
   });
 
+  // TODO: cart hashmap
   const handleRemoveCartItem = (item: ICartItem) => {
-    const updatedCart = user?.cart?.filter(cartItem => cartItem.itemId !== item.itemId) as ICartItem[];
+    const updatedCart = deleteFromMap(user!.cart, item.itemId);
     const updatedUser = { ...user!, cart: updatedCart };
     setUser(updatedUser);
     deleteCartItem({ uid: user!.uid, itemId: item.itemId });
