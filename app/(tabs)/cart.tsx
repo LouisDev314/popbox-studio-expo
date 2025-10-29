@@ -1,19 +1,32 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { RefreshControl, StyleSheet } from 'react-native';
-import { ScrollView, SizableText, View } from 'tamagui';
+import { Button, ScrollView, SizableText, View, XStack, YStack } from 'tamagui';
 import AppStyleSheet from '@/constants/app-stylesheet';
 import { useGetUser, useSetUser } from '@/hooks/use-user-store';
-import BottomSheet, { SCREEN_HEIGHT } from '@gorhom/bottom-sheet';
+import BottomSheet, { BottomSheetBackdrop, BottomSheetView, SCREEN_HEIGHT } from '@gorhom/bottom-sheet';
 import CustomizeImage from '@/components/CustomizeImage';
 import { useCart } from '@/context/cart-context';
 import CartItem from '@/components/CartItem';
+import Colors from '@/constants/colors';
+import { AntDesign } from '@expo/vector-icons';
 
 const Cart = () => {
   const user = useGetUser();
   const setUser = useSetUser();
   const { fetchCart, isFetchingCart } = useCart();
+  const [isExpanded, setIsExpanded] = useState(false);
 
   const bottomSheetRef = useRef<BottomSheet>(null);
+
+  const handleExpand = () => {
+    bottomSheetRef.current?.snapToIndex(1);
+    setIsExpanded(true);
+  };
+
+  const handleCollapse = () => {
+    bottomSheetRef.current?.snapToIndex(0);
+    setIsExpanded(false);
+  };
 
   // Calculate totals
   const subtotal = Array.from(user?.cart?.values() ?? []).reduce((sum, item) => sum + (item.price * item.quantity), 0);
@@ -106,34 +119,115 @@ const Cart = () => {
           </>
         )}
       </ScrollView>
-      {/*<BottomSheet*/}
-      {/*  style={styles.container}*/}
-      {/*  ref={bottomSheetRef}*/}
-      {/*  snapPoints={['25%']}*/}
-      {/*  handleComponent={null}*/}
-      {/*  enableHandlePanningGesture={false} // Prevent drag resize*/}
-      {/*  enableContentPanningGesture={false} // Prevent drag from content*/}
-      {/*  enableDynamicSizing={false}*/}
-      {/*>*/}
-      {/*  <BottomSheetView*/}
-      {/*    style={styles.content}*/}
-      {/*  >*/}
-      {/*    <Text>Awesome 🎉</Text>*/}
-      {/*  </BottomSheetView>*/}
-      {/*</BottomSheet>*/}
+      <BottomSheet
+        style={styles.container}
+        backgroundStyle={styles.background}
+        ref={bottomSheetRef}
+        snapPoints={['10%', '40%']}
+        handleComponent={null}
+        enableHandlePanningGesture={false} // Prevent drag resize
+        enableContentPanningGesture={false} // Prevent drag from content
+        enableDynamicSizing={false}
+        backdropComponent={(backdropProps) => (
+          <BottomSheetBackdrop
+            {...backdropProps}
+            appearsOnIndex={1}
+            disappearsOnIndex={0}
+            onPress={handleCollapse}
+          />
+        )}
+      >
+        {isExpanded && (
+          <BottomSheetView style={styles.content}>
+            <YStack style={styles.yStack}>
+              {/* Header */}
+              <View marginHorizontal="auto">
+                <SizableText fontSize={25} fontWeight="700">Details</SizableText>
+              </View>
+
+              {/* Subtotal */}
+              <XStack justifyContent="space-between" alignItems="center">
+                <SizableText size="$7" fontWeight="500">Subtotal</SizableText>
+                <SizableText size="$8" fontWeight="600">$24</SizableText>
+              </XStack>
+
+              <XStack justifyContent="space-between" alignItems="center">
+                <SizableText size="$7" fontWeight="500">Tax</SizableText>
+                <SizableText size="$8" fontWeight="600">5%</SizableText>
+              </XStack>
+
+              <XStack justifyContent="space-between" alignItems="center">
+                <SizableText size="$7" fontWeight="500">Total</SizableText>
+                <SizableText size="$8" fontWeight="600" color={Colors.primary}>$125.99</SizableText>
+              </XStack>
+            </YStack>
+          </BottomSheetView>
+        )}
+      </BottomSheet>
+
+      {/* Checkout container */}
+      <XStack
+        justifyContent="space-between"
+        alignItems="center"
+        width="100%"
+        padding={12}
+      >
+        <YStack marginLeft={8} marginBottom={-8}>
+          <XStack marginRight={12}>
+            <SizableText fontSize={18}>Total:&nbsp;</SizableText>
+            <SizableText
+              color={Colors.primary}
+              fontSize={25}
+              fontWeight="600"
+            >
+              $125.99
+            </SizableText>
+          </XStack>
+          <Button
+            unstyled
+            pressStyle={{ opacity: 0.5 }}
+            onPress={isExpanded ? handleCollapse : handleExpand}
+          >
+            <XStack alignItems="center">
+              <SizableText color={Colors.primary} size="$5" marginRight={4}>Details</SizableText>
+              <AntDesign name={isExpanded ? 'down' : 'up'} color={Colors.primary} size={14} />
+            </XStack>
+          </Button>
+        </YStack>
+
+        <Button
+          width="45%"
+          size="$5"
+          borderRadius="$6"
+          backgroundColor={Colors.primary}
+          pressStyle={{ backgroundColor: Colors.primary }}
+          color="white"
+        >
+          <SizableText size="$6" fontWeight="500">Checkout</SizableText>
+        </Button>
+      </XStack>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    padding: 12,
+    padding: 18,
     borderTopLeftRadius: 36,
     borderTopRightRadius: 36,
     overflow: 'hidden',
+    // height: '16%',
+    // borderBottomWidth: 0,
+  },
+  background: {
+    backgroundColor: Colors.darkGrey,
   },
   content: {
-    backgroundColor: 'grey',
+    // paddingHorizontal: 12,
+    // height: '100%',
+  },
+  yStack: {
+    gap: 8,
   },
 });
 
